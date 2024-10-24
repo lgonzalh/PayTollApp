@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsuariosService", "UsuariosService\UsuariosService.csproj", "{61737CCF-39B8-42E1-BD49-B81B2D0DF299}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehiculosService", "VehiculosService\VehiculosService.csproj", "{458B20F5-D537-474C-9C79-8F7009304D11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarjetasService", "TarjetasService\TarjetasService.csproj", "{9A7B83B1-FFB6-4446-B104-A321854F62A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTollApp.Models", "PayTollApp.Models\PayTollApp.Models.csproj", "{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTollApp.SharedServices", "PayTollApp.SharedServices\PayTollApp.SharedServices.csproj", "{532323AD-848B-4B0E-943C-9CCCD36A3ECF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTollApp.DataAccess", "PayTollApp.DataAccess\PayTollApp.DataAccess.csproj", "{80823382-4E97-451A-B43C-D926D653D10F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecargasService", "RecargasService\RecargasService.csproj", "{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458B20F5-D537-474C-9C79-8F7009304D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458B20F5-D537-474C-9C79-8F7009304D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458B20F5-D537-474C-9C79-8F7009304D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458B20F5-D537-474C-9C79-8F7009304D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80823382-4E97-451A-B43C-D926D653D10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80823382-4E97-451A-B43C-D926D653D10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80823382-4E97-451A-B43C-D926D653D10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80823382-4E97-451A-B43C-D926D653D10F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF1044AA-DA3B-4617-A805-D5B9D3A931D6}
+	EndGlobalSection
+EndGlobal
