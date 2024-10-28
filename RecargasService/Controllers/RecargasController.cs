@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PayTollApp.DataAccess;
 using PayTollApp.Models;
-using RecargasService.Models; // Asegúrate de tener este using si RecargaRequest está en este namespace
+using RecargasService.Models;
 
 namespace RecargasService.Controllers
 {
@@ -46,6 +46,19 @@ namespace RecargasService.Controllers
                     return BadRequest("El monto de la recarga debe ser mayor que cero.");
                 }
 
+                // Obtener el precio de la categoría del vehículo
+                var categoriaVehiculo = await _context.CategoriasVehiculos.FirstOrDefaultAsync(c => c.IdCategoria == tarjeta.IdVehiculo);
+                if (categoriaVehiculo == null)
+                {
+                    return NotFound("La categoría del vehículo no existe.");
+                }
+
+                // Validar que el monto de la recarga sea un múltiplo del precio de la categoría
+                if (recargaRequest.Monto % categoriaVehiculo.Precio != 0)
+                {
+                    return BadRequest($"El monto de la recarga debe ser un múltiplo de {categoriaVehiculo.Precio}.");
+                }
+
                 // Actualizar el saldo de la tarjeta
                 tarjeta.Saldo += recargaRequest.Monto;
 
@@ -60,6 +73,21 @@ namespace RecargasService.Controllers
 
                 // Registrar la recarga
                 _context.Recargas.Add(recarga);
+
+                // Registrar el movimiento
+                var movimiento = new Movimiento
+                {
+                    IdUsuario = usuario.Id,
+                    IdTarjeta = tarjeta.Id,
+                    Monto = recargaRequest.Monto,
+                    SaldoAnterior = tarjeta.Saldo - recargaRequest.Monto,
+                    SaldoNuevo = tarjeta.Saldo,
+                    TipoMovimiento = "Recarga Saldo",
+                    FechaMovimiento = DateTime.Now,
+                    IdVehiculo = tarjeta.IdVehiculo // Asegúrate de incluir el ID_VEHICULO si es necesario
+                };
+
+                _context.Movimientos.Add(movimiento);
 
                 // Guardar cambios en la base de datos
                 await _context.SaveChangesAsync();

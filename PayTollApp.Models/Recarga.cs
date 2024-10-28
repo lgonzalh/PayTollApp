@@ -23,7 +23,6 @@ namespace PayTollApp.Models
         [Column("METODO_PAGO")]
         public string? MetodoPago { get; set; }
 
-        // Relaciones
         [ForeignKey("IdTarjeta")]
         public Tarjeta? Tarjeta { get; set; }
     }
