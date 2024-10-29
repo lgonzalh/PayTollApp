@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PagosService", "PagosServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractoService", "ExtractoService\ExtractoService.csproj", "{BCBFF5FA-5110-40DA-BCC6-E064E92DA5AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsuariosSolicitudes", "UsuariosSolicitudes\UsuariosSolicitudes.csproj", "{2C00F80C-3947-49D4-ADD0-E55625E7920D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolicitudesService", "UsuariosSolicitudes\SolicitudesService.csproj", "{2C00F80C-3947-49D4-ADD0-E55625E7920D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactosService", "ContactosService\ContactosService.csproj", "{3C32B7D7-F77D-45A6-967A-ED083DC894F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

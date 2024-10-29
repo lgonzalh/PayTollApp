@@ -20,9 +20,9 @@ namespace PayTollApp.Models
         [Column("FECHA_CREACION")]
         public DateTime FechaCreacion { get; set; }
 
-        // Corregir el nombre de la columna aquí
+        [Required]
         [Column("TARJETA_NUMERO")]
-        public string? NumeroTarjeta { get; set; }
+        public string NumeroTarjeta { get; set; } = string.Empty;
 
         [Column("ID_VEHICULO")]
         public int IdVehiculo { get; set; }
