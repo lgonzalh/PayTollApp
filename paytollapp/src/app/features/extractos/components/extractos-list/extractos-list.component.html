@@ -1,0 +1,47 @@
+<div class="extractos-container">
+  <h2>Detalle de Extracto</h2>
+  
+  <!-- Información General -->
+  <div class="extracto-info">
+    <p><strong>Tarjeta:</strong> {{ extracto.numeroTarjeta }}</p>
+    <div class="saldos-grid">
+      <p><strong>Saldo Anterior:</strong> {{ extracto.saldoAnterior | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+      <p><strong>Total Recargas:</strong> {{ extracto.totalRecargas | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+      <p><strong>Total Pagos:</strong> {{ extracto.totalPagos | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+      <p><strong>Saldo Actual:</strong> {{ extracto.saldoActual | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+    </div>
+  </div>
+
+  <!-- Tabla de Movimientos -->
+  <div class="movimientos-section" *ngIf="extracto.movimientos?.length > 0; else noData">
+    <h3>Movimientos</h3>
+    <table class="movimientos-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Descripción</th>
+          <th>Peaje</th>
+          <th>Valor</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movimiento of extracto.movimientos" 
+            [ngClass]="{'recarga': movimiento.descripcion === 'Recarga Saldo', 
+                       'pago': movimiento.descripcion === 'Pago Peaje'}">
+          <td>{{ movimiento.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ movimiento.descripcion }}</td>
+          <td>{{ movimiento.peaje }}</td>
+          <td [ngClass]="{'valor-negativo': movimiento.valor < 0}">
+            {{ movimiento.valor | currency:'COP':'symbol-narrow':'1.0-0' }}
+          </td>
+          <td>{{ movimiento.saldo | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noData>
+    <p class="no-data">No hay movimientos disponibles.</p>
+  </ng-template>
+</div>

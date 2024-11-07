@@ -1,0 +1,67 @@
+.extractos-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.extracto-info {
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.saldos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.movimientos-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.movimientos-table th,
+.movimientos-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.movimientos-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.recarga {
+  background-color: #e8f5e9;
+}
+
+.pago {
+  background-color: #fbe9e7;
+}
+
+.valor-negativo {
+  color: #d32f2f;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .saldos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .movimientos-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

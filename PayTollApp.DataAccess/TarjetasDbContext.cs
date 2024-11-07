@@ -24,11 +24,11 @@ namespace PayTollApp.DataAccess
             // Configuración de las tablas
             modelBuilder.Entity<Recarga>().ToTable("RECARGAS", "SERVICIO");
             modelBuilder.Entity<Tarjeta>().ToTable("TARJETAS", "SERVICIO");
-            modelBuilder.Entity<Usuario>().ToTable("USUARIOS", "USUARIO");
-            modelBuilder.Entity<Solicitud>().ToTable("SOLICITUDES", "USUARIO");
             modelBuilder.Entity<Pago>().ToTable("PAGOS", "SERVICIO");
             modelBuilder.Entity<Peaje>().ToTable("PEAJES", "SERVICIO");
             modelBuilder.Entity<CategoriaVehiculo>().ToTable("CATEGORIAS_VEHICULOS", "SERVICIO");
+            modelBuilder.Entity<Usuario>().ToTable("USUARIOS", "USUARIO");
+            modelBuilder.Entity<Solicitud>().ToTable("SOLICITUDES", "USUARIO");
             modelBuilder.Entity<Contacto>().ToTable("CONTACTOS", "USUARIO");
 
             // Configuración de la clave primaria para Solicitud

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PayTollApp.Models
 {
@@ -21,6 +22,7 @@ namespace PayTollApp.Models
         public string? CorreoElectronico { get; set; }
 
         [Column("CONTRASENA")]
+        [JsonIgnore]
         public string? Contrasena { get; set; }
 
         [Column("FECHA_CREACION")]
