@@ -1,39 +1,36 @@
 using Microsoft.EntityFrameworkCore;
+using PayTollApp.SharedServices;
 using VehiculosService.Data;
-using Microsoft.OpenApi.Models;
-
+using PayTollApp.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de la base de datos para VehiculosDbContext
+// Configuración de VehiculosDbContext
 builder.Services.AddDbContext<VehiculosDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Agregar controladores de Vehículos
+// Configuración de TarjetasDbContext
+builder.Services.AddDbContext<TarjetasDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Registro de TarjetaService
+builder.Services.AddScoped<TarjetaService>();
+
+// Agregar controladores
 builder.Services.AddControllers();
 
 // Configuración de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
-        policy => policy.WithOrigins("http://127.0.0.1:5500") // Ajusta según la URL del frontend
+        policy => policy.WithOrigins("http://127.0.0.1:5500")
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
 
-// Swagger para VehiculosService
+// Swagger para documentación de API
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "VehiculosService API", Version = "v1" });
-
-    // Limitar Swagger solo a controladores de Vehiculos
-    c.DocInclusionPredicate((docName, apiDesc) =>
-    {
-        return apiDesc.ActionDescriptor.RouteValues["controller"].StartsWith("Vehiculos");
-    });
-});
-
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayTollApp.Models;
-using PayTollApp.SharedServices;
 using VehiculosService.Data;
 
 namespace VehiculosService.Controllers
@@ -11,30 +10,39 @@ namespace VehiculosService.Controllers
     public class VehiculosController : ControllerBase
     {
         private readonly VehiculosDbContext _context;
-        private readonly TarjetaService _tarjetaService;
 
-        public VehiculosController(VehiculosDbContext context, TarjetaService tarjetaService)
+        public VehiculosController(VehiculosDbContext context)
         {
             _context = context;
-            _tarjetaService = tarjetaService;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(Vehiculo vehiculo)
+        public async Task<IActionResult> Register(VehiculoRegistroDto vehiculoDto)
         {
-            if (_context.Vehiculos.Any(v => v.Placa == vehiculo.Placa))
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == vehiculoDto.Cedula);
+
+            if (usuario == null)
+            {
+                return NotFound("El usuario no existe para registrar el vehículo.");
+            }
+
+            if (_context.Vehiculos.Any(v => v.Placa == vehiculoDto.Placa))
             {
                 return BadRequest("La placa ya está registrada.");
             }
+
+            var vehiculo = new Vehiculo
+            {
+                IdUsuario = usuario.Id,
+                Placa = vehiculoDto.Placa,
+                CategoriaVehiculo = vehiculoDto.CategoriaVehiculo
+            };
 
             try
             {
                 _context.Vehiculos.Add(vehiculo);
                 await _context.SaveChangesAsync();
-
-                await _tarjetaService.CrearTarjetaParaVehiculoAsync(vehiculo.IdUsuario, vehiculo.Id);
-
-                return Ok("Vehículo registrado exitosamente");
+                return Ok("Vehículo registrado exitosamente.");
             }
             catch (Exception ex)
             {
@@ -49,19 +57,16 @@ namespace VehiculosService.Controllers
 
             if (usuario == null)
             {
-                return NotFound("No se encontró un usuario con la cédula proporcionada.");
+                return NotFound("Usuario no encontrado.");
             }
 
             var vehiculos = await _context.Vehiculos
                 .Where(v => v.IdUsuario == usuario.Id)
                 .ToListAsync();
 
-            if (vehiculos.Count == 0)
-            {
-                return NotFound("No se encontraron vehículos para el usuario con la cédula proporcionada.");
-            }
-
             return Ok(vehiculos);
         }
+
+
     }
 }

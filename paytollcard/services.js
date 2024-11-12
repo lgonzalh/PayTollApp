@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
                       <div class="modal-body">${modalContent.body}</div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="button" class="btn btn-primary" id="${modalId}Submit">Enviar</button>
                       </div>
                   </div>
               </div>
@@ -52,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExtractos) {
       btnExtractos.addEventListener('click', () => {
           showModal('extractoModal', {
-              title: 'Historial de Extractos',
+              title: 'Extractos',
               body: '<div id="extractoFormContainer"></div>'
           });
           import('./extracto.js').then(module => module.default());

@@ -16,6 +16,24 @@ export default function recargaModule() {
         </form>
     `;
 
+    document.getElementById('cedula').addEventListener('blur', async () => {
+        const cedula = document.getElementById('cedula').value;
+
+        try {
+            const response = await fetch(`http://localhost:5141/api/Usuarios/categoria/${cedula}`);
+            if (!response.ok) {
+                throw new Error(`Error al obtener la categoría del usuario. Código: ${response.status}`);
+            }
+
+            const categoria = await response.json();
+            console.log('Categoría obtenida:', categoria);
+            alert(`Categoría del usuario: ${categoria.nombreCategoria}`);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema al obtener la categoría del usuario.');
+        }
+    });
+
     document.getElementById('recargaModalSubmit').addEventListener('click', async () => {
         const data = {
             cedula: document.getElementById('cedula').value,

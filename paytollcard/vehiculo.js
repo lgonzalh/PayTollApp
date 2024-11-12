@@ -52,18 +52,12 @@ export default function vehiculoModule() {
     // Registro de vehículo
     document.getElementById('registerVehicle').addEventListener('click', async () => {
         const data = {
-            idUsuario: 0, 
+            cedula: document.getElementById('cedula').value,
             placa: document.getElementById('placa').value,
             categoriaVehiculo: parseInt(document.getElementById('categoriaVehiculo').value),
         };
 
         try {
-            const cedula = document.getElementById('cedula').value;
-            const usuarioResponse = await fetch(`http://localhost:5266/api/Vehiculos/getByCedula/${cedula}`);
-            if (!usuarioResponse.ok) throw new Error('Usuario no encontrado.');
-            const usuario = await usuarioResponse.json();
-            data.idUsuario = usuario.id;
-
             const response = await fetch('http://localhost:5266/api/Vehiculos/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
