@@ -49,14 +49,25 @@ namespace UsuariosService.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
+            // Agregar logs para depuración
+            Console.WriteLine("Correo Electrónico recibido: " + model.CorreoElectronico);
+            Console.WriteLine("Contraseña recibida: " + model.Contrasena);
+
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.CorreoElectronico == model.CorreoElectronico && u.Contrasena == model.Contrasena);
 
             if (usuario == null)
+            {
+                Console.WriteLine("Usuario no encontrado o contraseña incorrecta.");
                 return Unauthorized("Credenciales incorrectas");
+            }
 
+            Console.WriteLine("Inicio de sesión exitoso para el usuario: " + usuario.CorreoElectronico);
             return Ok("Login exitoso");
         }
+
+
+
 
         // Método para obtener el perfil sin autorización
         [HttpGet("perfil")]

@@ -1,0 +1,186 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+main {
+  flex-grow: 1; 
+}
+
+.navbar-dark .navbar-brand {
+  color: #ffffff;
+  margin-top: 10px;
+}
+
+.navbar-brand span {
+  font-size: 14px; 
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #ffffff;
+}
+
+.bg-gradient {
+  background-color: #002366;
+  background-image: linear-gradient(to right, #002366 0%, #1E90FF 50%, #4169E1 100%);
+}
+
+.navbar .container-fluid {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;     
+  padding: 0.5rem 1rem; 
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center; 
+}
+
+.navbar-brand img {
+  border-radius: 50%; 
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: flex-start; 
+}
+
+.container {
+  margin-top: 150px;
+  margin-bottom: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start; 
+  flex-wrap: wrap;
+}
+
+.column {
+  text-align: center;
+  width: 45%; 
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container input {
+  margin-bottom: 10px;
+}
+
+.form-container {
+  position: relative;
+}
+
+.form-container input[type="password"] {
+  padding-right: 40px; /* Espacio para el botón */
+}
+
+.form-container button[type="submit"] {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.registro {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 10px 0; 
+  background-color: #002366;
+  color: white;
+  text-align: center;
+}
+
+.grid-container {
+  height: auto; 
+  overflow: hidden; 
+  max-height: 60vh; 
+}
+
+.container-fluid.bg-gradient.text-light {
+  padding: 1rem;
+}
+
+.footer p {
+  text-align: center;
+  margin: 0;
+}
+
+.imagen-container img {
+  width: 50px;
+  height: 50px;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.table-custom {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  margin: 0 auto;
+  table-layout: fixed; 
+}
+
+.table-custom tr {
+  display: flex;
+  width: 100%;
+}
+
+.table-custom td {
+  width: 50%;
+  height: 200px;
+  text-align: center;
+  vertical-align: top; 
+  border: 0px solid #ccc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.table-custom img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  object-fit: contain;
+}
+
+.table-custom button {
+  margin-top: 10px;
+  align-self: center; 
+}

@@ -8,10 +8,16 @@ namespace VehiculosService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class VehiculosController(VehiculosDbContext context, TarjetaService tarjetaService) : ControllerBase
+    public class VehiculosController : ControllerBase
     {
-        private readonly VehiculosDbContext _context = context;
-        private readonly TarjetaService _tarjetaService = tarjetaService;
+        private readonly VehiculosDbContext _context;
+        private readonly TarjetaService _tarjetaService;
+
+        public VehiculosController(VehiculosDbContext context, TarjetaService tarjetaService)
+        {
+            _context = context;
+            _tarjetaService = tarjetaService;
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(Vehiculo vehiculo)

@@ -22,7 +22,6 @@ namespace PayTollApp.Models
         public string? CorreoElectronico { get; set; }
 
         [Column("CONTRASENA")]
-        [JsonIgnore]
         public string? Contrasena { get; set; }
 
         [Column("FECHA_CREACION")]

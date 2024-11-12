@@ -20,6 +20,15 @@ builder.Services.AddDbContext<TarjetasDbContext>(options =>
                 errorNumbersToAdd: null);
         }));
 
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://127.0.0.1:5500") // Dirección del frontend
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configurar el pipeline de solicitudes HTTP
@@ -28,6 +37,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Middleware para redireccionar CORS y autorizaciones
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 
