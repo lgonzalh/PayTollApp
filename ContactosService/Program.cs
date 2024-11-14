@@ -10,6 +10,15 @@ builder.Services.AddDbContext<TarjetasDbContext>(options =>
 // Agregar controladores
 builder.Services.AddControllers();
 
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://127.0.0.1:5500") // Dirección del frontend
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
+
 // Agregar servicios de Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,10 +26,6 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configurar el middleware
-// app.UseHttpsRedirection(); // Descomenta esta línea si necesitas redirección a HTTPS
-
-app.UseAuthorization();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -30,6 +35,14 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = "swagger";
     });
 }
+
+// Middleware para redireccionar CORS y autorizaciones
+app.UseCors("AllowFrontend");
+
+// Descomenta esta línea si necesitas redirección a HTTPS
+// app.UseHttpsRedirection(); 
+
+app.UseAuthorization();
 
 app.MapControllers();
 

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PayTollApp.DataAccess\PayTollApp.DataAccess.csproj" />
     <ProjectReference Include="..\PayTollApp.Models\PayTollApp.Models.csproj" />
     <ProjectReference Include="..\PayTollApp.SharedServices\PayTollApp.SharedServices.csproj" />
   </ItemGroup>

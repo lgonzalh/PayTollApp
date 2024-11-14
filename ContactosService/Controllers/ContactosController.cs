@@ -22,6 +22,13 @@ namespace ContactosService.Controllers
         {
             try
             {
+                var usuarioExistente = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == contacto.Usuario.Cedula);
+                if (usuarioExistente != null)
+                {
+                    contacto.IdUsuario = usuarioExistente.Id;
+                    contacto.Usuario = null; // Evitar reinsertar usuario
+                }
+
                 _context.Contactos.Add(contacto);
                 await _context.SaveChangesAsync();
 

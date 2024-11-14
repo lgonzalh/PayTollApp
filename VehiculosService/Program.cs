@@ -1,43 +1,46 @@
 using Microsoft.EntityFrameworkCore;
+using PayTollApp.SharedServices;
 using VehiculosService.Data;
-using Microsoft.OpenApi.Models;
+using PayTollApp.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Agregar servicios al contenedor
+// Configuración de VehiculosDbContext
+builder.Services.AddDbContext<VehiculosDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configuración de TarjetasDbContext
+builder.Services.AddDbContext<TarjetasDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Registro de TarjetaService
+builder.Services.AddScoped<TarjetaService>();
+
+// Agregar controladores
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+
+// Configuración de CORS
+builder.Services.AddCors(options =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vehiculos API", Version = "v1" });
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://127.0.0.1:5500")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
 });
 
-// Registrar el DbContext con la base de datos
-builder.Services.AddDbContext<VehiculosDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("VehiculosDB")));
+// Swagger para documentación de API
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configurar el middleware de la aplicación
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vehiculos API v1");
-        c.RoutePrefix = string.Empty; // Esto hará que Swagger esté en la raíz
-    });
-}
-else
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 

@@ -18,16 +18,52 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
+// Configurar el middleware de excepción y HSTS para producción
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+// Redireccionar HTTP a HTTPS
+app.UseHttpsRedirection();
+
+// Habilitar CORS
+app.UseCors("AllowAll");
+
+// Habilitar Swagger en desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Habilitar archivos estáticos desde wwwroot
+app.UseStaticFiles();
+
+// Configurar el enrutamiento
+app.UseRouting();
+
+// Habilitar autorización (si aplica)
 app.UseAuthorization();
 
+// Mapear controladores
 app.MapControllers();
+
+// Manejar rutas para el frontend (SPA)
+app.MapFallbackToFile("index.html");
 
 app.Run();

@@ -1,0 +1,215 @@
+/* Estilos generales para html y body */
+html, body { 
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estructura del cuerpo de la página */
+body {
+  display: flex;
+  flex-direction: column; /* Coloca el contenido en columna */
+  min-height: 100vh; /* Garantiza que el body ocupe toda la altura de la ventana */
+}
+
+/* El main se expandirá para ocupar el espacio disponible */
+main {
+  flex-grow: 1; 
+}
+
+/* Estilos de la barra de navegación */
+.navbar-dark .navbar-brand {
+  color: #ffffff;
+  margin-top: 10px; /* Espacio superior para el texto de la marca */
+}
+
+/* Fuente más pequeña para el subtítulo de la marca */
+.navbar-brand span {
+  font-size: 14px; 
+}
+
+/* Estilo de los enlaces en la barra de navegación */
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+/* Cambia el color de los enlaces cuando están activos o se pasan por encima */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #ffffff;
+}
+
+/* Fondo con un gradiente en la barra de navegación */
+.bg-gradient {
+  background-color: #002366;
+  background-image: linear-gradient(to right, #002366 0%, #1E90FF 50%, #4169E1 100%);
+}
+
+/* Configuración de alineación en la barra de navegación */
+.navbar .container-fluid {
+  display: flex;
+  justify-content: space-between; /* Distribuye elementos en los extremos */
+  align-items: center; /* Alinea elementos verticalmente */
+  padding: 0.5rem 1rem; 
+}
+
+/* Configuración de la marca de la barra de navegación */
+.navbar-brand {
+  display: flex;
+  align-items: center; 
+}
+
+/* Estilo para el logotipo dentro de la marca */
+.navbar-brand img {
+  border-radius: 50%; 
+}
+
+/* Estilo de los elementos de la barra de navegación */
+.navbar-nav {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: flex-start; 
+}
+
+/* Contenedor general para organizar las columnas */
+.container {
+  margin-top: 150px;
+  margin-bottom: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start; 
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
+}
+
+/* Columnas individuales dentro del contenedor */
+.column {
+  text-align: center;
+  width: 45%; 
+}
+
+/* Estilo general para formularios */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilo para entradas de texto dentro del formulario */
+.form-container input {
+  margin-bottom: 10px;
+}
+
+.form-container {
+  position: relative; /* Relativo para posicionar elementos dentro */
+}
+
+/* Asegura que haya espacio para botones en campos de contraseña */
+.form-container input[type="password"] {
+  padding-right: 40px; 
+}
+
+/* Botón de envío dentro del formulario */
+.form-container button[type="submit"] {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Espaciado superior e inferior en la sección de registro */
+.registro {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* Estilos de pie de página */
+.footer {
+  margin-top: auto; /* Empuja el footer hacia abajo */
+  padding: 10px 0; 
+  background-color: #002366;
+  color: white;
+  text-align: center;
+}
+
+/* Contenedor general de grids para mantener orden */
+.grid-container {
+  height: auto; 
+  overflow: hidden; /* Oculta desbordamientos no deseados */
+  max-height: 60vh; 
+}
+
+.container-fluid.bg-gradient.text-light {
+  padding: 1rem;
+}
+
+/* Estilo de texto dentro del footer */
+.footer p {
+  text-align: center;
+  margin: 0;
+}
+
+/* Ajuste de tamaño para imágenes dentro de contenedores de imagen */
+.imagen-container img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Contenedor para centrar tablas */
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* Tabla personalizada con disposición fija */
+.table-custom {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  margin: 0 auto;
+  table-layout: fixed; 
+}
+
+/* Cada fila de la tabla se muestra como un contenedor flexible */
+.table-custom tr {
+  display: flex;
+  width: 100%;
+}
+
+/* Estilo de las celdas de la tabla */
+.table-custom td {
+  width: 50%;
+  height: 200px;
+  text-align: center;
+  vertical-align: top; 
+  border: 0px solid #ccc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Tamaño de imágenes dentro de las celdas */
+.table-custom img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  object-fit: contain;
+}
+
+/* Botones dentro de la tabla, centrados */
+.table-custom button {
+  margin-top: 10px;
+  align-self: center; 
+}

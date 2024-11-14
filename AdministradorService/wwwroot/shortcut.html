@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>paytollappshortcut</title>
+    <link rel="icon"
+        href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
+        type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
+            <div class="container-fluid d-flex align-items-center">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/logo.webp?alt=media&token=d30dc85e-81d4-4a2d-9b94-8eabf25c25e6"
+                        alt="Logo" width="48" height="48">
+                    <span style="font-size: 24px; font-weight: bold;">PayTollCard</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">Acerca</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contáctenos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow container-fluid mt-5 mb-5" style="max-width: 48rem; padding: 0 1rem;">
+        <div id="root"></div>
+    </main>
+
+    <footer class="bg-gradient text-light py-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2023-2024 PayTollCard</p>
+                </div>
+                <div class="col-md-6 text-end"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-2Y85Go1/VUVKHSxW0zu4NNhkVxI/4jG41f3TUL+xlY6S/7nOfvFjmhstcqlQbgDEKWn9x94cpcr3yTn1ma/Uxw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="text/babel" src="js/shortcut.js"></script>
+</body>
+
+</html>
