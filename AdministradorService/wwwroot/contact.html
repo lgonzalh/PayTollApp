@@ -1,119 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PayTollApp</title>
+  <title>Contáctenos | PayTollCard</title>
   <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Enlace a Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <style>
+    @font-face {
+      font-family: "Antenna";
+      src: url("fonts/Ford-Antenna-Regular.woff2") format("woff2"),
+           url("fonts/Ford-Antenna-Regular.woff") format("woff"),
+           url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'Antenna', sans-serif;
+      background: linear-gradient(150deg, #01023f, #221d4d, #01023f);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .navbar .nav-link {
+      color: rgba(255,255,255,0.7);
+      transition: color 0.3s ease;
+    }
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+      color: #fff;
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .btn-submit {
+      background: linear-gradient(90deg, #3498db, #2980b9);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(90deg, #2980b9, #3498db);
+    }
+
+    .contact-card {
+      background: rgba(44, 62, 80, 0.85);
+      border: none;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      padding: 1rem 0;
+      background: transparent;
+    }
+
+    footer p {
+      text-align: left;
+      margin-left: 1rem;
+    }
+  </style>
 </head>
-
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
-      <div class="container-fluid d-flex align-items-center">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/logo.webp?alt=media&token=d30dc85e-81d4-4a2d-9b94-8eabf25c25e6" alt="Logo" width="48" height="48">
-          <span style="font-size: 24px; font-weight: bold;">PayTollCard</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">Acerca</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="services.html">Servicios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contáctenos</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg py-4">
     <div class="container">
-      <div class="row justify-content-center align-items-start">
-        <div class="col-md-6">
-          <h2 class="text-center">Contacto</h2>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/logo.webp?alt=media&token=d30dc85e-81d4-4a2d-9b94-8eabf25c25e6"
-            alt="Logo" class="img-fluid mx-auto d-block" width="200" height="200">
-          <p class="text-center">¡Estamos aquí para ayudarte! Ponte en contacto con nosotros.</p>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title text-center">Formulario de Contacto</h4>
-              <form>
-                <div class="form-group">
-                  <label for="nombre">Nombre:</label>
-                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Tu nombre">
-                </div>
-                <div class="form-group">
-                  <label for="correo">Correo electrónico:</label>
-                  <input type="email" id="correo" name="correo" class="form-control"
-                    placeholder="Tu correo electrónico">
-                </div>
-                <div class="form-group">
-                  <label for="mensaje">Mensaje:</label>
-                  <textarea id="mensaje" name="mensaje" class="form-control" rows="5"
-                    placeholder="Escribe tu mensaje aquí"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
-              </form>
-            </div>
+      <a class="navbar-brand text-white fs-4" href="#">PayTollCard</a>
+      <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon text-white-50"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link mx-3" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-3" href="about.html">Acerca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-3 active" href="contact.html">Contáctenos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="py-5">
+    <div class="container text-center">
+      <h1 class="display-5 fw-bold gradient-text mb-4">Contáctanos</h1>
+      <p class="lead text-white-50 mb-5">
+        ¿Tienes alguna pregunta o necesitas ayuda? Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.
+      </p>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="contact-card">
+            <form>
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+              </div>
+              <div class="mb-3">
+                <label for="correo" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="correo" placeholder="tu@correo.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" rows="5" placeholder="Escribe tu mensaje" required></textarea>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-submit">Enviar</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Footer -->
   <footer>
-    <div class="container-fluid bg-gradient text-light">
-      <div class="row">
-        <div class="col-md-6">
-          <p>© 2023-2024 PayTollCard</p>
-        </div>
-        <div class="col-md-6 text-end">
-        </div>
-      </div>
+    <div class="container">
+      <p class="text-white-50 mb-0 small">© 2023-2024 PayTollCard</p>
     </div>
   </footer>
-  
-  <div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="confirmacionModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmacionModalLabel">¡Confirmación!</h5>
-        <!--<span aria-hidden="true">&times;</span>-->
-          </button>
-        </div>
-        <div class="modal-body">
-          <p id="mensajeConfirmacion"></p>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="js/contact.js"></script>
-
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

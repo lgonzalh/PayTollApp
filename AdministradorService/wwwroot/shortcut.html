@@ -1,76 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>paytollappshortcut</title>
-    <link rel="icon"
-        href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
-        type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <meta charset="UTF-8">
+  <title>PayTollCard - Atajos</title>
+  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Enlace a Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <style>
+    @font-face {
+      font-family: "Antenna";
+      src: url("fonts/Ford-Antenna-Regular.woff2") format("woff2"),
+           url("fonts/Ford-Antenna-Regular.woff") format("woff"),
+           url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'Antenna', sans-serif;
+      background: linear-gradient(150deg, #01023f, #221d4d, #01023f);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background: transparent;
+    }
+
+    .navbar .navbar-brand {
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .input-container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 25px;
+      padding: 0.5rem 3rem 0.5rem 1rem;
+      color: #fff;
+      font-family: 'Antenna', sans-serif;
+      font-size: 1rem;
+      resize: none;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    textarea:focus {
+      outline: none;
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-execute {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, #1a1a1a, #2c3e50);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-execute i {
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .grid-container {
+      width: 90%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+    }
+
+    .grid-container .pill {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      color: #fff;
+      font-size: 0.9rem;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      padding: 1rem 0;
+      background: transparent;
+    }
+
+    footer p {
+      text-align: left;
+      margin-left: 1rem;
+    }
+  </style>
 </head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg py-3">
+    <div class="container">
+      <a class="navbar-brand" href="#">PayTollCard</a>
+    </div>
+  </nav>
 
-<body class="min-h-screen flex flex-col">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
-            <div class="container-fluid d-flex align-items-center">
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/logo.webp?alt=media&token=d30dc85e-81d4-4a2d-9b94-8eabf25c25e6"
-                        alt="Logo" width="48" height="48">
-                    <span style="font-size: 24px; font-weight: bold;">PayTollCard</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">Acerca</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="services.html">Servicios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contáctenos</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <div class="input-container">
+      <textarea id="query-input" placeholder="Ingresa tu consulta..."></textarea>
+      <button class="btn-execute" id="execute-btn">
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+    <div class="grid-container" id="result-grid">
+      <!-- Celdas dinámicas -->
+      <div class="pill">Atajo 1</div>
+      <div class="pill">Atajo 2</div>
+      <div class="pill">Atajo 3</div>
+      <!-- Agrega más elementos según sea necesario -->
+    </div>
+  </div>
 
-    <main class="flex-grow container-fluid mt-5 mb-5" style="max-width: 48rem; padding: 0 1rem;">
-        <div id="root"></div>
-    </main>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p class="text-white-50 mb-0 small">© 2023-2024 PayTollCard</p>
+    </div>
+  </footer>
 
-    <footer class="bg-gradient text-light py-2">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">© 2023-2024 PayTollCard</p>
-                </div>
-                <div class="col-md-6 text-end"></div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-2Y85Go1/VUVKHSxW0zu4NNhkVxI/4jG41f3TUL+xlY6S/7nOfvFjmhstcqlQbgDEKWn9x94cpcr3yTn1ma/Uxw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <script type="text/babel" src="js/shortcut.js"></script>
+  <!-- Enlaces a scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-QdNdaJ9fD9+f+9hc2o9cQDmqw2ONRQ4bhIQmOloetHdRMlw0ajh05Hv4CcGUVQuPuq5ut6Y6PGbdeLtksIe3Mw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('execute-btn').addEventListener('click', function () {
+      // Lógica para manejar el envío de la consulta
+      console.log("Consulta ejecutada:", document.getElementById('query-input').value);
+    });
+  </script>
 </body>
-
 </html>

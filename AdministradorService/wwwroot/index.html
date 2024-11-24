@@ -1,99 +1,428 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+  <!-- Metadatos -->
   <meta charset="UTF-8">
+  <title>© PayTollCard</title>
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
+    type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PayTollCard</title>
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b" type="image/x-icon">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-  <!-- Font Awesome CSS (para el icono de flecha) -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+  <!-- Enlace a Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @font-face {
+      font-family: "Antenna";
+      src: url("./fonts/Ford-Antenna-Regular.woff2") format("woff2"),
+        url("./fonts/Ford-Antenna-Regular.woff") format("woff"),
+        url("./fonts/Ford-Antenna-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'Antenna', sans-serif;
+      background: linear-gradient(150deg, #01023f, #221d4d, #01023f);
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar .nav-link {
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.3s ease;
+    }
+
+    .navbar .nav-link:hover {
+      color: #fff;
+    }
+
+    .btn-outline-light {
+      border-width: 0.5px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-light:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Tarjeta tipo crédito */
+    .card-container {
+      position: relative;
+      width: 400px;
+      height: 600px;
+      margin: 2rem auto;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #1a1a1a;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+      position: absolute;
+      top: 25px;
+      left: 30px;
+      font-size: 1.5rem;
+      /* Mismo tamaño que la navbar */
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      z-index: 2;
+    }
+
+    /* Logo de la franquicia */
+    .franchise-logo {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 80px;
+      z-index: 2;
+    }
+
+    .franchise-logo img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Carrusel */
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-inner {
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-item {
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Texto y botón sobre el carrusel */
+    .overlay-content {
+      position: absolute;
+      top: 50%;
+      left: -100%;
+      transform: translateY(-50%);
+      animation: slideIn 1.5s forwards;
+      text-align: left;
+      padding-left: 30px;
+      z-index: 3;
+    }
+
+    @keyframes slideIn {
+      to {
+        left: 30px;
+      }
+    }
+
+    .overlay-content h1,
+    .overlay-content p {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      margin: 0;
+    }
+
+    .overlay-content h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .overlay-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-register {
+      background: linear-gradient(90deg, #3498db, #2980b9);
+      border: none;
+      border-radius: 25px;
+      padding: 0.5rem 1.5rem;
+      color: #fff;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-register:hover {
+      background: linear-gradient(90deg, #2980b9, #3498db);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    /* Footer */
+    footer {
+      padding: 1rem 0;
+      background: transparent;
+    }
+
+    footer p {
+      text-align: left;
+      margin-left: 1rem;
+      margin-bottom: 0;
+      color: #fff;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .card-container {
+        width: 90%;
+        height: auto;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+        top: 20px;
+        left: 20px;
+      }
+
+      .franchise-logo {
+        width: 60px;
+        bottom: 15px;
+        right: 15px;
+      }
+
+      .overlay-content h1 {
+        font-size: 1.5rem;
+      }
+
+      .overlay-content p {
+        font-size: 1rem;
+      }
+    }
+
+    /* Ocultar scroll horizontal */
+    body {
+      overflow-x: hidden;
+    }
+  </style>
 </head>
+
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
-      <div class="container-fluid d-flex align-items-center">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/logo.webp?alt=media&token=d30dc85e-81d4-4a2d-9b94-8eabf25c25e6" alt="Logo" width="48" height="48">
-          <span style="font-size: 24px; font-weight: bold;">PayTollCard</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!-- Enlaces de navegación -->
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">Acerca</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="services.html">Servicios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contáctenos</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>    
-  </header>
-
-  <main>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg py-4">
     <div class="container">
-      <div class="column">
-        <h4>Acelera tu viaje: menos espera, más carretera.</h4>
-        <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/logo.webp?alt=media&token=d30dc85e-81d4-4a2d-9b94-8eabf25c25e6" alt="Logo" width="200" height="200">
+      <a class="navbar-brand text-white fs-4" href="#">PayTollCard</a>
+      <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon text-white-50"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link mx-3 active" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-3" href="about.html">Acerca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-3" href="contact.html">Contáctenos</a>
+          </li>
+          <li class="nav-item ms-3">
+            <button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal"
+              data-bs-target="#loginModal">Acceder</button>
+          </li>
+        </ul>
       </div>
-      <div class="column">
-        <div class="form-container">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/usuario.webp?alt=media&token=3832e7bd-79c6-490b-b741-7e7e8b12190c" alt="Registro" width="70" height="70">
-          
-          <!-- Formulario de inicio de sesión -->
-          <form id="loginForm" style="position: relative;">
-            <input type="email" id="correo_electronico" placeholder="Correo electrónico" required>
-            <div style="position: relative;">
-              <input type="password" id="contrasena" placeholder="Contraseña" required>
-              <!-- Botón de envío dentro del campo de contraseña -->
-              <button type="submit" style="position: absolute; right: 5px; top: 50%; transform: translateY(-60%); background: none; border: none; cursor: pointer;">
-                <i class="fas fa-arrow-circle-right" style="font-size: 24px; color: #220e64;"></i>
-              </button>
-            </div>
-          </form>
+    </div>
+  </nav>
 
-          <a href="register.html" class="registro">Registro</a>
+  <!-- Contenido principal -->
+  <main class="flex-grow-1">
+    <!-- Tarjeta con carrusel -->
+    <div class="card-container">
+      <!-- Título de la tarjeta -->
+      <div class="card-title">PayTollCard</div>
+
+      <!-- Carrusel -->
+      <div id="imageCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <!-- Doodle -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/doodle.png?alt=media&token=9aa28061-504a-4994-b651-dd9c4389ad6e"
+              alt="Doodle">
+          </div>
+          <!-- Imagen 1 -->
+          <div class="carousel-item active">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/a.jpg?alt=media&token=2d0b172f-1733-4443-a532-9b7dd0178860"
+              alt="Imagen 1">
+          </div>
+          <!-- Imagen 2 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/b.jpg?alt=media&token=b0e9fdb7-f5f1-40cf-aefd-a4d82e58ff29"
+              alt="Imagen 2">
+          </div>
+          <!-- Doodle -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/doodle.png?alt=media&token=9aa28061-504a-4994-b651-dd9c4389ad6e"
+              alt="Doodle">
+          </div>
+          <!-- Imagen 3 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/c.jpg?alt=media&token=558c9425-e2db-4319-95c9-7270f32cbdca"
+              alt="Imagen 3">
+          </div>
+          <!-- Imagen 4 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/d.jpg?alt=media&token=6a2f0762-7230-4702-a286-5adaf2725490"
+              alt="Imagen 4">
+          </div>
+          <!-- Doodle -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/doodle.png?alt=media&token=9aa28061-504a-4994-b651-dd9c4389ad6e"
+              alt="Doodle">
+          </div>
+          <!-- Imagen 5 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/e.jpg?alt=media&token=b8ca97d3-e9d5-4737-b258-015a540943da"
+              alt="Imagen 5">
+          </div>
+          <!-- Imagen 6 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/f.jpg?alt=media&token=4e3e387c-a30d-4576-b366-f48ae22140b5"
+              alt="Imagen 6">
+          </div>
+          <!-- Doodle -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/doodle.png?alt=media&token=9aa28061-504a-4994-b651-dd9c4389ad6e"
+              alt="Doodle">
+          </div>
+          <!-- Imagen 7 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/g.jpg?alt=media&token=87510a0d-43dc-46ab-9b66-26e8ce7c422e"
+              alt="Imagen 7">
+          </div>
+          <!-- Imagen 8 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/h.jpg?alt=media&token=803dd2da-80dd-499a-8945-cb1c7727cf0e"
+              alt="Imagen 8">
+          </div>
+          <!-- Doodle -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/doodle.png?alt=media&token=9aa28061-504a-4994-b651-dd9c4389ad6e"
+              alt="Doodle">
+          </div>
+          <!-- Imagen 9 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/i.jpg?alt=media&token=5f14050a-3af7-4b54-9c12-179ea50ea4fc"
+              alt="Imagen 9">
+          </div>
+          <!-- Imagen 10 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/j.jpg?alt=media&token=263a5a1f-db22-4039-a2b2-8a3f4ab78043"
+              alt="Imagen 10">
+          </div>
+          <!-- Doodle -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/doodle.png?alt=media&token=9aa28061-504a-4994-b651-dd9c4389ad6e"
+              alt="Doodle">
+          </div>
+          <!-- Imagen 11 -->
+          <div class="carousel-item">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/k.jpg?alt=media&token=a6960f6d-3df4-4bbb-a0cb-4a125c596473"
+              alt="Imagen 11">
+          </div>
         </div>
-        <h4>Abre la puerta a una experiencia de viaje superior.</h4>
+      </div>
+
+      <!-- Logo de la franquicia -->
+      <div class="franchise-logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/visa.png?alt=media&token=cdb2b796-93c5-4c70-a11c-ff3f2916dc73"
+          alt="Franquicia">
+      </div>
+
+      <!-- Contenido flotante sobre el carrusel -->
+      <div class="overlay-content">
+        <h1>Acelera tu viaje</h1>
+        <p>Sin límites, sin esperas</p>
+        <a href="register.html" class="btn-register">Regístrate</a>
       </div>
     </div>
   </main>
-  
+
+  <!-- Footer -->
   <footer>
-    <div class="container-fluid bg-gradient text-light">
-      <div class="row">
-        <div class="col-md-6">
-          <p>© 2023-2024 PayTollCard</p>
-        </div>
-        <div class="col-md-6 text-end">
-        </div>
-      </div>
+    <div class="container">
+      <p class="small">© 2023-2024 PayTollCard</p>
     </div>
   </footer>
 
+  <!-- Modal de Login -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background: rgba(44, 62, 80, 0.85); border: none; border-radius: 10px;">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <p class="text-white-50 small">¿No tienes cuenta? <a href="register.html" class="text-white">Regístrate
+              aquí</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Archivo JavaScript -->
-  <script src="js/index.js"></script>
+  <!-- Enlace a los scripts de Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <!-- Activación del carrusel -->
+  <script>
+    var myCarousel = document.querySelector('#imageCarousel');
+    var carousel = new bootstrap.Carousel(myCarousel, {
+      interval: 3000,
+      ride: 'carousel'
+    });
+  </script>
 </body>
+
 </html>

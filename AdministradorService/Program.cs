@@ -36,10 +36,17 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
+    
+    // **Deshabilitar la redirección HTTPS en producción**
+    // La terminación SSL es manejada por Heroku externamente.
+    // Por lo tanto, es recomendable comentar o eliminar la siguiente línea en producción.
+    // app.UseHttpsRedirection();
 }
-
-// Redireccionar HTTP a HTTPS
-app.UseHttpsRedirection();
+else
+{
+    // **Habilitar la redirección HTTPS en desarrollo**
+    app.UseHttpsRedirection();
+}
 
 // Habilitar CORS
 app.UseCors("AllowAll");
@@ -66,4 +73,6 @@ app.MapControllers();
 // Manejar rutas para el frontend (SPA)
 app.MapFallbackToFile("index.html");
 
-app.Run();
+// **Configurar el puerto para Heroku**
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Run($"http://0.0.0.0:{port}");
