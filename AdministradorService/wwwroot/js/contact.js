@@ -28,8 +28,8 @@ $(document).ready(function () {
         };
   
         try {
-            // Enviar datos a la API
-            const response = await fetch('http://localhost:7209/api/Contactos/enviar', {
+            //http://localhost:7209/api/Contactos/enviar
+            const response = await fetch('https://paytollcard-28537ba559dc.herokuapp.com/api/Contactos/enviar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: 'Recargar Tarjeta',
                 body: '<div id="recargaFormContainer"></div>'
             });
-            import('./recarga.js').then(module => module.default()); // RUTA CORREGIDA
+            import('./recarga.js').then(module => module.default()); 
         });
     }
 
