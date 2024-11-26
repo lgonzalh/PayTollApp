@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <!-- Metadatos -->
   <meta charset="UTF-8">
-  <title>PayTollCard - Servicios</title>
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b" type="image/x-icon">
-  <!-- Enlace a Bootstrap -->
+  <title>© PayTollCard | Servicios</title>
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
+    type="image/x-icon">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Estilos personalizados -->
   <style>
     @font-face {
       font-family: "Antenna";
       src: url("fonts/Ford-Antenna-Regular.woff2") format("woff2"),
-           url("fonts/Ford-Antenna-Regular.woff") format("woff"),
-           url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
+        url("fonts/Ford-Antenna-Regular.woff") format("woff"),
+        url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
       font-weight: normal;
       font-style: normal;
     }
@@ -28,9 +28,8 @@
       flex-direction: column;
     }
 
-    /* Navbar */
     .navbar .nav-link {
-      color: rgba(255,255,255,0.7);
+      color: rgba(255, 255, 255, 0.7);
       transition: color 0.3s ease;
     }
 
@@ -39,7 +38,6 @@
       color: #fff;
     }
 
-    /* Contenido principal */
     main {
       flex: 1;
       padding: 2rem 0;
@@ -108,7 +106,6 @@
       color: #fff;
     }
 
-    /* Modal */
     .modal-content {
       background: rgba(44, 62, 80, 0.95);
       color: #fff;
@@ -121,7 +118,6 @@
       border: none;
     }
 
-    /* Responsividad */
     @media (max-width: 768px) {
       .service-container {
         flex-direction: column;
@@ -139,8 +135,8 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg py-4">
     <div class="container">
       <a class="navbar-brand text-white fs-4" href="#">PayTollCard</a>
@@ -162,39 +158,48 @@
             <a class="nav-link mx-3" href="contact.html">Contáctenos</a>
           </li>
           <li class="nav-item ms-3">
-            <button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Acceder</button>
+            <button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal"
+              data-bs-target="#loginModal">Acceder</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Contenido principal -->
   <main>
     <div class="container">
       <h2 class="text-center mb-5">Nuestros Servicios</h2>
       <div class="service-container">
-        <!-- Servicio 1 -->
+
         <div class="service-pill">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/registrar_vehiculo.webp?alt=media&token=54c302f6-4fab-4ec5-b3e9-624a8ab304d7" alt="Registrar Vehículo">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/registrar_vehiculo.webp?alt=media&token=54c302f6-4fab-4ec5-b3e9-624a8ab304d7"
+            alt="Registrar Vehículo">
           <h5>Registrar Vehículo</h5>
-          <button id="btnRegistrarVehiculo" data-bs-toggle="modal" data-bs-target="#exampleModal">Más Información</button>
+          <button id="btnRegistrarVehiculo" data-bs-toggle="modal" data-bs-target="#exampleModal">Más
+            Información</button>
         </div>
-        <!-- Servicio 2 -->
+
         <div class="service-pill">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/realizar_pagos.webp?alt=media&token=a45c8f94-3aa6-4279-909a-fedd93b13b7d" alt="Recargar Tarjeta">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/realizar_pagos.webp?alt=media&token=a45c8f94-3aa6-4279-909a-fedd93b13b7d"
+            alt="Recargar Tarjeta">
           <h5>Recargar Tarjeta</h5>
           <button id="btnRecargarTarjeta" data-bs-toggle="modal" data-bs-target="#exampleModal">Más Información</button>
         </div>
-        <!-- Servicio 3 -->
+
         <div class="service-pill">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/registro_pagos.webp?alt=media&token=5606ccac-2dc0-41c3-898e-2d77dbe98f6e" alt="Extractos">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/registro_pagos.webp?alt=media&token=5606ccac-2dc0-41c3-898e-2d77dbe98f6e"
+            alt="Extractos">
           <h5>Extractos</h5>
           <button id="btnExtractos" data-bs-toggle="modal" data-bs-target="#exampleModal">Más Información</button>
         </div>
-        <!-- Servicio 4 -->
+
         <div class="service-pill">
-          <img src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/solicitudes.webp?alt=media&token=931c4717-6ff0-4921-b35b-08d845f980a7" alt="Solicitudes">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/solicitudes.webp?alt=media&token=931c4717-6ff0-4921-b35b-08d845f980a7"
+            alt="Solicitudes">
           <h5>Solicitudes</h5>
           <button id="btnSolicitudes" data-bs-toggle="modal" data-bs-target="#exampleModal">Más Información</button>
         </div>
@@ -202,14 +207,12 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <p class="small">© 2023-2024 PayTollCard</p>
     </div>
   </footer>
 
-  <!-- Modal de Información -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -227,7 +230,6 @@
     </div>
   </div>
 
-  <!-- Modal de Login -->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: rgba(44, 62, 80, 0.85); border: none; border-radius: 10px;">
@@ -251,16 +253,15 @@
           </form>
         </div>
         <div class="modal-footer border-0">
-          <p class="text-white-50 small">¿No tienes cuenta? <a href="register.html" class="text-white">Regístrate aquí</a></p>
+          <p class="text-white-50 small">¿No tienes cuenta? <a href="register.html" class="text-white">Regístrate
+              aquí</a></p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Scripts -->
-  <!-- Enlace a los scripts de Bootstrap -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-  <!-- Script personalizado -->
   <script src="js/services.js"></script>
 </body>
+
 </html>

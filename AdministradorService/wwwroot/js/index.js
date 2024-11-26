@@ -1,5 +1,8 @@
 // index.js
 
+var myCarousel = document.querySelector('#imageCarousel');
+var carousel = new bootstrap.Carousel(myCarousel, {interval: 3000, ride: 'carousel'});
+
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('contrasena');
@@ -54,3 +57,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error: Elementos del DOM no encontrados.');
     }
 });
+

@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>PayTollCard - Atajos</title>
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b" type="image/x-icon">
+  <title>© PayTollCard | ••• </title>
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
+    type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Enlace a Bootstrap -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Estilos personalizados -->
   <style>
     @font-face {
       font-family: "Antenna";
       src: url("fonts/Ford-Antenna-Regular.woff2") format("woff2"),
-           url("fonts/Ford-Antenna-Regular.woff") format("woff"),
-           url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
+        url("fonts/Ford-Antenna-Regular.woff") format("woff"),
+        url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
       font-weight: normal;
       font-style: normal;
     }
@@ -126,46 +127,42 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg py-3">
     <div class="container">
       <a class="navbar-brand" href="#">PayTollCard</a>
     </div>
   </nav>
 
-  <!-- Contenido principal -->
   <div class="main-content">
     <div class="input-container">
-      <textarea id="query-input" placeholder="Ingresa tu consulta..."></textarea>
+      <textarea id="query-input" placeholder=""></textarea>
       <button class="btn-execute" id="execute-btn">
-        <i class="fas fa-arrow-right"></i>
+        <i class="fas fa-arrow-right">•••</i>
       </button>
     </div>
     <div class="grid-container" id="result-grid">
-      <!-- Celdas dinámicas -->
-      <div class="pill">Atajo 1</div>
-      <div class="pill">Atajo 2</div>
-      <div class="pill">Atajo 3</div>
-      <!-- Agrega más elementos según sea necesario -->
+      <div class="pill">•••</div>
+      <div class="pill">•••</div>
+      <div class="pill">•••</div>
+      <div class="pill">•••</div>
+      <div class="pill">•••</div>
+      <div class="pill">•••</div>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <p class="text-white-50 mb-0 small">© 2023-2024 PayTollCard</p>
     </div>
   </footer>
 
-  <!-- Enlaces a scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-QdNdaJ9fD9+f+9hc2o9cQDmqw2ONRQ4bhIQmOloetHdRMlw0ajh05Hv4CcGUVQuPuq5ut6Y6PGbdeLtksIe3Mw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+    integrity="sha512-QdNdaJ9fD9+f+9hc2o9cQDmqw2ONRQ4bhIQmOloetHdRMlw0ajh05Hv4CcGUVQuPuq5ut6Y6PGbdeLtksIe3Mw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.getElementById('execute-btn').addEventListener('click', function () {
-      // Lógica para manejar el envío de la consulta
-      console.log("Consulta ejecutada:", document.getElementById('query-input').value);
-    });
-  </script>
+  <script src="js/shortcut.js"></script>
 </body>
+
 </html>

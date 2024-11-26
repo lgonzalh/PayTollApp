@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>PayTollCard - Registro</title>
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b" type="image/x-icon">
-  <!-- Enlace a Bootstrap -->
+  <title>© PayTollCard | Registro</title>
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
+    type="image/x-icon">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Estilos personalizados -->
+
   <style>
     @font-face {
       font-family: "Antenna";
       font-style: normal;
       font-weight: 400;
       src: url("/fonts/Ford-Antenna-Regular.woff2") format("woff2"),
-           url("/fonts/Ford-Antenna-Regular.woff") format("woff"),
-           url("/fonts/Ford-Antenna-Regular.ttf") format("truetype");
+        url("/fonts/Ford-Antenna-Regular.woff") format("woff"),
+        url("/fonts/Ford-Antenna-Regular.ttf") format("truetype");
     }
 
     body {
@@ -28,7 +30,7 @@
     }
 
     .navbar .nav-link {
-      color: rgba(255,255,255,0.7);
+      color: rgba(255, 255, 255, 0.7);
       transition: color 0.3s ease;
     }
 
@@ -95,7 +97,6 @@
       display: none;
     }
 
-    /* Responsividad */
     @media (max-width: 768px) {
       .register-container {
         width: 90%;
@@ -109,8 +110,8 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg py-4">
     <div class="container">
       <a class="navbar-brand text-white fs-4" href="#">PayTollCard</a>
@@ -133,7 +134,6 @@
     </div>
   </nav>
 
-  <!-- Contenido principal -->
   <main>
     <div class="register-container">
       <h5 class="text-center mb-4">Formulario de Registro</h5>
@@ -169,63 +169,14 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <p class="small">© 2023-2024 PayTollCard</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <!-- Enlace a los scripts de Bootstrap -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-  <!-- Validaciones del formulario -->
-  <script>
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      // Validar edad
-      const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
-      const fechaNacimientoValor = fechaNacimientoInput.value;
-
-      if (!fechaNacimientoValor) {
-        document.getElementById('edadError').style.display = 'block';
-        document.getElementById('edadError').textContent = 'Por favor, ingresa tu fecha de nacimiento.';
-        return;
-      }
-
-      const fechaNacimiento = new Date(fechaNacimientoValor);
-      const hoy = new Date();
-      let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-      const mes = hoy.getMonth() - fechaNacimiento.getMonth();
-
-      if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-        edad--;
-      }
-
-      if (edad < 18 || edad > 80) {
-        document.getElementById('edadError').style.display = 'block';
-        document.getElementById('edadError').textContent = 'Debes tener entre 18 y 80 años.';
-        return;
-      } else {
-        document.getElementById('edadError').style.display = 'none';
-      }
-
-      // Validar contraseñas
-      const contrasena = document.getElementById('contrasena').value;
-      const confirmarContrasena = document.getElementById('confirmar_contrasena').value;
-
-      if (contrasena !== confirmarContrasena) {
-        document.getElementById('passwordError').style.display = 'block';
-        return;
-      } else {
-        document.getElementById('passwordError').style.display = 'none';
-      }
-
-      // Aquí puedes agregar el código para enviar el formulario al servidor o realizar otras acciones
-      alert('¡Registro exitoso!');
-      // this.submit(); // Si deseas enviar el formulario al servidor
-    });
-  </script>
+  <script src="js/register.js"></script>
 </body>
+
 </html>
