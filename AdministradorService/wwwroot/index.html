@@ -7,6 +7,7 @@
   <link rel="icon"
     href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
     type="image/x-icon">
+  <script src="auth-handler.js" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -345,33 +346,32 @@
 
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="background: rgba(44, 62, 80, 0.85); border: none; border-radius: 10px;">
-        <div class="modal-header border-0">
-          <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
+        <div class="modal-content" style="background: rgba(44, 62, 80, 0.85); border: none; border-radius: 10px;">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white" id="loginModalLabel">Iniciar Sesión</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+            <form id="loginForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="correo_electronico" class="form-label text-white">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="correo_electronico" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contrasena" class="form-label text-white">Contraseña</label>
+                        <input type="password" class="form-control" id="contrasena" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Inicia Sesión</button>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer border-0">
+                <p class="text-white">¿No tienes cuenta? <a href="register.html" class="text-white">Regístrate aquí</a></p>
             </div>
-            <div class="d-grid">
-              <button type="submit" class="btn btn-login">Iniciar Sesión</button>
-            </div>
-          </form>
         </div>
-        <div class="modal-footer border-0">
-          <p class="text-white-50 small">¿No tienes cuenta? <a href="register.html" class="text-white">Regístrate
-              aquí</a></p>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
