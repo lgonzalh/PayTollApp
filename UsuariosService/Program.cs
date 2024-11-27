@@ -42,12 +42,14 @@ builder.Services.AddSwaggerGen(c =>
 // Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost",
-        builder => builder
-            .WithOrigins("http://127.0.0.1:5500", "http://localhost:5500")
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
+
 
 // Agregar DbContext
 builder.Services.AddDbContext<UsuariosDbContext>(options =>
@@ -72,7 +74,7 @@ else
 }
 
 // Usar CORS
-app.UseCors("AllowLocalhost");
+app.UseCors("AllowAll");
 
 // Configurar middleware
 app.UseHttpsRedirection();

@@ -51,11 +51,21 @@ namespace UsuariosService.Controllers
 
             if (usuario == null)
             {
-                return Unauthorized("Credenciales incorrectas.");
+                return Unauthorized(new { Message = "Credenciales incorrectas." });
             }
 
-            return Ok("Inicio de sesión exitoso.");
+            return Ok(new
+            {
+                Message = "Inicio de sesión exitoso.",
+                Usuario = new
+                {
+                    usuario.Id,
+                    usuario.CorreoElectronico,
+                    usuario.Nombre
+                }
+            });
         }
+
 
         // Método para obtener el perfil de un usuario (sin autorización por ahora)
         [HttpGet("perfil/{cedula}")]
