@@ -1,0 +1,39 @@
+/* Estilos específicos para el modal de Extractos */
+
+/* Ajusta el tamaño de fuente dentro del modal de extractos */
+#extractoModal .modal-content {
+    font-size: 12px; /* Reducir tamaño de fuente solo para este modal */
+  }
+  
+  /* Ajusta la tabla del extracto dentro del modal */
+  #extractoGrid, #summaryGrid {
+    font-size: 12px; /* Tamaño de fuente reducido para tablas */
+    width: 100%;
+  }
+  
+  /* Espaciado entre celdas para una mejor legibilidad */
+  #extractoGrid th, #extractoGrid td,
+  #summaryGrid th, #summaryGrid td {
+    padding: 8px;
+    text-align: center; /* Centrado de texto */
+  }
+  
+  /* Botones alineados horizontalmente en el modal */
+  #extractoModal .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  /* Ajustes específicos para el botón "Imprimir" */
+  #extractoModal #printExtract {
+    background-color: #28a745; /* Verde claro */
+    color: white;
+    border: none;
+  }
+  
+  #extractoModal #printExtract:hover {
+    background-color: #218838; /* Verde oscuro al pasar el cursor */
+  }
+  
+  
