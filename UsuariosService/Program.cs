@@ -64,14 +64,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Usuarios API v1");
-        c.RoutePrefix = string.Empty; // Esto hace que Swagger UI se sirva en la raíz
+        c.RoutePrefix = string.Empty; // Para servir Swagger en la raíz
     });
+
+    app.UseHttpsRedirection(); // Solo redirige en local si tienes HTTPS configurado
 }
 else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
 
 // Usar CORS
 app.UseCors("AllowAll");
