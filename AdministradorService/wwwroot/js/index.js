@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const correoElectronico = correoInput.value;
             const contrasena = passwordInput.value;
 
-            //http://localhost:5085/api/Usuarios/login;
-            const endpoint = 'https://paytollcard-28537ba559dc.herokuapp.com/apiUsuarios/login';
+            // Ruta correcta del endpoint
+            const endpoint = 'https://paytollcard-28537ba559dc.herokuapp.com/api/Usuarios/login';
 
             const data = {
                 CorreoElectronico: correoElectronico,
@@ -41,10 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         throw new Error(errorMessage || 'Credenciales incorrectas');
                     });
                 }
-                return response.text();
+                return response.json();
             })
             .then(result => {
-                // Puedes ajustar esta parte si el backend devuelve un token u otros datos
+                console.log('Inicio de sesión exitoso:', result);
                 alert('Inicio de sesión exitoso.');
                 window.location.href = 'services.html';
             })
@@ -57,4 +57,3 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error: Elementos del DOM no encontrados.');
     }
 });
-

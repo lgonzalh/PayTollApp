@@ -16,24 +16,32 @@ class AuthHandler {
 
     async handleLogin(event) {
         event.preventDefault();
-        
+
         const email = document.getElementById('correo_electronico').value;
         const password = document.getElementById('contrasena').value;
 
+        // Definir el endpoint correctamente
+        const endpoint = `${this.API_BASE_URL}/api/Usuarios/login`;
+
+        // Preparar los datos a enviar
+        const data = {
+            CorreoElectronico: email,
+            Contrasena: password
+        };
+
         try {
-            // Agregar logs para debugging
+            // Logs para debugging
+            console.log('Enviando solicitud a:', endpoint);
+            console.log('Datos enviados:', data);
             console.log('Intentando login con:', { email });
 
-            const response = await fetch(`${this.API_BASE_URL}/apiUsuarios/login`, {
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    correoElectronico: email,
-                    contrasena: password
-                })
+                body: JSON.stringify(data)
             });
 
             console.log('Respuesta del servidor:', response.status);
@@ -44,13 +52,15 @@ class AuthHandler {
                 throw new Error(errorText || 'Error en el inicio de sesión');
             }
 
-            const data = await response.json();
-            console.log('Login exitoso:', data);
+            const responseData = await response.json();
+            console.log('Login exitoso:', responseData);
 
-            if (data.token) {
-                localStorage.setItem('authToken', data.token);
+            // Si el backend devuelve un token, lo almacenamos
+            if (responseData.token) {
+                localStorage.setItem('authToken', responseData.token);
             }
 
+            // Redirigir al usuario a la página de servicios
             window.location.href = 'services.html';
 
         } catch (error) {

@@ -1,3 +1,4 @@
+// Program.cs
 using Microsoft.EntityFrameworkCore;
 using UsuariosService.Data;
 using Microsoft.OpenApi.Models;
@@ -50,7 +51,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
 // Agregar DbContext
 builder.Services.AddDbContext<UsuariosDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UsuariosDB")));
@@ -75,13 +75,11 @@ else
     app.UseHsts();
 }
 
+app.UseRouting();
 
-// Usar CORS
+// Mover app.UseCors aquí
 app.UseCors("AllowAll");
 
-// Configurar middleware
-app.UseHttpsRedirection();
-app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
 app.UseStaticFiles();
