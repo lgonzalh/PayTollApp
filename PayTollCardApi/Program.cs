@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using PayTollCardApi.Data;
 using PayTollCardApi.DataAccess;
 using PayTollCardApi.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using PayTollCardApi.Data;
 using PayTollCardApi.SharedServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -71,12 +76,23 @@ else
     app.UseHsts();
 }
 
-// Configurar el puerto desde Heroku
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
+// Configurar Forwarded Headers para Heroku
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
-app.UseHttpsRedirection();
+// Desactivar Redirección HTTPS en Heroku
+var isHeroku = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PORT"));
+if (!isHeroku)
+{
+    app.UseHttpsRedirection();
+}
+
+// Servir archivos estáticos y archivos por defecto
+app.UseDefaultFiles();
 app.UseStaticFiles();
+
 app.UseRouting();
 app.UseCors("AllowAll");
 
