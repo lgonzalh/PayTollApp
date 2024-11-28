@@ -26,9 +26,24 @@ namespace PayTollCardApi.Controllers
         {
             try
             {
+                if (usuario == null)
+                {
+                    return BadRequest(new { Message = "Datos de usuario inválidos." });
+                }
+
+                if (string.IsNullOrWhiteSpace(usuario.Cedula))
+                {
+                    return BadRequest(new { Message = "La cédula es requerida." });
+                }
+
                 if (_context.Usuarios.Any(u => u.CorreoElectronico == usuario.CorreoElectronico))
                 {
                     return BadRequest(new { Message = "El correo electrónico ya está registrado." });
+                }
+
+                if (_context.Usuarios.Any(u => u.Cedula == usuario.Cedula))
+                {
+                    return BadRequest(new { Message = "La cédula ya está registrada." });
                 }
 
                 usuario.FechaCreacion = DateTime.UtcNow;
@@ -36,6 +51,11 @@ namespace PayTollCardApi.Controllers
                 await _context.SaveChangesAsync();
 
                 return Ok(new { Message = "Usuario registrado exitosamente." });
+            }
+            catch (DbUpdateException dbEx)
+            {
+                // Manejar excepciones específicas de la base de datos
+                return StatusCode(500, new { Message = $"Error al registrar el usuario: {dbEx.InnerException?.Message ?? dbEx.Message}" });
             }
             catch (Exception ex)
             {
@@ -77,6 +97,11 @@ namespace PayTollCardApi.Controllers
         [HttpGet("perfil/{cedula}")]
         public async Task<IActionResult> ObtenerPerfil(string cedula)
         {
+            if (string.IsNullOrWhiteSpace(cedula))
+            {
+                return BadRequest(new { Message = "Cédula es requerida." });
+            }
+
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == cedula);
             if (usuario == null)
             {
@@ -91,6 +116,11 @@ namespace PayTollCardApi.Controllers
         [HttpGet("categoria/{cedula}")]
         public async Task<IActionResult> ObtenerCategoriaPorCedula(string cedula)
         {
+            if (string.IsNullOrWhiteSpace(cedula))
+            {
+                return BadRequest(new { Message = "Cédula es requerida." });
+            }
+
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == cedula);
             if (usuario == null)
             {

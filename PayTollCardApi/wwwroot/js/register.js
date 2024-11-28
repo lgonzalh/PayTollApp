@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Validación de Fecha de Nacimiento
     const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
-    if (fechaNacimientoInput) {
-        const edadLabel = document.getElementById('edad_label');
-        const today = new Date();
+    const edadError = document.getElementById('edadError');
+    const today = new Date();
 
+    if (fechaNacimientoInput) {
         const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
         const minDate = new Date(today.getFullYear() - 80, today.getMonth(), today.getDate());
 
@@ -20,72 +20,94 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
                     age--;
                 }
-                edadLabel.textContent = age < 18 
-                    ? `Debe ser mayor de 18 años. Su edad es ${age} años.` 
-                    : age > 80 
-                        ? `Debe ser menor o igual a 80 años. Su edad es ${age} años.` 
-                        : `Su edad es ${age} años`;
+                if (age < 18 || age > 80) {
+                    edadError.textContent = `Debes tener entre 18 y 80 años. Tu edad es ${age} años.`;
+                    edadError.style.display = 'block';
+                } else {
+                    edadError.textContent = '';
+                    edadError.style.display = 'none';
+                }
             } else {
-                edadLabel.textContent = '';
+                edadError.textContent = '';
+                edadError.style.display = 'none';
             }
         });
     }
 
-    // Mostrar/Ocultar contraseña y validación de coincidencia
-    const togglePassword1 = document.getElementById('togglePassword1');
-    const togglePassword2 = document.getElementById('togglePassword2');
+    // Validación de coincidencia de contraseñas
     const passwordInput1 = document.getElementById('contrasena');
     const passwordInput2 = document.getElementById('confirmar_contrasena');
-    const passwordError = document.getElementById('password_error');
+    const passwordError = document.getElementById('passwordError');
 
-    if (togglePassword1 && togglePassword2) {
-        togglePassword1.addEventListener('click', function () {
-            const type = passwordInput1.type === 'password' ? 'text' : 'password';
-            passwordInput1.type = type;
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-eye-slash');
-            icon.classList.toggle('fa-eye');
-        });
+    const validatePasswords = () => {
+        if (passwordInput1.value !== passwordInput2.value) {
+            passwordError.textContent = 'Las contraseñas no coinciden.';
+            passwordError.style.display = 'block';
+        } else {
+            passwordError.textContent = '';
+            passwordError.style.display = 'none';
+        }
+    };
 
-        togglePassword2.addEventListener('click', function () {
-            const type = passwordInput2.type === 'password' ? 'text' : 'password';
-            passwordInput2.type = type;
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-eye-slash');
-            icon.classList.toggle('fa-eye');
-        });
-
-        const validatePasswords = () => {
-            passwordError.textContent = passwordInput1.value !== passwordInput2.value 
-                ? '¡Las contraseñas no coinciden!' 
-                : '';
-        };
-
+    if (passwordInput1 && passwordInput2) {
         passwordInput1.addEventListener('input', validatePasswords);
         passwordInput2.addEventListener('input', validatePasswords);
     }
 
     // Manejo del envío del formulario de registro
     const registerForm = document.getElementById('registerForm');
-    const registerMessage = document.createElement('div');
-    registerMessage.id = 'registerMessage';
-    document.body.appendChild(registerMessage);
+    const registerMessage = document.getElementById('registerMessage');
+    const numeroIdentificacion = document.getElementById('numero_identificacion');
+    const correoElectronicoInput = document.getElementById('correo_electronico');
+    const correoError = document.getElementById('correoError');
+    const cedulaError = document.getElementById('cedulaError');
 
     if (registerForm) {
         registerForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
+            // Limpiar mensajes anteriores
+            registerMessage.innerHTML = '';
+            correoError.style.display = 'none';
+            cedulaError.style.display = 'none';
+
+            const cedula = numeroIdentificacion.value.trim();
+            const nombres = document.getElementById('nombres').value.trim();
+            const apellidos = document.getElementById('apellidos').value.trim();
+            const nombreCompleto = `${nombres} ${apellidos}`;
+            const correoElectronico = correoElectronicoInput.value.trim();
+            const contrasena = document.getElementById('contrasena').value.trim();
+            const fechaCreacion = new Date().toISOString();
+
+            // Validaciones básicas
+            if (!cedula) {
+                cedulaError.textContent = 'La cédula es requerida.';
+                cedulaError.style.display = 'block';
+                return;
+            }
+
+            if (!correoElectronico) {
+                correoError.textContent = 'El correo electrónico es requerido.';
+                correoError.style.display = 'block';
+                return;
+            }
+
+            if (passwordInput1.value !== passwordInput2.value) {
+                passwordError.textContent = 'Las contraseñas no coinciden.';
+                passwordError.style.display = 'block';
+                return;
+            }
+
             const data = {
-                cedula: document.getElementById('numero_identificacion')?.value.trim(),
-                nombre: document.getElementById('nombres')?.value.trim() + " " + document.getElementById('apellidos')?.value.trim(),
-                correoElectronico: document.getElementById('correo_electronico')?.value.trim(),
-                contrasena: document.getElementById('contrasena')?.value.trim(),
-                fechaCreacion: new Date().toISOString()
+                cedula,
+                nombre: nombreCompleto,
+                correoElectronico,
+                contrasena,
+                fechaCreacion
             };
 
             console.log('Datos enviados al backend:', data);
 
-            //http://localhost:5085/api/Usuarios/register
             fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Usuarios/register', {
                 method: 'POST',
                 headers: {
@@ -95,20 +117,25 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => {
                 console.log('Estado de respuesta:', response.status);
+                if (response.status === 400) {
+                    return response.json().then((error) => {
+                        throw new Error(error.Message || 'Error al registrar el usuario.');
+                    });
+                }
                 if (!response.ok) {
                     return response.text().then((error) => {
                         throw new Error(error || 'Error al registrar el usuario.');
                     });
                 }
-                return response.text();
+                return response.json();
             })
             .then(result => {
-                alert('El usuario se ha registrado correctamente.');
-                window.location.href = 'index.html';
+                registerMessage.innerHTML = '<div class="alert alert-success" role="alert">El usuario se ha registrado correctamente.</div>';
+                registerForm.reset();
             })
             .catch(error => {
                 console.error('Error:', error);
-                registerMessage.innerHTML = '<div class="alert alert-danger" role="alert">' + error.message + '</div>';
+                registerMessage.innerHTML = `<div class="alert alert-danger" role="alert">${error.message}</div>`;
             });
         });
     } else {
