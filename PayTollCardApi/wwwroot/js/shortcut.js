@@ -18,13 +18,14 @@ document.getElementById("execute-btn").addEventListener("click", async () => {
         body: JSON.stringify({ query: queryInput }),
       });
   
+      const responseData = await response.json();
+  
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ Message: "Error desconocido en el servidor." }));
-        alert(`Error: ${errorData.Message}`);
+        alert(`Error: ${responseData.Message}`);
         return;
       }
   
-      const data = await response.json();
+      const data = responseData;
   
       if (data.length > 0) {
         const headers = Object.keys(data[0]);

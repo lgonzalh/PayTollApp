@@ -38,17 +38,20 @@ builder.Services.AddDbContext<VehiculosDbContext>(options =>
 builder.Services.AddScoped<TarjetaService>();
 builder.Services.AddScoped<IAdministradorService, AdministradorService>();
 
+// **Agregar esta línea para registrar SqlService**
+builder.Services.AddSingleton<SqlService>(new SqlService(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Añadir Controllers
 builder.Services.AddControllers();
 
 // Configuración de CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins", policy =>
+    options.AddPolicy("AllowHerokuApp", policy =>
     {
         policy.WithOrigins("https://paytollcard-2b6b0c89816c.herokuapp.com")
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
@@ -97,8 +100,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Aplicar CORS antes de Authorization y MapControllers
-app.UseCors("AllowSpecificOrigins");
+// Aplicar CORS
+app.UseCors("AllowHerokuApp");
 
 // Opcional: Autenticación y Autorización
 // app.UseAuthentication();

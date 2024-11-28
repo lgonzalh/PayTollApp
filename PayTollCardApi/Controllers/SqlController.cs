@@ -57,6 +57,5 @@ namespace PayTollCardApi.Controllers
                 return StatusCode(500, new { Message = $"Ocurrió un error inesperado: {ex.Message}" });
             }
         }
-
     }
 }
