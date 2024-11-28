@@ -1,7 +1,8 @@
-// auth-handler.js 
+// auth-handler.js
 class AuthHandler {
     constructor() {
-        this.API_BASE_URL = 'https://paytollcard-28537ba559dc.herokuapp.com';
+        // Usar el mismo dominio del frontend
+        this.API_BASE_URL = 'https://paytollcard-2b6b0c89816c.herokuapp.com';
         this.setupEventListeners();
     }
 
@@ -37,7 +38,6 @@ class AuthHandler {
 
             const response = await fetch(endpoint, {
                 method: 'POST',
-                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'

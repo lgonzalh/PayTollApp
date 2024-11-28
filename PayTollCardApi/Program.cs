@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.HttpOverrides;
 using PayTollCardApi.Data;
 using PayTollCardApi.DataAccess;
 using PayTollCardApi.Services;
 using PayTollCardApi.SharedServices;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,10 +44,12 @@ builder.Services.AddControllers();
 // Configuración de CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        policy => policy.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader());
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins("https://paytollcard-2b6b0c89816c.herokuapp.com")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
 });
 
 // Configuración de Swagger
@@ -95,8 +97,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Aplicar CORS
-app.UseCors("AllowAll");
+// Aplicar CORS antes de Authorization y MapControllers
+app.UseCors("AllowSpecificOrigins");
 
 // Opcional: Autenticación y Autorización
 // app.UseAuthentication();
