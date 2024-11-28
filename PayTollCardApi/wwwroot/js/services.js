@@ -22,6 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
         new bootstrap.Modal(document.getElementById(modalId)).show();
     }
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const userGreetingElement = document.getElementById("userGreeting");
+      
+        const user = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (user && user.nombre) {
+          userGreetingElement.textContent = `¡Hola de nuevo ${user.nombre}!`;
+        } else {
+          userGreetingElement.textContent = "¡Bienvenido!";
+        }
+      });
+      
+
     const btnRegistrarVehiculo = document.getElementById('btnRegistrarVehiculo');
     const btnRecargarTarjeta = document.getElementById('btnRecargarTarjeta');
     const btnExtractos = document.getElementById('btnExtractos');

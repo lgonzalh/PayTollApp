@@ -11,9 +11,9 @@
   <style>
     @font-face {
       font-family: "Antenna";
-      src: url("fonts/Ford-Antenna-Regular.woff2") format("woff2"),
-        url("fonts/Ford-Antenna-Regular.woff") format("woff"),
-        url("fonts/Ford-Antenna-Regular.ttf") format("truetype");
+      src: url("fonts/Ford Antenna Regular.woff2") format("woff2"),
+        url("fonts/Ford Antenna Regular.woff") format("woff"),
+        url("fonts/Ford Antenna Regular.ttf") format("truetype");
       font-weight: normal;
       font-style: normal;
     }
@@ -139,7 +139,10 @@
 <body>
   <nav class="navbar navbar-expand-lg py-4">
     <div class="container">
-      <a class="navbar-brand text-white fs-4" href="index.html">PayTollCard</a>
+      <a class="navbar-brand text-white fs-4" href="index.html">
+        PayTollCard
+        <span id="userGreeting" style="font-weight: 400; margin-left: 10px;"></span>
+      </a>
       <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon text-white-50"></span>
       </button>
@@ -213,7 +216,7 @@
     </div>
   </footer>
 
-  
+
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: rgba(44, 62, 80, 0.85); border: none; border-radius: 10px;">
