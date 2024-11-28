@@ -3,31 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsuariosService", "UsuariosService\UsuariosService.csproj", "{61737CCF-39B8-42E1-BD49-B81B2D0DF299}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehiculosService", "VehiculosService\VehiculosService.csproj", "{458B20F5-D537-474C-9C79-8F7009304D11}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarjetasService", "TarjetasService\TarjetasService.csproj", "{9A7B83B1-FFB6-4446-B104-A321854F62A0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTollApp.Models", "PayTollApp.Models\PayTollApp.Models.csproj", "{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTollApp.SharedServices", "PayTollApp.SharedServices\PayTollApp.SharedServices.csproj", "{532323AD-848B-4B0E-943C-9CCCD36A3ECF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTollApp.DataAccess", "PayTollApp.DataAccess\PayTollApp.DataAccess.csproj", "{80823382-4E97-451A-B43C-D926D653D10F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecargasService", "RecargasService\RecargasService.csproj", "{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PagosService", "PagosService\PagosService.csproj", "{107E20DD-EE61-4BF3-B762-992E91622086}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractoService", "ExtractoService\ExtractoService.csproj", "{BCBFF5FA-5110-40DA-BCC6-E064E92DA5AC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolicitudesService", "UsuariosSolicitudes\SolicitudesService.csproj", "{2C00F80C-3947-49D4-ADD0-E55625E7920D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactosService", "ContactosService\ContactosService.csproj", "{3C32B7D7-F77D-45A6-967A-ED083DC894F5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdministradorService", "AdministradorService\AdministradorService.csproj", "{47759698-EA7B-4A93-8589-575D1949A3F7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortcutService", "ShortcutService\ShortcutService.csproj", "{4ED39EEE-FAE1-4CB7-B927-ED2541A5606F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayTollCardApi", "PayTollCardApi\PayTollCardApi.csproj", "{D37923DB-83DF-4F3A-A062-EC40EBD5B82C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,58 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61737CCF-39B8-42E1-BD49-B81B2D0DF299}.Release|Any CPU.Build.0 = Release|Any CPU
-		{458B20F5-D537-474C-9C79-8F7009304D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{458B20F5-D537-474C-9C79-8F7009304D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{458B20F5-D537-474C-9C79-8F7009304D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{458B20F5-D537-474C-9C79-8F7009304D11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A7B83B1-FFB6-4446-B104-A321854F62A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCBC4950-2E9E-482E-BB38-B16E82CB28C8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{532323AD-848B-4B0E-943C-9CCCD36A3ECF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80823382-4E97-451A-B43C-D926D653D10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80823382-4E97-451A-B43C-D926D653D10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80823382-4E97-451A-B43C-D926D653D10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80823382-4E97-451A-B43C-D926D653D10F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A4B5143-B15C-402E-9DC8-EF70FB6DF71B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{107E20DD-EE61-4BF3-B762-992E91622086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{107E20DD-EE61-4BF3-B762-992E91622086}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{107E20DD-EE61-4BF3-B762-992E91622086}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{107E20DD-EE61-4BF3-B762-992E91622086}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCBFF5FA-5110-40DA-BCC6-E064E92DA5AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCBFF5FA-5110-40DA-BCC6-E064E92DA5AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCBFF5FA-5110-40DA-BCC6-E064E92DA5AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCBFF5FA-5110-40DA-BCC6-E064E92DA5AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C00F80C-3947-49D4-ADD0-E55625E7920D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C32B7D7-F77D-45A6-967A-ED083DC894F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47759698-EA7B-4A93-8589-575D1949A3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47759698-EA7B-4A93-8589-575D1949A3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47759698-EA7B-4A93-8589-575D1949A3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47759698-EA7B-4A93-8589-575D1949A3F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4ED39EEE-FAE1-4CB7-B927-ED2541A5606F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4ED39EEE-FAE1-4CB7-B927-ED2541A5606F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4ED39EEE-FAE1-4CB7-B927-ED2541A5606F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4ED39EEE-FAE1-4CB7-B927-ED2541A5606F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D37923DB-83DF-4F3A-A062-EC40EBD5B82C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37923DB-83DF-4F3A-A062-EC40EBD5B82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37923DB-83DF-4F3A-A062-EC40EBD5B82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37923DB-83DF-4F3A-A062-EC40EBD5B82C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
