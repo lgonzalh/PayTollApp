@@ -94,6 +94,8 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Aplicar CORS
 app.UseCors("AllowAll");
 
 // Opcional: Autenticación y Autorización

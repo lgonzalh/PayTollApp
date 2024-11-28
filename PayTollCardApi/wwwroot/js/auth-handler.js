@@ -1,4 +1,4 @@
-// auth-handler.js
+// auth-handler.js 
 class AuthHandler {
     constructor() {
         this.API_BASE_URL = 'https://paytollcard-28537ba559dc.herokuapp.com';
@@ -33,10 +33,11 @@ class AuthHandler {
             // Logs para debugging
             console.log('Enviando solicitud a:', endpoint);
             console.log('Datos enviados:', data);
-            console.log('Intentando login con:', { email });
+            console.log('Intentando login con:', { CorreoElectronico: email });
 
             const response = await fetch(endpoint, {
                 method: 'POST',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -47,9 +48,9 @@ class AuthHandler {
             console.log('Respuesta del servidor:', response.status);
 
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Error response:', errorText);
-                throw new Error(errorText || 'Error en el inicio de sesión');
+                const errorData = await response.json();
+                console.error('Error response:', errorData);
+                throw new Error(errorData.Message || 'Error en el inicio de sesión');
             }
 
             const responseData = await response.json();
