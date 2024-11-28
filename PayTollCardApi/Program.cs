@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using PayTollCardApi.DataAccess;
-using PayTollCardApi.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using PayTollCardApi.Data;
+using PayTollCardApi.DataAccess;
+using PayTollCardApi.Services;
 using PayTollCardApi.SharedServices;
 
 var builder = WebApplication.CreateBuilder(args);
