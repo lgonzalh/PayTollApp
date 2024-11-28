@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using System.Data;
-using PayTollCardApi.Services;
 using PayTollCardApi.Models;
+using PayTollCardApi.Services;
+using System.Data;
 
 namespace PayTollCardApi.Controllers
 {
@@ -25,7 +25,6 @@ namespace PayTollCardApi.Controllers
                 return BadRequest("La consulta SQL no puede estar vacía.");
             }
 
-            // Validación básica para prevenir consultas dañinas
             var lowerQuery = model.Query.ToLower();
             if (lowerQuery.Contains("delete") || lowerQuery.Contains("drop") || lowerQuery.Contains("truncate") || lowerQuery.Contains("update") || lowerQuery.Contains("insert"))
             {
@@ -36,7 +35,6 @@ namespace PayTollCardApi.Controllers
             {
                 var dataTable = _sqlService.ExecuteQuery(model.Query);
 
-                // Convertir DataTable a Lista de Diccionarios
                 var result = new List<Dictionary<string, object>>();
                 foreach (DataRow row in dataTable.Rows)
                 {

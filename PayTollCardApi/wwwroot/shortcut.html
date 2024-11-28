@@ -3,24 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>© PayTollCard | ••• </title>
+  <title>© PayTollCard | Atajo SQL</title>
   <link rel="icon"
     href="https://firebasestorage.googleapis.com/v0/b/paytollcard.appspot.com/o/favicon.ico?alt=media&token=f76b334e-ea86-432f-bc3c-ae16dfb84d0b"
     type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: "Antenna";
-      src: url("./fonts/Ford Antenna Regular.woff2") format("woff2"),
-        url("./fonts/Ford Antenna Regular.woff") format("woff"),
-        url("./fonts/Ford Antenna Regular.ttf") format("truetype");
-      font-weight: normal;
-      font-style: normal;
-    }
-
     body {
-      font-family: 'Antenna', sans-serif;
+      font-family: 'Arial', sans-serif;
       background: linear-gradient(150deg, #01023f, #221d4d, #01023f);
       color: #fff;
       min-height: 100vh;
@@ -28,140 +19,47 @@
       flex-direction: column;
     }
 
-    .navbar {
-      background: transparent;
-    }
-
-    .navbar .navbar-brand {
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .main-content {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .input-container {
-      position: relative;
-      width: 90%;
-      max-width: 800px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      border-radius: 25px;
-      padding: 0.5rem 3rem 0.5rem 1rem;
-      color: #fff;
-      font-family: 'Antenna', sans-serif;
-      font-size: 1rem;
-      resize: none;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    textarea:focus {
-      outline: none;
-      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .btn-execute {
-      position: absolute;
-      top: 50%;
-      right: 1rem;
-      transform: translateY(-50%);
-      background: linear-gradient(90deg, #1a1a1a, #2c3e50);
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-execute i {
-      color: #fff;
-      font-size: 1rem;
-    }
-
-    .grid-container {
-      width: 90%;
-      max-width: 800px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 1rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    .container {
       margin-top: 2rem;
     }
 
-    .grid-container .pill {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 25px;
-      padding: 0.5rem 1rem;
-      text-align: center;
-      color: #fff;
-      font-size: 0.9rem;
-      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+    .grid-container {
+      margin-top: 2rem;
+      overflow-x: auto;
     }
 
-    footer {
-      padding: 1rem 0;
-      background: transparent;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    footer p {
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 8px;
       text-align: left;
-      margin-left: 1rem;
+      color: #fff;
+    }
+
+    table th {
+      background-color: #333;
     }
   </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg py-3">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">PayTollCard</a>
-    </div>
-  </nav>
+  <div class="container">
+    <h1>Ejecutar Scripts SQL</h1>
+    <textarea id="query-input" rows="4" class="form-control" placeholder="Escriba su consulta SQL aquí"></textarea>
+    <button id="execute-btn" class="btn btn-primary mt-2">Ejecutar</button>
 
-  <div class="main-content">
-    <div class="input-container">
-      <textarea id="query-input" placeholder=""></textarea>
-      <button class="btn-execute" id="execute-btn">
-        <i class="fas fa-arrow-right">➢</i>
-      </button>
-    </div>
-    <div class="grid-container" id="result-grid">
-      <div class="pill">•••</div>
-      <div class="pill">•••</div>
-      <div class="pill">•••</div>
-      <div class="pill">•••</div>
-      <div class="pill">•••</div>
-      <div class="pill">•••</div>
+    <div class="grid-container">
+      <table id="result-table" class="table table-dark">
+        <thead id="table-head"></thead>
+        <tbody id="table-body"></tbody>
+      </table>
     </div>
   </div>
 
-  <footer>
-    <div class="container">
-      <p class="text-white-50 mb-0 small">© 2023-2024 PayTollCard</p>
-    </div>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
-    integrity="sha512-QdNdaJ9fD9+f+9hc2o9cQDmqw2ONRQ4bhIQmOloetHdRMlw0ajh05Hv4CcGUVQuPuq5ut6Y6PGbdeLtksIe3Mw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="js/shortcut.js"></script>
 </body>
 
