@@ -22,13 +22,13 @@ namespace PayTollCardApi.Controllers
         {
             if (string.IsNullOrWhiteSpace(model.Query))
             {
-                return BadRequest("La consulta SQL no puede estar vacía.");
+                return BadRequest(new { Message = "La consulta SQL no puede estar vacía." });
             }
 
             var lowerQuery = model.Query.ToLower();
             if (lowerQuery.Contains("delete") || lowerQuery.Contains("drop") || lowerQuery.Contains("truncate") || lowerQuery.Contains("update") || lowerQuery.Contains("insert"))
             {
-                return BadRequest("Operaciones de modificación no permitidas.");
+                return BadRequest(new { Message = "Operaciones de modificación no permitidas." });
             }
 
             try
@@ -50,8 +50,13 @@ namespace PayTollCardApi.Controllers
             }
             catch (SqlException ex)
             {
-                return BadRequest($"Error al ejecutar la consulta SQL: {ex.Message}");
+                return StatusCode(500, new { Message = $"Error al ejecutar la consulta SQL: {ex.Message}" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"Ocurrió un error inesperado: {ex.Message}" });
             }
         }
+
     }
 }

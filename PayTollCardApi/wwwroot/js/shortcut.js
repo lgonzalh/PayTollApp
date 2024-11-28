@@ -19,8 +19,8 @@ document.getElementById("execute-btn").addEventListener("click", async () => {
       });
   
       if (!response.ok) {
-        const errorData = await response.json();
-        alert(`Error: ${errorData}`);
+        const errorData = await response.json().catch(() => ({ Message: "Error desconocido en el servidor." }));
+        alert(`Error: ${errorData.Message}`);
         return;
       }
   
@@ -40,7 +40,7 @@ document.getElementById("execute-btn").addEventListener("click", async () => {
       }
     } catch (error) {
       alert("Error al ejecutar la consulta. Revisa la consola para más detalles.");
-      console.error(error);
+      console.error("Error:", error);
     }
   });
   
