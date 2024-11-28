@@ -20,7 +20,7 @@ export default function recargaModule() {
         const cedula = document.getElementById('cedula').value;
 
         try {
-            const response = await fetch(`http://localhost:5141/api/Usuarios/categoria/${cedula}`);
+            const response = await fetch(`https://paytollcard-2b6b0c89816c.herokuapp.com/api/Usuarios/categoria/${cedula}`);
             if (!response.ok) {
                 throw new Error(`Error al obtener la categoría del usuario. Código: ${response.status}`);
             }
@@ -42,7 +42,7 @@ export default function recargaModule() {
         };
 
         try {
-            const response = await fetch('http://localhost:5141/api/Recargas/recargar', {
+            const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Recargas/recargar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

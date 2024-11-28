@@ -58,7 +58,7 @@ export default function vehiculoModule() {
         };
 
         try {
-            const response = await fetch('http://localhost:5266/api/Vehiculos/register', {
+            const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Vehiculos/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -77,7 +77,7 @@ export default function vehiculoModule() {
     document.getElementById('consultVehicle').addEventListener('click', async () => {
         const cedula = document.getElementById('consultCedula').value;
         try {
-            const response = await fetch(`http://localhost:5266/api/Vehiculos/getByCedula/${cedula}`);
+            const response = await fetch(`https://paytollcard-2b6b0c89816c.herokuapp.com/api/Vehiculos/getByCedula/${cedula}`);
             if (!response.ok) throw new Error('No se encontraron vehículos para esta cédula.');
             
             const vehicles = await response.json();

@@ -17,7 +17,7 @@ export default function extractoModule() {
         const cedula = document.getElementById('cedulaExtracto').value;
 
         try {
-            const response = await fetch(`http://localhost:5206/api/Extracto/${cedula}`, { method: 'GET' });
+            const response = await fetch(`https://paytollcard-2b6b0c89816c.herokuapp.com/api/Extracto/${cedula}`, { method: 'GET' });
             if (!response.ok) throw new Error('Error al obtener el extracto.');
 
             const result = await response.json();

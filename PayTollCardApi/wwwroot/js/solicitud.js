@@ -24,7 +24,7 @@ export default function solicitudModule() {
         };
 
         try {
-            const response = await fetch('http://localhost:5005/api/Solicitudes/crear', {
+            const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Solicitudes/crear', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
