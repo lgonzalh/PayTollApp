@@ -1,13 +1,21 @@
 export default function solicitudModule() {
-    document.getElementById('solicitudFormContainer').innerHTML = `
+    const solicitudFormContainer = document.getElementById('solicitudFormContainer');
+
+    if (!solicitudFormContainer) {
+        console.error('No se encontró el contenedor del formulario de solicitud.');
+        return;
+    }
+
+    solicitudFormContainer.innerHTML = `
         <form id="solicitudForm">
             <div class="mb-3">
-                <label for="cedulaSolicitud" class="form-label">Cédula</label>
-                <input type="text" class="form-control" id="cedulaSolicitud" required>
-            </div>
-            <div class="mb-3">
                 <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
-                <input type="text" class="form-control" id="tipoSolicitud" required>
+                <select class="form-select" id="tipoSolicitud" required>
+                    <option value="">Seleccione</option>
+                    <option value="Reclamo">Reclamo</option>
+                    <option value="Petición">Petición</option>
+                    <option value="Queja">Queja</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="descripcionSolicitud" class="form-label">Descripción</label>
@@ -16,29 +24,39 @@ export default function solicitudModule() {
         </form>
     `;
 
-    document.getElementById('solicitudModalSubmit').addEventListener('click', async () => {
-        const data = {
-            cedula: document.getElementById('cedulaSolicitud').value,
-            tipoSolicitud: document.getElementById('tipoSolicitud').value,
-            descripcion: document.getElementById('descripcionSolicitud').value
-        };
+    const submitSolicitud = document.getElementById('submitSolicitud');
+    const solicitudForm = document.getElementById('solicitudForm');
 
-        try {
-            const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Solicitudes/crear', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
+    if (submitSolicitud && solicitudForm) {
+        submitSolicitud.addEventListener('click', async () => {
+            const tipoSolicitud = document.getElementById('tipoSolicitud').value;
+            const descripcionSolicitud = document.getElementById('descripcionSolicitud').value;
 
-            if (!response.ok) throw new Error('Error al enviar la solicitud.');
+            // Lógica para enviar los datos al servidor
+            try {
+                const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Solicitudes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tipoSolicitud,
+                        descripcionSolicitud
+                    })
+                });
 
-            alert('La solicitud se ha enviado correctamente.');
-            window.location.href = 'index.html';
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Hubo un problema al enviar la solicitud.');
-        }
-    });
+                if (response.ok) {
+                    alert('Solicitud enviada exitosamente.');
+                    // Cerrar el modal si es necesario
+                } else {
+                    alert('Error al enviar la solicitud.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al procesar la solicitud.');
+            }
+        });
+    } else {
+        console.error('No se encontró el botón submitSolicitud o el formulario solicitudForm.');
+    }
 }
