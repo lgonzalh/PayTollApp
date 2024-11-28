@@ -21,7 +21,7 @@ const PayTollCardApi = () => {
 
         //http://localhost:5293/api/Sql/execute
         setStatusMessage('Ejecutando el script...');
-        fetch('https://paytollcard-28537ba559dc.herokuapp.com/api/Sql/execute', {
+        fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Sql/execute', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

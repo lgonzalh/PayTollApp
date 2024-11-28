@@ -29,7 +29,7 @@ $(document).ready(function () {
   
         try {
             //http://localhost:7209/api/Contactos/enviar
-            const response = await fetch('https://paytollcard-28537ba559dc.herokuapp.com/api/Contactos/enviar', {
+            const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Contactos/enviar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
