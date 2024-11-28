@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UsuariosService.Controllers
+namespace PayTollCardApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -21,31 +21,38 @@ namespace UsuariosService.Controllers
 
         // Método para registrar un nuevo usuario
         [HttpPost("register")]
+        [Consumes("application/json")]
         public async Task<IActionResult> Register([FromBody] Usuario usuario)
         {
             try
             {
                 if (_context.Usuarios.Any(u => u.CorreoElectronico == usuario.CorreoElectronico))
                 {
-                    return BadRequest("El correo electrónico ya está registrado.");
+                    return BadRequest(new { Message = "El correo electrónico ya está registrado." });
                 }
 
-                usuario.FechaCreacion = DateTime.Now;
+                usuario.FechaCreacion = DateTime.UtcNow;
                 _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
 
-                return Ok("Usuario registrado exitosamente.");
+                return Ok(new { Message = "Usuario registrado exitosamente." });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al registrar el usuario: {ex.Message}");
+                return StatusCode(500, new { Message = $"Error al registrar el usuario: {ex.Message}" });
             }
         }
 
         // Método para iniciar sesión de un usuario
         [HttpPost("login")]
+        [Consumes("application/json")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
+            if (model == null || string.IsNullOrEmpty(model.CorreoElectronico) || string.IsNullOrEmpty(model.Contrasena))
+            {
+                return BadRequest(new { Message = "Correo electrónico y contraseña son requeridos." });
+            }
+
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.CorreoElectronico == model.CorreoElectronico && u.Contrasena == model.Contrasena);
 
@@ -66,7 +73,6 @@ namespace UsuariosService.Controllers
             });
         }
 
-
         // Método para obtener el perfil de un usuario (sin autorización por ahora)
         [HttpGet("perfil/{cedula}")]
         public async Task<IActionResult> ObtenerPerfil(string cedula)
@@ -74,7 +80,7 @@ namespace UsuariosService.Controllers
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == cedula);
             if (usuario == null)
             {
-                return NotFound("Usuario no encontrado.");
+                return NotFound(new { Message = "Usuario no encontrado." });
             }
 
             usuario.Contrasena = null; // Ocultar la contraseña en la respuesta
@@ -88,19 +94,19 @@ namespace UsuariosService.Controllers
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == cedula);
             if (usuario == null)
             {
-                return NotFound("Usuario no encontrado.");
+                return NotFound(new { Message = "Usuario no encontrado." });
             }
 
             var tarjeta = await _context.Tarjetas.FirstOrDefaultAsync(t => t.IdUsuario == usuario.Id);
             if (tarjeta == null)
             {
-                return NotFound("Tarjeta no encontrada para el usuario.");
+                return NotFound(new { Message = "Tarjeta no encontrada para el usuario." });
             }
 
             var categoria = await _context.CategoriasVehiculos.FirstOrDefaultAsync(c => c.IdCategoria == tarjeta.IdVehiculo);
             if (categoria == null)
             {
-                return NotFound("Categoría de vehículo no encontrada.");
+                return NotFound(new { Message = "Categoría de vehículo no encontrada." });
             }
 
             return Ok(categoria);
@@ -110,7 +116,7 @@ namespace UsuariosService.Controllers
     // Clase auxiliar para el modelo de inicio de sesión
     public class LoginModel
     {
-        public string? CorreoElectronico { get; set; }
-        public string? Contrasena { get; set; }
+        public string CorreoElectronico { get; set; }
+        public string Contrasena { get; set; }
     }
 }

@@ -59,6 +59,12 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Configurar Forwarded Headers para Heroku
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 // Configuración de Middleware
 if (app.Environment.IsDevelopment())
 {
@@ -75,12 +81,6 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-
-// Configurar Forwarded Headers para Heroku
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
 
 // Desactivar Redirección HTTPS en Heroku
 var isHeroku = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PORT"));
