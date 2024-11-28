@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="modal-body">${modalContent.body}</div>
                         <div class="modal-footer">
-                            ${modalContent.footer || '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>'}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" id="${modalContent.submitId}">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal('vehicleModal', {
                 title: 'Registrar Vehículo',
                 body: '<div id="vehiculoFormContainer"></div>',
-                footer: '<button type="button" class="btn btn-primary" id="submitVehiculo">Enviar</button>'
+                submitId: 'submitVehiculo'
             });
             import('./vehiculo.js').then(module => module.default());
         });
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal('recargaModal', {
                 title: 'Recargar Tarjeta',
                 body: '<div id="recargaFormContainer"></div>',
-                footer: '<button type="button" class="btn btn-primary" id="submitRecarga">Enviar</button>'
+                submitId: 'submitRecarga'
             });
             import('./recarga.js').then(module => module.default());
         });
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal('extractoModal', {
                 title: 'Extractos',
                 body: '<div id="extractoFormContainer"></div>',
-                footer: '<button type="button" class="btn btn-primary" id="submitExtracto">Enviar</button>'
+                submitId: 'submitExtracto'
             });
             import('./extracto.js').then(module => module.default());
         });
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal('solicitudModal', {
                 title: 'Centro de Solicitudes',
                 body: '<div id="solicitudFormContainer"></div>',
-                footer: '<button type="button" class="btn btn-primary" id="submitSolicitud">Enviar</button>'
+                submitId: 'submitSolicitud'
             });
             import('./solicitud.js').then(module => module.default());
         });

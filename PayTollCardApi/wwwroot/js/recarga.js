@@ -9,8 +9,8 @@ export default function recargaModule() {
     recargaFormContainer.innerHTML = `
         <form id="recargaForm">
             <div class="mb-3">
-                <label for="numeroTarjeta" class="form-label">Número de Tarjeta</label>
-                <input type="text" class="form-control" id="numeroTarjeta" required>
+                <label for="cedula" class="form-label">Número de Cédula</label>
+                <input type="text" class="form-control" id="cedula" required>
             </div>
             <div class="mb-3">
                 <label for="montoRecarga" class="form-label">Monto a Recargar</label>
@@ -24,10 +24,9 @@ export default function recargaModule() {
 
     if (submitRecarga && recargaForm) {
         submitRecarga.addEventListener('click', async () => {
-            const numeroTarjeta = document.getElementById('numeroTarjeta').value;
+            const cedula = document.getElementById('cedula').value;
             const montoRecarga = document.getElementById('montoRecarga').value;
 
-            // Lógica para enviar los datos al servidor
             try {
                 const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Recargas', {
                     method: 'POST',
@@ -35,7 +34,7 @@ export default function recargaModule() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        numeroTarjeta,
+                        cedula,
                         montoRecarga
                     })
                 });

@@ -9,6 +9,10 @@ export default function solicitudModule() {
     solicitudFormContainer.innerHTML = `
         <form id="solicitudForm">
             <div class="mb-3">
+                <label for="cedula" class="form-label">Número de Cédula</label>
+                <input type="text" class="form-control" id="cedula" required>
+            </div>
+            <div class="mb-3">
                 <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
                 <select class="form-select" id="tipoSolicitud" required>
                     <option value="">Seleccione</option>
@@ -29,10 +33,10 @@ export default function solicitudModule() {
 
     if (submitSolicitud && solicitudForm) {
         submitSolicitud.addEventListener('click', async () => {
+            const cedula = document.getElementById('cedula').value;
             const tipoSolicitud = document.getElementById('tipoSolicitud').value;
             const descripcionSolicitud = document.getElementById('descripcionSolicitud').value;
 
-            // Lógica para enviar los datos al servidor
             try {
                 const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Solicitudes', {
                     method: 'POST',
@@ -40,6 +44,7 @@ export default function solicitudModule() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        cedula,
                         tipoSolicitud,
                         descripcionSolicitud
                     })
