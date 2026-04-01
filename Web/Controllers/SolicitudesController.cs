@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PayTollCardApi.Core.Entities;
+using PayTollCardApi.Infrastructure.Persistence;
 using PayTollCardApi.Web.Models;
 
-namespace SolicitudesService.Controllers
+namespace PayTollCardApi.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -23,6 +24,13 @@ namespace SolicitudesService.Controllers
         {
             try
             {
+                if (solicitudRequest == null ||
+                    string.IsNullOrWhiteSpace(solicitudRequest.Cedula) ||
+                    string.IsNullOrWhiteSpace(solicitudRequest.TipoSolicitud))
+                {
+                    return BadRequest("La cédula y el tipo de solicitud son obligatorios.");
+                }
+
                 // Validar que el usuario exista
                 var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == solicitudRequest.Cedula);
                 if (usuario == null)
@@ -34,9 +42,9 @@ namespace SolicitudesService.Controllers
                 var solicitud = new Solicitud
                 {
                     IdUsuario = usuario.Id,
-                    TipoSolicitud = solicitudRequest.TipoSolicitud,
-                    Descripcion = solicitudRequest.Descripcion,
-                    FechaSolicitud = DateTime.Now,
+                    TipoSolicitud = solicitudRequest.TipoSolicitud ?? string.Empty,
+                    Descripcion = solicitudRequest.Descripcion ?? string.Empty,
+                    FechaSolicitud = DateTime.UtcNow,
                     Estado = "Pendiente" // Estado inicial
                 };
 
@@ -68,7 +76,7 @@ namespace SolicitudesService.Controllers
             }
         }
 
-        // Endpoint para obtener el historial de solicitudes usando la c�dula
+        // Endpoint para obtener el historial de solicitudes usando la cédula
         [HttpGet("historial/{cedula}")]
         public async Task<IActionResult> Historial(string cedula)
         {
@@ -111,3 +119,4 @@ namespace SolicitudesService.Controllers
         }
     }
 }
+

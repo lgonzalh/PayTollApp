@@ -1,4 +1,4 @@
-// auth-handler.js
+﻿// auth-handler.js
 class AuthHandler {
     constructor() {
         // Usar el mismo dominio del frontend (local o desplegado)
@@ -50,7 +50,7 @@ class AuthHandler {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error('Error response:', errorData);
-                throw new Error(errorData.Message || 'Error en el inicio de sesión');
+                throw new Error(errorData.message || errorData.Message || 'Error en el inicio de sesiÃ³n');
             }
 
             const responseData = await response.json();
@@ -61,15 +61,21 @@ class AuthHandler {
                 localStorage.setItem('authToken', responseData.token);
             }
 
-            // Redirigir al usuario a la página de servicios
+            const loggedInUser = responseData.usuario || responseData.Usuario;
+            if (loggedInUser) {
+                localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+            }
+
+            // Redirigir al usuario a la pÃ¡gina de servicios
             window.location.href = 'services.html';
 
         } catch (error) {
             console.error('Error detallado:', error);
-            alert('Error en el inicio de sesión: ' + error.message);
+            alert('Error en el inicio de sesiÃ³n: ' + error.message);
         }
     }
 }
 
 // Inicializar el manejador
 new AuthHandler();
+

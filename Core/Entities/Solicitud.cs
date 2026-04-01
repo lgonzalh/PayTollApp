@@ -1,34 +1,35 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("SOLICITUDES", Schema = "USUARIO")]
+    [Table("solicitudes", Schema = "usuario")]
     public class Solicitud
     {
         [Key]
-        [Column("ID_SOLICITUD")]
+        [Column("id_solicitud")]
         public int IdSolicitud { get; set; }
 
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int IdUsuario { get; set; }
 
-        [Column("TIPO_SOLICITUD")]
+        [Column("tipo_solicitud")]
         [Required]
         [MaxLength(50)]
         public string TipoSolicitud { get; set; } = string.Empty;
 
-        [Column("DESCRIPCION")]
+        [Column("descripcion")]
         public string Descripcion { get; set; } = string.Empty;
 
-        [Column("FECHA_SOLICITUD")]
-        public DateTime FechaSolicitud { get; set; } = DateTime.Now;
+        [Column("fecha_solicitud")]
+        public DateTime FechaSolicitud { get; set; } = DateTime.UtcNow;
 
-        [Column("ESTADO")]
+        [Column("estado")]
         public string Estado { get; set; } = "Pendiente";
 
         [ForeignKey("IdUsuario")]
         public Usuario? Usuario { get; set; }
     }
 }
+

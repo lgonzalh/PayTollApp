@@ -1,41 +1,42 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("MOVIMIENTOS", Schema = "SERVICIO")]
+    [Table("movimientos", Schema = "servicio")]
     public class Movimiento
     {
         [Key]
-        [Column("ID_MOVIMIENTO")]
+        [Column("id_movimiento")]
         public int? Id { get; set; }
 
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int IdUsuario { get; set; }
 
-        [Column("ID_TARJETA")]
+        [Column("id_tarjeta")]
         public int IdTarjeta { get; set; }
 
-        [Column("ID_VEHICULO")]
+        [Column("id_vehiculo")]
         public int? IdVehiculo { get; set; }
 
-        [Column("ID_PEAJE")]
+        [Column("id_peaje")]
         public int? IdPeaje { get; set; }
 
-        [Column("TIPO_MOVIMIENTO")]
+        [Column("tipomovimiento")]
         public string? TipoMovimiento { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column("monto", TypeName = "numeric(18,2)")]
         public decimal Monto { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column("saldoanterior", TypeName = "numeric(18,2)")]
         public decimal SaldoAnterior { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column("saldonuevo", TypeName = "numeric(18,2)")]
         public decimal SaldoNuevo { get; set; }
 
-        [Column("FECHA_MOVIMIENTO")]
+        [Column("fecha_movimiento")]
         public DateTime FechaMovimiento { get; set; }
     }
 }
+

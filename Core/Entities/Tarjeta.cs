@@ -1,30 +1,30 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("TARJETAS", Schema = "SERVICIO")]
+    [Table("tarjetas", Schema = "servicio")]
     public class Tarjeta
     {
         [Key]
-        [Column("ID_TARJETA")]
+        [Column("id_tarjeta")]
         public int Id { get; set; }
 
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int IdUsuario { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column("saldo", TypeName = "numeric(18,2)")]
         public decimal Saldo { get; set; }
 
-        [Column("FECHA_CREACION")]
+        [Column("fecha_creacion")]
         public DateTime FechaCreacion { get; set; }
 
         [Required]
-        [Column("TARJETA_NUMERO")]
+        [Column("tarjeta_numero")]
         public string NumeroTarjeta { get; set; } = string.Empty;
 
-        [Column("ID_VEHICULO")]
+        [Column("id_vehiculo")]
         public int IdVehiculo { get; set; }
 
         // Relaciones
@@ -34,7 +34,7 @@ namespace PayTollCardApi.Core.Entities
         [ForeignKey("IdVehiculo")]
         public Vehiculo? Vehiculo { get; set; }
 
-        // Propiedad calculada para el número de tarjeta enmascarado
+        // Propiedad calculada para el nÃºmero de tarjeta enmascarado
         [NotMapped]
         public string NumeroTarjetaEnmascarado
         {
@@ -45,7 +45,7 @@ namespace PayTollCardApi.Core.Entities
                     return NumeroTarjeta;
                 }
 
-                // Mostrar los primeros 4 y los últimos 4 dígitos, enmascarar el resto
+                // Mostrar los primeros 4 y los Ãºltimos 4 dÃ­gitos, enmascarar el resto
                 var primerosDigitos = NumeroTarjeta.Substring(0, 4);
                 var ultimosDigitos = NumeroTarjeta.Substring(NumeroTarjeta.Length - 4);
                 var asteriscos = new string('*', NumeroTarjeta.Length - 8);
@@ -54,3 +54,4 @@ namespace PayTollCardApi.Core.Entities
         }
     }
 }
+

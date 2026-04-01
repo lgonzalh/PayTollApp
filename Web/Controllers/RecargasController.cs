@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+Ôªøusing Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PayTollCardApi.Core.Entities;
+using PayTollCardApi.Infrastructure.Persistence;
 using PayTollCardApi.Web.Models;
 
-namespace RecargasService.Controllers
+namespace PayTollCardApi.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -17,7 +18,7 @@ namespace RecargasService.Controllers
             _context = context;
         }
 
-        // Endpoint para realizar una recarga usando la cÈdula
+        // Endpoint para realizar una recarga usando la c√©dula
         [HttpPost("recargar")]
         public async Task<IActionResult> Recargar([FromBody] RecargaRequest recargaRequest)
         {
@@ -39,6 +40,10 @@ namespace RecargasService.Controllers
 
                 // Por simplicidad, asumamos que el usuario tiene una sola tarjeta
                 var tarjeta = tarjetas.FirstOrDefault();
+                if (tarjeta == null)
+                {
+                    return NotFound("No se encontr√≥ una tarjeta v√°lida para el usuario.");
+                }
 
                 // Validar el monto de la recarga
                 if (recargaRequest.Monto <= 0)
@@ -46,17 +51,23 @@ namespace RecargasService.Controllers
                     return BadRequest("El monto de la recarga debe ser mayor que cero.");
                 }
 
-                // Obtener el precio de la categorÌa del vehÌculo
-                var categoriaVehiculo = await _context.CategoriasVehiculos.FirstOrDefaultAsync(c => c.IdCategoria == tarjeta.IdVehiculo);
-                if (categoriaVehiculo == null)
+                var vehiculo = await _context.Vehiculos.FirstOrDefaultAsync(v => v.Id == tarjeta.IdVehiculo);
+                if (vehiculo == null)
                 {
-                    return NotFound("La categorÌa del vehÌculo no existe.");
+                    return NotFound("El veh√≠culo asociado a la tarjeta no existe.");
                 }
 
-                // Validar que el monto de la recarga sea un m˙ltiplo del precio de la categorÌa
+                // Obtener el precio de la categor√≠a del veh√≠culo
+                var categoriaVehiculo = await _context.CategoriasVehiculos.FirstOrDefaultAsync(c => c.IdCategoria == vehiculo.CategoriaVehiculo);
+                if (categoriaVehiculo == null)
+                {
+                    return NotFound("La categor√≠a del veh√≠culo no existe.");
+                }
+
+                // Validar que el monto de la recarga sea un m√∫ltiplo del precio de la categor√≠a
                 if (recargaRequest.Monto % categoriaVehiculo.Precio != 0)
                 {
-                    return BadRequest($"El monto de la recarga debe ser un m˙ltiplo de {categoriaVehiculo.Precio}.");
+                    return BadRequest($"El monto de la recarga debe ser un m√∫ltiplo de {categoriaVehiculo.Precio}.");
                 }
 
                 // Actualizar el saldo de la tarjeta
@@ -67,7 +78,7 @@ namespace RecargasService.Controllers
                 {
                     IdTarjeta = tarjeta.Id,
                     Monto = recargaRequest.Monto,
-                    FechaRecarga = DateTime.Now,
+                    FechaRecarga = DateTime.UtcNow,
                     MetodoPago = recargaRequest.MetodoPago
                 };
 
@@ -83,8 +94,8 @@ namespace RecargasService.Controllers
                     SaldoAnterior = tarjeta.Saldo - recargaRequest.Monto,
                     SaldoNuevo = tarjeta.Saldo,
                     TipoMovimiento = "Recarga Saldo",
-                    FechaMovimiento = DateTime.Now,
-                    IdVehiculo = tarjeta.IdVehiculo // Aseg˙rate de incluir el ID_VEHICULO si es necesario
+                    FechaMovimiento = DateTime.UtcNow,
+                    IdVehiculo = tarjeta.IdVehiculo // Aseg√∫rate de incluir el ID_VEHICULO si es necesario
                 };
 
                 _context.Movimientos.Add(movimiento);
@@ -92,7 +103,7 @@ namespace RecargasService.Controllers
                 // Guardar cambios en la base de datos
                 await _context.SaveChangesAsync();
 
-                // Crear el objeto de respuesta con la informaciÛn enmascarada
+                // Crear el objeto de respuesta con la informaci√≥n enmascarada
                 var recargaDto = new
                 {
                     Mensaje = "Recarga realizada exitosamente.",
@@ -117,11 +128,17 @@ namespace RecargasService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al realizar la recarga: {ex.Message}");
+                var errorMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $" Excepci√≥n interna: {ex.InnerException.Message}";
+                }
+
+                return StatusCode(500, $"Error al realizar la recarga: {errorMessage}");
             }
         }
 
-        // Endpoint para obtener el historial de recargas usando la cÈdula
+        // Endpoint para obtener el historial de recargas usando la c√©dula
         [HttpGet("historial/{cedula}")]
         public async Task<IActionResult> Historial(string cedula)
         {
@@ -156,23 +173,29 @@ namespace RecargasService.Controllers
                     return NotFound("No se encontraron recargas para el usuario proporcionado.");
                 }
 
-                // Mapear las recargas a DTOs con el n˙mero de tarjeta enmascarado
-                var recargasDto = recargas.Select(r => new
-                {
-                    r.Id,
-                    r.IdTarjeta,
-                    r.Monto,
-                    r.FechaRecarga,
-                    r.MetodoPago,
-                    Tarjeta = new TarjetaDto
+                // Mapear las recargas a DTOs con el n√∫mero de tarjeta enmascarado
+                var recargasDto = recargas
+                    .Where(r => r.Tarjeta != null)
+                    .Select(r =>
                     {
-                        Id = r.Tarjeta.Id,
-                        Saldo = r.Tarjeta.Saldo,
-                        FechaCreacion = r.Tarjeta.FechaCreacion,
-                        NumeroTarjeta = r.Tarjeta.NumeroTarjetaEnmascarado,
-                        IdVehiculo = r.Tarjeta.IdVehiculo
-                    }
-                });
+                        var tarjetaRecarga = r.Tarjeta!;
+                        return new
+                        {
+                            r.Id,
+                            r.IdTarjeta,
+                            r.Monto,
+                            r.FechaRecarga,
+                            r.MetodoPago,
+                            Tarjeta = new TarjetaDto
+                            {
+                                Id = tarjetaRecarga.Id,
+                                Saldo = tarjetaRecarga.Saldo,
+                                FechaCreacion = tarjetaRecarga.FechaCreacion,
+                                NumeroTarjeta = tarjetaRecarga.NumeroTarjetaEnmascarado,
+                                IdVehiculo = tarjetaRecarga.IdVehiculo
+                            }
+                        };
+                    });
 
                 return Ok(recargasDto);
             }
@@ -183,3 +206,4 @@ namespace RecargasService.Controllers
         }
     }
 }
+

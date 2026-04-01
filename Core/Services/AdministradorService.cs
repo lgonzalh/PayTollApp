@@ -1,9 +1,8 @@
-using Microsoft.EntityFrameworkCore;
+锘縰sing Microsoft.EntityFrameworkCore;
 
 using PayTollCardApi.Core.Entities;
-using PayTollCardApi.Web.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using PayTollCardApi.Core.Interfaces;
+using PayTollCardApi.Infrastructure.Persistence;
 
 namespace PayTollCardApi.Core.Services
 {
@@ -16,7 +15,7 @@ namespace PayTollCardApi.Core.Services
             _context = context;
         }
 
-        // Gesti髇 de Usuarios
+        // Gesti贸n de Usuarios
         public async Task<List<Usuario>> GetAllUsuariosAsync()
         {
             return await _context.Usuarios.ToListAsync();
@@ -56,7 +55,7 @@ namespace PayTollCardApi.Core.Services
             }
         }
 
-        // Gesti髇 de Tarjetas
+        // Gesti贸n de Tarjetas
         public async Task<List<Tarjeta>> GetTarjetasByCedulaAsync(string cedula)
         {
             var usuario = await GetUsuarioByCedulaAsync(cedula);
@@ -86,13 +85,13 @@ namespace PayTollCardApi.Core.Services
             }
         }
 
-        // Gesti髇 de Recargas y Pagos
+        // Gesti贸n de Recargas y Pagos
         public async Task<List<Recarga>> GetAllRecargasByCedulaAsync(string cedula)
         {
             var usuario = await GetUsuarioByCedulaAsync(cedula);
             return usuario == null ? new List<Recarga>() : await _context.Recargas
                 .Include(r => r.Tarjeta)
-                .Where(r => r.Tarjeta.IdUsuario == usuario.Id)
+                .Where(r => r.Tarjeta != null && r.Tarjeta.IdUsuario == usuario.Id)
                 .ToListAsync();
         }
 
@@ -105,7 +104,7 @@ namespace PayTollCardApi.Core.Services
                 .ToListAsync();
         }
 
-        // Gesti髇 de Solicitudes
+        // Gesti贸n de Solicitudes
         public async Task<List<Solicitud>> GetAllSolicitudesByCedulaAsync(string cedula)
         {
             var usuario = await GetUsuarioByCedulaAsync(cedula);
@@ -135,10 +134,11 @@ namespace PayTollCardApi.Core.Services
             }
         }
 
-        // M閠odo adicional para Contactos (si aplica)
+        // M茅todo adicional para Contactos (si aplica)
         public async Task<List<Contacto>> GetContactosByUsuarioIdAsync(int usuarioId)
         {
             return await _context.Contactos.Where(c => c.IdUsuario == usuarioId).ToListAsync();
         }
     }
 }
+

@@ -1,30 +1,29 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("USUARIOS", Schema = "USUARIO")]
+    [Table("usuarios", Schema = "usuario")]
     public class Usuario
     {
         [Key]
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int Id { get; set; }
 
-        [Column("CEDULA")]
+        [Column("cedula")]
         public string? Cedula { get; set; }
 
-        [Column("NOMBRE")]
+        [Column("nombre")]
         public string? Nombre { get; set; }
 
-        [Column("CORREO_ELECTRONICO")]
+        [Column("correo_electronico")]
         public string? CorreoElectronico { get; set; }
 
-        [Column("CONTRASENA")]
+        [Column("contrasena")]
         public string? Contrasena { get; set; }
 
-        [Column("FECHA_CREACION")]
+        [Column("fecha_creacion")]
         public DateTime FechaCreacion { get; set; }
     }
 }
+

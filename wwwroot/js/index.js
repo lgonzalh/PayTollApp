@@ -1,4 +1,4 @@
-// index.js
+﻿// index.js
 
 var myCarousel = document.querySelector('#imageCarousel');
 var carousel = new bootstrap.Carousel(myCarousel, {interval: 3000, ride: 'carousel'});
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Verificar que los elementos existen
     if (loginForm && passwordInput && correoInput) {
-        // Manejo del formulario de inicio de sesión
+        // Manejo del formulario de inicio de sesiÃ³n
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Contrasena: contrasena
             };
 
-            // Agregar logs para depuración
+            // Agregar logs para depuraciÃ³n
             console.log('Datos enviados al backend:', data);
 
             fetch(endpoint, {
@@ -44,16 +44,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(result => {
-                console.log('Inicio de sesión exitoso:', result);
-                alert('Inicio de sesión exitoso.');
+                console.log('Inicio de sesiÃ³n exitoso:', result);
+                const loggedInUser = result.usuario || result.Usuario;
+                if (loggedInUser) {
+                    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                }
+                alert('Inicio de sesiÃ³n exitoso.');
                 window.location.href = 'services.html';
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Correo o contraseña incorrectos.');
+                alert('Correo o contraseÃ±a incorrectos.');
             });
         });
     } else {
         console.error('Error: Elementos del DOM no encontrados.');
     }
 });
+

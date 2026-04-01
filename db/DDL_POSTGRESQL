@@ -1,0 +1,160 @@
+-- =========================
+-- SCHEMAS
+-- =========================
+CREATE SCHEMA IF NOT EXISTS usuario;
+CREATE SCHEMA IF NOT EXISTS servicio;
+
+-- =========================
+-- USUARIO.USUARIOS
+-- =========================
+CREATE TABLE usuario.usuarios (
+    id_usuario INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cedula VARCHAR(20) NOT NULL,
+    nombre VARCHAR(100),
+    correo_electronico VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255),
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+);
+
+CREATE UNIQUE INDEX ux_usuarios_cedula ON usuario.usuarios (cedula);
+CREATE UNIQUE INDEX ux_usuarios_correo ON usuario.usuarios (correo_electronico);
+
+-- =========================
+-- USUARIO.SOLICITUDES
+-- =========================
+CREATE TABLE usuario.solicitudes (
+    id_solicitud INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    tipo_solicitud VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    fecha_solicitud TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    estado VARCHAR(50) DEFAULT 'Pendiente' NOT NULL,
+    CONSTRAINT fk_solicitudes_usuarios
+        FOREIGN KEY (id_usuario) REFERENCES usuario.usuarios(id_usuario)
+);
+
+-- =========================
+-- USUARIO.CONTACTOS
+-- =========================
+CREATE TABLE usuario.contactos (
+    id_contacto INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    nombre VARCHAR(100),
+    correo VARCHAR(255),
+    mensaje TEXT,
+    fecha_contacto TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    CONSTRAINT fk_contactos_usuarios
+        FOREIGN KEY (id_usuario) REFERENCES usuario.usuarios(id_usuario)
+);
+
+-- =========================
+-- SERVICIO.CATEGORIAS_VEHICULOS
+-- =========================
+CREATE TABLE servicio.categorias_vehiculos (
+    id_categoria INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre_categoria VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255),
+    precio DECIMAL(18,2) NOT NULL
+);
+
+-- =========================
+-- SERVICIO.VEHICULOS
+-- =========================
+CREATE TABLE servicio.vehiculos (
+    id_vehiculo INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    placa VARCHAR(10) NOT NULL,
+    categoria_vehiculo INT NOT NULL,
+    CONSTRAINT fk_vehiculos_usuarios
+        FOREIGN KEY (id_usuario) REFERENCES usuario.usuarios(id_usuario),
+    CONSTRAINT fk_vehiculos_categoria
+        FOREIGN KEY (categoria_vehiculo) REFERENCES servicio.categorias_vehiculos(id_categoria)
+);
+
+CREATE UNIQUE INDEX ux_vehiculos_placa ON servicio.vehiculos (placa);
+
+-- =========================
+-- SERVICIO.PEAJES
+-- =========================
+CREATE TABLE servicio.peajes (
+    id_peaje INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR(100),
+    ciudad VARCHAR(100),
+    departamento VARCHAR(100)
+);
+
+-- =========================
+-- SERVICIO.TARJETAS
+-- =========================
+CREATE TABLE servicio.tarjetas (
+    id_tarjeta INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    saldo DECIMAL(18,2) DEFAULT 0 NOT NULL,
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    tarjeta_numero VARCHAR(20) NOT NULL,
+    id_vehiculo INT NOT NULL,
+    CONSTRAINT fk_tarjetas_usuarios
+        FOREIGN KEY (id_usuario) REFERENCES usuario.usuarios(id_usuario),
+    CONSTRAINT fk_tarjetas_vehiculos
+        FOREIGN KEY (id_vehiculo) REFERENCES servicio.vehiculos(id_vehiculo)
+);
+
+CREATE UNIQUE INDEX ux_tarjetas_numero ON servicio.tarjetas (tarjeta_numero);
+
+-- =========================
+-- SERVICIO.RECARGAS
+-- =========================
+CREATE TABLE servicio.recargas (
+    id_recarga INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_tarjeta INT NOT NULL,
+    monto DECIMAL(18,2) NOT NULL,
+    fecha_recarga TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    metodo_pago VARCHAR(50),
+    CONSTRAINT fk_recargas_tarjetas
+        FOREIGN KEY (id_tarjeta) REFERENCES servicio.tarjetas(id_tarjeta)
+);
+
+-- =========================
+-- SERVICIO.PAGOS
+-- =========================
+CREATE TABLE servicio.pagos (
+    id_pago INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_tarjeta INT NOT NULL,
+    id_peaje INT NOT NULL,
+    id_categoria INT NOT NULL,
+    valor DECIMAL(18,2) NOT NULL,
+    fecha_pago TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    CONSTRAINT fk_pagos_usuarios
+        FOREIGN KEY (id_usuario) REFERENCES usuario.usuarios(id_usuario),
+    CONSTRAINT fk_pagos_tarjetas
+        FOREIGN KEY (id_tarjeta) REFERENCES servicio.tarjetas(id_tarjeta),
+    CONSTRAINT fk_pagos_peajes
+        FOREIGN KEY (id_peaje) REFERENCES servicio.peajes(id_peaje),
+    CONSTRAINT fk_pagos_categorias
+        FOREIGN KEY (id_categoria) REFERENCES servicio.categorias_vehiculos(id_categoria)
+);
+
+-- =========================
+-- SERVICIO.MOVIMIENTOS
+-- =========================
+CREATE TABLE servicio.movimientos (
+    id_movimiento INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_tarjeta INT NOT NULL,
+    id_vehiculo INT,
+    id_peaje INT,
+    tipomovimiento VARCHAR(50),
+    monto DECIMAL(18,2) NOT NULL,
+    saldoanterior DECIMAL(18,2) NOT NULL,
+    saldonuevo DECIMAL(18,2) NOT NULL,
+    fecha_movimiento TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    CONSTRAINT fk_mov_usuarios
+        FOREIGN KEY (id_usuario) REFERENCES usuario.usuarios(id_usuario),
+    CONSTRAINT fk_mov_tarjetas
+        FOREIGN KEY (id_tarjeta) REFERENCES servicio.tarjetas(id_tarjeta),
+    CONSTRAINT fk_mov_vehiculos
+        FOREIGN KEY (id_vehiculo) REFERENCES servicio.vehiculos(id_vehiculo),
+    CONSTRAINT fk_mov_peajes
+        FOREIGN KEY (id_peaje) REFERENCES servicio.peajes(id_peaje)
+);

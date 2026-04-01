@@ -1,0 +1,34 @@
+-- =========================
+-- CATEGORIAS_VEHICULOS
+-- =========================
+INSERT INTO servicio.categorias_vehiculos (nombre_categoria, descripcion, precio) VALUES
+('Liviano',    'Automóvil liviano',       9000.00),
+('Camioneta',  'Camioneta y microbús',    12000.00),
+('Bus',        'Bus y camión 2 ejes',     15000.00),
+('Camión 3 ejes', 'Carga 3 ejes',         20000.00),
+('Camión 4+ ejes', 'Carga pesada',        25000.00);
+
+-- =========================
+-- PEAJES
+-- =========================
+INSERT INTO servicio.peajes (nombre, ciudad, departamento) VALUES
+('Peaje La Paz',     'La Paz',       'Santander'),
+('Peaje Andes',      'Andes',        'Antioquia'),
+('Peaje Caribe',     'Cartagena',    'Bolívar');
+
+-- =========================
+-- USUARIO (control duplicados)
+-- =========================
+INSERT INTO usuario.usuarios (cedula, nombre, correo_electronico, contrasena, fecha_creacion)
+SELECT
+    '79862885',
+    'LUIS GONZALEZ',
+    'lantonium@gmail.com',
+    'Alfa#1011',
+    '2025-11-06'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM usuario.usuarios
+    WHERE cedula = '79862885'
+       OR correo_electronico = 'lantonium@gmail.com'
+);

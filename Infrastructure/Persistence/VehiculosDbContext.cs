@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PayTollCardApi.Core.Entities;
 using PayTollCardApi.Web.Models;
 
@@ -12,8 +12,9 @@ namespace PayTollCardApi.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Vehiculo>().ToTable("VEHICULOS", "SERVICIO");
-            modelBuilder.Entity<Usuario>().ToTable("USUARIOS", "USUARIO");
+            modelBuilder.Entity<Vehiculo>().ToTable("vehiculos", "servicio");
+            modelBuilder.Entity<Usuario>().ToTable("usuarios", "usuario");
         }
     }
 }
+

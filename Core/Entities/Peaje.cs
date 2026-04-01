@@ -1,22 +1,23 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("PEAJES", Schema = "SERVICIO")]
+    [Table("peajes", Schema = "servicio")]
     public class Peaje
     {
         [Key]
-        [Column("ID_PEAJE")]
+        [Column("id_peaje")]
         public int IdPeaje { get; set; }
 
-        [Column("NOMBRE")]
-        public string ? Nombre { get; set; }
+        [Column("nombre")]
+        public string? Nombre { get; set; }
 
-        [Column("CIUDAD")]
-        public string ? Ciudad { get; set; }
+        [Column("ciudad")]
+        public string? Ciudad { get; set; }
 
-        [Column("DEPARTAMENTO")]
-        public string ? Departamento { get; set; }
+        [Column("departamento")]
+        public string? Departamento { get; set; }
     }
 }
+

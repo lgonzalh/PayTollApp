@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,38 +8,40 @@ using Microsoft.AspNetCore.HttpOverrides;
 using PayTollCardApi.Infrastructure.Persistence;
 using PayTollCardApi.Core.Interfaces;
 using PayTollCardApi.Core.Services;
-using PayTollCardApi.Core.Entities;
-using PayTollCardApi.Web.Models;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? builder.Configuration["SUPABASE_DB_CONNECTION"]
+    ?? throw new InvalidOperationException("Database connection string 'DefaultConnection' is not configured.");
+var usuariosConnection = builder.Configuration.GetConnectionString("UsuariosDB") ?? defaultConnection;
 
 // Configuración de DbContext
 builder.Services.AddDbContext<TarjetasDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
+    options.UseNpgsql(
+        defaultConnection,
+        npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()
     )
 );
 
 builder.Services.AddDbContext<UsuariosDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("UsuariosDB"),
-        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
+    options.UseNpgsql(
+        usuariosConnection,
+        npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()
     )
 );
 
 builder.Services.AddDbContext<VehiculosDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
+    options.UseNpgsql(
+        defaultConnection,
+        npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()
     )
 );
 
 // Inyección de Dependencias: Capa de Servicios
 builder.Services.AddScoped<TarjetaService>();
 builder.Services.AddScoped<IAdministradorService, AdministradorService>();
-builder.Services.AddSingleton<SqlService>(new SqlService(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton(new SqlService(defaultConnection));
 
 builder.Services.AddControllers();
 

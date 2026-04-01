@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PayTollCardApi.Core.Entities;
-using PayTollCardApi.Web.Models;
-using System.Diagnostics.Contracts;
+using PayTollCardApi.Infrastructure.Persistence;
 
-namespace ContactosService.Controllers
+namespace PayTollCardApi.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -23,12 +22,35 @@ namespace ContactosService.Controllers
         {
             try
             {
-                var usuarioExistente = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == contacto.Usuario.Cedula);
-                if (usuarioExistente != null)
+                if (contacto == null)
                 {
-                    contacto.IdUsuario = usuarioExistente.Id;
-                    contacto.Usuario = null; // Evitar reinsertar usuario
+                    return BadRequest("Los datos de contacto son obligatorios.");
                 }
+
+                Usuario? usuarioExistente = null;
+
+                if (!string.IsNullOrWhiteSpace(contacto.Usuario?.Cedula))
+                {
+                    usuarioExistente = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == contacto.Usuario.Cedula);
+                }
+
+                if (usuarioExistente == null && contacto.IdUsuario > 0)
+                {
+                    usuarioExistente = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == contacto.IdUsuario);
+                }
+
+                if (usuarioExistente == null)
+                {
+                    return BadRequest("Debe existir un usuario asociado para registrar el contacto.");
+                }
+
+                if (contacto.FechaContacto == default)
+                {
+                    contacto.FechaContacto = DateTime.UtcNow;
+                }
+
+                contacto.IdUsuario = usuarioExistente.Id;
+                contacto.Usuario = null; // Evitar reinsertar usuario
 
                 _context.Contactos.Add(contacto);
                 await _context.SaveChangesAsync();
@@ -67,3 +89,4 @@ namespace ContactosService.Controllers
         }
     }
 }
+
