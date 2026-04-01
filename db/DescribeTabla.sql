@@ -1,1 +1,0 @@
-EXEC sp_columns 'movimientos', 'servicio';
