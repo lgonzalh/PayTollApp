@@ -1,8 +1,8 @@
 ﻿// auth-handler.js
 class AuthHandler {
     constructor() {
-        // Usar el mismo dominio del frontend (local o desplegado)
-        this.API_BASE_URL = window.location.origin;
+        const storedApiBaseUrl = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim();
+        this.API_BASE_URL = storedApiBaseUrl || window.location.origin;
         this.setupEventListeners();
     }
 
@@ -21,17 +21,14 @@ class AuthHandler {
         const email = document.getElementById('correo_electronico').value;
         const password = document.getElementById('contrasena').value;
 
-        // Definir el endpoint correctamente
         const endpoint = `${this.API_BASE_URL}/api/Usuarios/login`;
 
-        // Preparar los datos a enviar
         const data = {
             CorreoElectronico: email,
             Contrasena: password
         };
 
         try {
-            // Logs para debugging
             console.log('Enviando solicitud a:', endpoint);
             console.log('Datos enviados:', data);
             console.log('Intentando login con:', { CorreoElectronico: email });
@@ -47,16 +44,15 @@ class AuthHandler {
 
             console.log('Respuesta del servidor:', response.status);
 
+            const responseData = await this.readResponsePayload(response);
+
             if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Error response:', errorData);
-                throw new Error(errorData.message || errorData.Message || 'Error en el inicio de sesiÃ³n');
+                const errorMessage = this.getErrorMessage(response.status, responseData);
+                throw new Error(errorMessage);
             }
 
-            const responseData = await response.json();
             console.log('Login exitoso:', responseData);
 
-            // Si el backend devuelve un token, lo almacenamos
             if (responseData.token) {
                 localStorage.setItem('authToken', responseData.token);
             }
@@ -66,7 +62,6 @@ class AuthHandler {
                 localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
             }
 
-            // Redirigir al usuario a la pÃ¡gina de servicios
             window.location.href = 'services.html';
 
         } catch (error) {
@@ -74,8 +69,37 @@ class AuthHandler {
             alert('Error en el inicio de sesiÃ³n: ' + error.message);
         }
     }
+
+    async readResponsePayload(response) {
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+            return response.json();
+        }
+
+        const rawText = await response.text();
+        return { rawText };
+    }
+
+    getErrorMessage(status, payload) {
+        if (payload?.message) {
+            return payload.message;
+        }
+
+        if (payload?.Message) {
+            return payload.Message;
+        }
+
+        if (status === 404) {
+            return 'No se encontró el endpoint de login. Verifica la URL del API o configura PAYTOLL_API_BASE_URL en localStorage.';
+        }
+
+        if (payload?.rawText && payload.rawText.includes('<!DOCTYPE')) {
+            return 'El servidor respondió HTML en lugar de JSON. El frontend está apuntando a un host sin backend API.';
+        }
+
+        return 'No fue posible iniciar sesión.';
+    }
 }
 
-// Inicializar el manejador
 new AuthHandler();
 
