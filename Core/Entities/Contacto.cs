@@ -1,33 +1,34 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("CONTACTOS", Schema = "USUARIO")]
+    [Table("contactos", Schema = "usuario")]
     public class Contacto
     {
         [Key]
-        [Column("ID_CONTACTO")]
+        [Column("id_contacto")]
         public int IdContacto { get; set; }
 
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int IdUsuario { get; set; }
 
-        [Column("NOMBRE")]
+        [Column("nombre")]
         public string? Nombre { get; set; }
 
-        [Column("CORREO")]
+        [Column("correo")]
         public string? Correo { get; set; }
 
-        [Column("MENSAJE")]
+        [Column("mensaje")]
         public string? Mensaje { get; set; }
 
-        [Column("FECHA_CONTACTO")]
+        [Column("fecha_contacto")]
         public DateTime FechaContacto { get; set; }
 
-        // Relaci�n con el Usuario
+        // Relación con el Usuario
         public Usuario? Usuario { get; set; }
     }
 }
+

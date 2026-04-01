@@ -1,29 +1,30 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("RECARGAS", Schema = "SERVICIO")]
+    [Table("recargas", Schema = "servicio")]
     public class Recarga
     {
         [Key]
-        [Column("ID_RECARGA")]
+        [Column("id_recarga")]
         public int Id { get; set; }
 
-        [Column("ID_TARJETA")]
+        [Column("id_tarjeta")]
         public int IdTarjeta { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column("monto", TypeName = "numeric(18,2)")]
         public decimal Monto { get; set; }
 
-        [Column("FECHA_RECARGA")]
+        [Column("fecha_recarga")]
         public DateTime FechaRecarga { get; set; }
 
-        [Column("METODO_PAGO")]
+        [Column("metodo_pago")]
         public string? MetodoPago { get; set; }
 
         [ForeignKey("IdTarjeta")]
         public Tarjeta? Tarjeta { get; set; }
     }
 }
+

@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+Ôªøusing Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PayTollCardApi.Core.Entities;
+using PayTollCardApi.Infrastructure.Persistence;
 using PayTollCardApi.Web.Models;
 
-namespace PagosService.Controllers
+namespace PayTollCardApi.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -17,7 +18,7 @@ namespace PagosService.Controllers
             _context = context;
         }
 
-        // Endpoint para realizar un pago usando la cÈdula
+        // Endpoint para realizar un pago usando la c√©dula
         [HttpPost("pagar")]
         public async Task<IActionResult> Pagar([FromBody] PagoRequest pagoRequest)
         {
@@ -39,6 +40,10 @@ namespace PagosService.Controllers
 
                 // Asumimos que el usuario tiene una sola tarjeta
                 var tarjeta = tarjetas.FirstOrDefault();
+                if (tarjeta == null)
+                {
+                    return NotFound("No se encontr√≥ una tarjeta v√°lida para el usuario.");
+                }
 
                 // Validar que el saldo sea suficiente
                 if (tarjeta.Saldo < pagoRequest.Valor)
@@ -53,11 +58,11 @@ namespace PagosService.Controllers
                     return NotFound("El peaje no existe.");
                 }
 
-                // Obtener la categorÌa del vehÌculo
+                // Obtener la categor√≠a del veh√≠culo
                 var categoriaVehiculo = await _context.CategoriasVehiculos.FirstOrDefaultAsync(c => c.IdCategoria == pagoRequest.IdCategoria);
                 if (categoriaVehiculo == null)
                 {
-                    return NotFound("La categorÌa del vehÌculo no existe.");
+                    return NotFound("La categor√≠a del veh√≠culo no existe.");
                 }
 
                 // Actualizar el saldo de la tarjeta
@@ -71,7 +76,7 @@ namespace PagosService.Controllers
                     IdPeaje = peaje.IdPeaje,
                     IdCategoria = categoriaVehiculo.IdCategoria,
                     Valor = pagoRequest.Valor,
-                    FechaPago = DateTime.Now
+                    FechaPago = DateTime.UtcNow
                 };
 
                 _context.Pagos.Add(pago);
@@ -79,7 +84,7 @@ namespace PagosService.Controllers
                 // Guardar cambios en la base de datos
                 await _context.SaveChangesAsync();
 
-                // Crear el objeto de respuesta con la informaciÛn enmascarada
+                // Crear el objeto de respuesta con la informaci√≥n enmascarada
                 var pagoDto = new
                 {
                     Mensaje = "Pago realizado exitosamente.",
@@ -107,13 +112,13 @@ namespace PagosService.Controllers
                 var errorMessage = ex.Message;
                 if (ex.InnerException != null)
                 {
-                    errorMessage += $" ExcepciÛn interna: {ex.InnerException.Message}";
+                    errorMessage += $" Excepci√≥n interna: {ex.InnerException.Message}";
                 }
                 return StatusCode(500, $"Error al realizar el pago: {errorMessage}");
             }
         }
 
-        // Endpoint para obtener el historial de pagos usando la cÈdula
+        // Endpoint para obtener el historial de pagos usando la c√©dula
         [HttpGet("historial/{cedula}")]
         public async Task<IActionResult> Historial(string cedula)
         {
@@ -139,21 +144,27 @@ namespace PagosService.Controllers
                 }
 
                 // Mapear los pagos a DTOs
-                var pagosDto = pagos.Select(p => new
-                {
-                    p.IdPago,
-                    p.IdTarjeta,
-                    p.Valor,
-                    p.FechaPago,
-                    Tarjeta = new TarjetaDto
+                var pagosDto = pagos
+                    .Where(p => p.Tarjeta != null)
+                    .Select(p =>
                     {
-                        Id = p.Tarjeta.Id,
-                        Saldo = p.Tarjeta.Saldo,
-                        FechaCreacion = p.Tarjeta.FechaCreacion,
-                        NumeroTarjeta = p.Tarjeta.NumeroTarjetaEnmascarado,
-                        IdVehiculo = p.Tarjeta.IdVehiculo
-                    }
-                });
+                        var tarjetaPago = p.Tarjeta!;
+                        return new
+                        {
+                            p.IdPago,
+                            p.IdTarjeta,
+                            p.Valor,
+                            p.FechaPago,
+                            Tarjeta = new TarjetaDto
+                            {
+                                Id = tarjetaPago.Id,
+                                Saldo = tarjetaPago.Saldo,
+                                FechaCreacion = tarjetaPago.FechaCreacion,
+                                NumeroTarjeta = tarjetaPago.NumeroTarjetaEnmascarado,
+                                IdVehiculo = tarjetaPago.IdVehiculo
+                            }
+                        };
+                    });
 
                 return Ok(pagosDto);
             }
@@ -162,10 +173,11 @@ namespace PagosService.Controllers
                 var errorMessage = ex.Message;
                 if (ex.InnerException != null)
                 {
-                    errorMessage += $" ExcepciÛn interna: {ex.InnerException.Message}";
+                    errorMessage += $" Excepci√≥n interna: {ex.InnerException.Message}";
                 }
                 return StatusCode(500, $"Error al obtener el historial de pagos: {errorMessage}");
             }
         }
     }
 }
+

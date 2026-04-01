@@ -1,23 +1,24 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("VEHICULOS", Schema = "SERVICIO")]
+    [Table("vehiculos", Schema = "servicio")]
     public class Vehiculo
     {
         [Key]
-        [Column("ID_VEHICULO")]
+        [Column("id_vehiculo")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int IdUsuario { get; set; }
 
-        [Column("PLACA")]
+        [Column("placa")]
         public string? Placa { get; set; }
 
-        [Column("CATEGORIA_VEHICULO")]
+        [Column("categoria_vehiculo")]
         public int CategoriaVehiculo { get; set; }
     }
 }
+

@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+Ôªøusing Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayTollCardApi.Core.Entities;
 using PayTollCardApi.Web.Models;
 using PayTollCardApi.Infrastructure.Persistence;
 
-namespace VehiculosService.Controllers
+namespace PayTollCardApi.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -24,12 +24,12 @@ namespace VehiculosService.Controllers
 
             if (usuario == null)
             {
-                return NotFound("El usuario no existe para registrar el vehÌculo.");
+                return NotFound("El usuario no existe para registrar el veh√≠culo.");
             }
 
             if (_context.Vehiculos.Any(v => v.Placa == vehiculoDto.Placa))
             {
-                return BadRequest("La placa ya est· registrada.");
+                return BadRequest("La placa ya est√° registrada.");
             }
 
             var vehiculo = new Vehiculo
@@ -43,11 +43,11 @@ namespace VehiculosService.Controllers
             {
                 _context.Vehiculos.Add(vehiculo);
                 await _context.SaveChangesAsync();
-                return Ok("VehÌculo registrado exitosamente.");
+                return Ok("Veh√≠culo registrado exitosamente.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al registrar el vehÌculo: {ex.Message}");
+                return StatusCode(500, $"Error al registrar el veh√≠culo: {ex.Message}");
             }
         }
 
@@ -71,3 +71,4 @@ namespace VehiculosService.Controllers
 
     }
 }
+

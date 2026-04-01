@@ -1,31 +1,15 @@
-BEGIN TRANSACTION;
--- Borrar registros de las tablas en el orden correcto
-DELETE FROM SERVICIO.RECARGAS WHERE ID_RECARGA > 1;
-DELETE FROM SERVICIO.TARIFAS WHERE ID_TARIFA > 1;
-DELETE FROM SERVICIO.MOVIMIENTOS WHERE ID_MOVIMIENTO > 1;
-DELETE FROM SERVICIO.TARJETAS WHERE ID_TARJETA > 1;
-DELETE FROM SERVICIO.VEHICULOS WHERE ID_VEHICULO > 1;
-DELETE FROM USUARIO.USUARIOS WHERE ID_USUARIO > 48;
-DELETE FROM USUARIO.SOLICITUDES WHERE ID_SOLICITUD > 1;
-DELETE FROM USUARIO.CONTACTOS WHERE ID_CONTACTO = >1;
-COMMIT TRANSACTION;
+begin;
 
-SELECT * FROM SERVICIO.CATEGORIAS_VEHICULOS
---SELECT * FROM SERVICIO.PEAJES
---SELECT * FROM SERVICIO.MOVIMIENTOS ORDER BY ID_MOVIMIENTO ASC
---SELECT * FROM SERVICIO.RECARGAS
---SELECT * FROM SERVICIO.PAGOS
---SELECT * FROM SERVICIO.TARJETAS
-SELECT * FROM SERVICIO.VEHICULOS
-SELECT * FROM USUARIO.USUARIOS
---SELECT * FROM USUARIO.SOLICITUDES
---SELECT * FROM USUARIO.CONTACTOS
+-- Use these statements only in development or controlled admin scenarios.
+select * from servicio.categorias_vehiculos order by id_categoria;
+select * from servicio.peajes order by id_peaje;
+select * from servicio.movimientos order by id_movimiento asc;
+select * from servicio.recargas order by id_recarga desc;
+select * from servicio.pagos order by id_pago desc;
+select * from servicio.tarjetas order by id_tarjeta;
+select * from servicio.vehiculos order by id_vehiculo;
+select * from usuario.usuarios order by id_usuario;
+select * from usuario.solicitudes order by id_solicitud desc;
+select * from usuario.contactos order by id_contacto desc;
 
---UPDATE [USUARIO].[CONTACTOS]
---SET [MENSAJE] = 'Quiero saber cuanto es el costo del servicio.'
---WHERE [ID_CONTACTO] = 1;
-
-
---UPDATE USUARIO.USUARIOS
---SET CONTRASENA = 'P4SSW0RD'
---WHERE ID_USUARIO = '46';
+rollback;

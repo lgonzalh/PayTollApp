@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using System.Data;
 
 namespace PayTollCardApi.Core.Services
@@ -16,12 +16,12 @@ namespace PayTollCardApi.Core.Services
         {
             var dataTable = new DataTable();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
 
-                using (var command = new SqlCommand(query, connection))
-                using (var adapter = new SqlDataAdapter(command))
+                using (var command = new NpgsqlCommand(query, connection))
+                using (var adapter = new NpgsqlDataAdapter(command))
                 {
                     adapter.Fill(dataTable);
                 }

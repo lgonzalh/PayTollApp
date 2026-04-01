@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PayTollCardApi.Core.Entities;
-using PayTollCardApi.Web.Models;
+using PayTollCardApi.Infrastructure.Persistence;
 
-
-namespace PayTollCardApi.SharedServices
+namespace PayTollCardApi.Core.Services
 {
     public class TarjetaService(TarjetasDbContext context)
     {
@@ -53,7 +52,7 @@ namespace PayTollCardApi.SharedServices
                 IdUsuario = idUsuario,
                 IdVehiculo = idVehiculo,
                 Saldo = 0,
-                FechaCreacion = DateTime.Now,
+                FechaCreacion = DateTime.UtcNow,
                 NumeroTarjeta = nuevoTarjetaNumero
             };
 
@@ -62,3 +61,4 @@ namespace PayTollCardApi.SharedServices
         }
     }
 }
+

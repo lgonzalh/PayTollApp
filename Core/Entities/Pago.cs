@@ -1,33 +1,33 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
 
 namespace PayTollCardApi.Core.Entities
 {
-    [Table("PAGOS", Schema = "SERVICIO")]
+    [Table("pagos", Schema = "servicio")]
     public class Pago
     {
         [Key]
-        [Column("ID_PAGO")]
+        [Column("id_pago")]
         public int IdPago { get; set; }
 
-        [Column("ID_USUARIO")]
+        [Column("id_usuario")]
         public int IdUsuario { get; set; }
 
-        [Column("ID_TARJETA")]
+        [Column("id_tarjeta")]
         public int IdTarjeta { get; set; }
 
-        [Column("ID_PEAJE")]
+        [Column("id_peaje")]
         public int IdPeaje { get; set; }
 
-        [Column("ID_CATEGORIA")]
+        [Column("id_categoria")]
         public int IdCategoria { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column("valor", TypeName = "numeric(18,2)")]
         public decimal Valor { get; set; }
 
-        [Column("FECHA_PAGO")]
+        [Column("fecha_pago")]
         public DateTime FechaPago { get; set; }
 
         // Relaciones
@@ -44,3 +44,4 @@ namespace PayTollCardApi.Core.Entities
         public CategoriaVehiculo? CategoriaVehiculo { get; set; }
     }
 }
+

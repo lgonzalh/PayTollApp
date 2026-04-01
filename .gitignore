@@ -4,4 +4,6 @@ obj/
 *.suo 
 *.lock 
 *.log 
+build_errors.txt
+tmp.txt
 .vs/ 

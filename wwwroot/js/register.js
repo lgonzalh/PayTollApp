@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Validación de Fecha de Nacimiento
+﻿document.addEventListener('DOMContentLoaded', function () {
+    // ValidaciÃ³n de Fecha de Nacimiento
     const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
     const edadError = document.getElementById('edadError');
     const today = new Date();
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     age--;
                 }
                 if (age < 18 || age > 80) {
-                    edadError.textContent = `Debes tener entre 18 y 80 años. Tu edad es ${age} años.`;
+                    edadError.textContent = `Debes tener entre 18 y 80 aÃ±os. Tu edad es ${age} aÃ±os.`;
                     edadError.style.display = 'block';
                 } else {
                     edadError.textContent = '';
@@ -34,14 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Validación de coincidencia de contraseñas
+    // ValidaciÃ³n de coincidencia de contraseÃ±as
     const passwordInput1 = document.getElementById('contrasena');
     const passwordInput2 = document.getElementById('confirmar_contrasena');
     const passwordError = document.getElementById('passwordError');
 
     const validatePasswords = () => {
         if (passwordInput1.value !== passwordInput2.value) {
-            passwordError.textContent = 'Las contraseñas no coinciden.';
+            passwordError.textContent = 'Las contraseÃ±as no coinciden.';
             passwordError.style.display = 'block';
         } else {
             passwordError.textContent = '';
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         passwordInput2.addEventListener('input', validatePasswords);
     }
 
-    // Manejo del envío del formulario de registro
+    // Manejo del envÃ­o del formulario de registro
     const registerForm = document.getElementById('registerForm');
     const registerMessage = document.getElementById('registerMessage');
     const numeroIdentificacion = document.getElementById('numero_identificacion');
@@ -79,21 +79,21 @@ document.addEventListener('DOMContentLoaded', function () {
             const contrasena = document.getElementById('contrasena').value.trim();
             const fechaCreacion = new Date().toISOString();
 
-            // Validaciones básicas
+            // Validaciones bÃ¡sicas
             if (!cedula) {
-                cedulaError.textContent = 'La cédula es requerida.';
+                cedulaError.textContent = 'La cÃ©dula es requerida.';
                 cedulaError.style.display = 'block';
                 return;
             }
 
             if (!correoElectronico) {
-                correoError.textContent = 'El correo electrónico es requerido.';
+                correoError.textContent = 'El correo electrÃ³nico es requerido.';
                 correoError.style.display = 'block';
                 return;
             }
 
             if (passwordInput1.value !== passwordInput2.value) {
-                passwordError.textContent = 'Las contraseñas no coinciden.';
+                passwordError.textContent = 'Las contraseÃ±as no coinciden.';
                 passwordError.style.display = 'block';
                 return;
             }
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('Estado de respuesta:', response.status);
                 if (response.status === 400) {
                     return response.json().then((error) => {
-                        throw new Error(error.Message || 'Error al registrar el usuario.');
+                        throw new Error(error.message || error.Message || 'Error al registrar el usuario.');
                     });
                 }
                 if (!response.ok) {
@@ -142,3 +142,4 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Error: Elementos del DOM relacionados con el formulario no encontrados.');
     }
 });
+

@@ -1,4 +1,4 @@
-document.getElementById("execute-btn").addEventListener("click", async () => {
+﻿document.getElementById("execute-btn").addEventListener("click", async () => {
     const queryInput = document.getElementById("query-input").value.trim();
     const tableHead = document.getElementById("table-head");
     const tableBody = document.getElementById("table-body");
@@ -21,7 +21,7 @@ document.getElementById("execute-btn").addEventListener("click", async () => {
       const responseData = await response.json();
   
       if (!response.ok) {
-        alert(`Error: ${responseData.Message}`);
+        alert(`Error: ${responseData.message || responseData.Message}`);
         return;
       }
   
@@ -40,7 +40,7 @@ document.getElementById("execute-btn").addEventListener("click", async () => {
         tableBody.innerHTML = "<tr><td colspan='100%'>No se encontraron resultados.</td></tr>";
       }
     } catch (error) {
-      alert("Error al ejecutar la consulta. Revisa la consola para más detalles.");
+      alert("Error al ejecutar la consulta. Revisa la consola para mÃ¡s detalles.");
       console.error("Error:", error);
     }
   });
