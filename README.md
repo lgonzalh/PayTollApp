@@ -1,14 +1,12 @@
 # PayTollApp
 
-Professional bilingual project documentation for the PayToll toll-card platform.
-
 [English](#english) | [Español Latinoamericano](#espanol-latinoamericano)
 
 ## English
 
 ### Overview
 
-PayTollApp is an ASP.NET Core 8 web application for managing electronic toll-card operations. The solution combines a REST API, SQL Server persistence, static web pages, and Swagger-based API exploration for development environments.
+PayTollApp is an ASP.NET Core 8 web application for managing electronic toll-card operations. The solution combines a REST API, PostgreSQL persistence on Supabase, static web pages, and Swagger-based API exploration for development environments.
 
 The platform currently supports:
 
@@ -35,10 +33,11 @@ This layout keeps business logic separated from HTTP concerns and persistence de
 ### Technology Stack
 
 - .NET 8 / ASP.NET Core Web API
-- Entity Framework Core with SQL Server
+- Entity Framework Core with PostgreSQL via Npgsql
 - Swagger / OpenAPI for local API documentation
 - Static HTML, CSS, JavaScript frontend served by ASP.NET Core
-- SQL Server DDL/DML scripts for database provisioning
+- Supabase PostgreSQL database
+- PostgreSQL DDL/DML scripts for database provisioning
 - Heroku-oriented runtime support through `Procfile` and forwarded headers handling
 
 ### Repository Structure
@@ -55,9 +54,8 @@ PayTollApp/
 |   |-- Controllers/
 |   `-- Models/
 |-- db/
-|   |-- DDL.sql
-|   |-- DML.sql
-|   |-- DescribeTabla.sql
+|   |-- DDL_POSTGRESQL
+|   |-- DML_POSTGRESQL.txt
 |   `-- Selects.sql
 |-- wwwroot/
 |   |-- css/
@@ -89,42 +87,42 @@ PayTollApp/
 | Requests | `GET /api/Solicitudes/historial/{cedula}` | Retrieve request history |
 | Contacts | `POST /api/Contactos/enviar` | Submit a contact message |
 | Contacts | `GET /api/Contactos/historial/{cedula}` | Retrieve contact history |
+| Diagnostics | `POST /api/Sql/execute` | Execute read-only diagnostic queries |
 | Administration | `GET/POST/PUT/DELETE /api/Administracion/...` | Administrative operations for users, cards, payments, top-ups, and requests |
 
 ### Database
 
-The project uses SQL Server and includes database scripts under `db/`:
+The application is currently configured to run against Supabase PostgreSQL. The repository also includes database scripts under `db/`:
 
-- `db/DDL.sql`: schema creation
-- `db/DML.sql`: seed or initial data population
-- `db/DescribeTabla.sql`: table inspection helpers
+- `db/DDL_POSTGRESQL`: PostgreSQL schema creation
+- `db/DML_POSTGRESQL.txt`: PostgreSQL seed data
 - `db/Selects.sql`: query samples
 
-The default local connection strings point to a SQL Server database named `PayTollApp`.
+The live application configuration uses a Supabase session-pooler PostgreSQL connection string in `appsettings.json` and `appsettings.Development.json`.
 
 ### Local Setup
 
 #### Prerequisites
 
 - .NET 8 SDK
-- SQL Server
-- A SQL client such as SQL Server Management Studio or Azure Data Studio
+- PostgreSQL access through Supabase
+- A SQL client such as Supabase SQL Editor, DBeaver, or Azure Data Studio
 
-#### 1. Create the database
+#### 1. Provision the database
 
 Run the scripts in this order:
 
-1. `db/DDL.sql`
-2. `db/DML.sql`
+1. `db/DDL_POSTGRESQL`
+2. `db/DML_POSTGRESQL.txt`
 
 #### 2. Configure connection strings
 
-Update `appsettings.json` as needed:
+The repository already includes a working Supabase session-pooler connection string for demo and portfolio deployment. If you need to change it, update `appsettings.json` and `appsettings.Development.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Database=PayTollApp;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;",
-  "UsuariosDB": "Server=localhost;Database=PayTollApp;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+  "DefaultConnection": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;",
+  "UsuariosDB": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;"
 }
 ```
 
@@ -163,7 +161,7 @@ The project also serves a static site from `wwwroot/`, including pages such as:
 - The repository includes a `Procfile` with `web: dotnet PayTollCardApi.dll`
 - The application handles forwarded headers for reverse proxies
 - HTTPS redirection is skipped when a `PORT` environment variable is present, which supports certain cloud-hosted environments
-- A CORS policy currently allows the deployed Heroku frontend origin configured in `Program.cs`
+- The application is configured to work against a Supabase PostgreSQL database without additional post-deployment code changes
 
 ### Current Implementation Notes
 
@@ -178,7 +176,7 @@ The project also serves a static site from `wwwroot/`, including pages such as:
 
 ### Resumen
 
-PayTollApp es una aplicacion web construida con ASP.NET Core 8 para gestionar operaciones de telepeaje mediante tarjetas. La solucion integra una API REST, persistencia sobre SQL Server, paginas web estaticas y documentacion Swagger disponible en entornos de desarrollo.
+PayTollApp es una aplicacion web construida con ASP.NET Core 8 para gestionar operaciones de telepeaje mediante tarjetas. La solucion integra una API REST, persistencia sobre PostgreSQL en Supabase, paginas web estaticas y documentacion Swagger disponible en entornos de desarrollo.
 
 Actualmente la plataforma soporta:
 
@@ -205,10 +203,11 @@ Esta organizacion facilita el mantenimiento y separa la logica del negocio de la
 ### Stack Tecnologico
 
 - .NET 8 / ASP.NET Core Web API
-- Entity Framework Core con SQL Server
+- Entity Framework Core con PostgreSQL mediante Npgsql
 - Swagger / OpenAPI para exploracion local de la API
 - Frontend estatico en HTML, CSS y JavaScript
-- Scripts DDL/DML para aprovisionamiento de base de datos
+- Base de datos PostgreSQL en Supabase
+- Scripts DDL/DML para aprovisionamiento de la base de datos PostgreSQL
 - Compatibilidad de despliegue tipo Heroku mediante `Procfile` y encabezados reenviados
 
 ### Estructura del Repositorio
@@ -225,9 +224,8 @@ PayTollApp/
 |   |-- Controllers/
 |   `-- Models/
 |-- db/
-|   |-- DDL.sql
-|   |-- DML.sql
-|   |-- DescribeTabla.sql
+|   |-- DDL_POSTGRESQL
+|   |-- DML_POSTGRESQL.txt
 |   `-- Selects.sql
 |-- wwwroot/
 |   |-- css/
@@ -259,42 +257,42 @@ PayTollApp/
 | Solicitudes | `GET /api/Solicitudes/historial/{cedula}` | Consultar historial de solicitudes |
 | Contactos | `POST /api/Contactos/enviar` | Enviar mensaje de contacto |
 | Contactos | `GET /api/Contactos/historial/{cedula}` | Consultar historial de contactos |
+| Diagnostico | `POST /api/Sql/execute` | Ejecutar consultas diagnosticas de solo lectura |
 | Administracion | `GET/POST/PUT/DELETE /api/Administracion/...` | Operaciones administrativas sobre usuarios, tarjetas, pagos, recargas y solicitudes |
 
 ### Base de Datos
 
-El proyecto usa SQL Server e incluye scripts en `db/`:
+La aplicacion esta configurada actualmente para ejecutarse sobre PostgreSQL en Supabase. El repositorio tambien incluye scripts en `db/`:
 
-- `db/DDL.sql`: creacion del esquema
-- `db/DML.sql`: datos iniciales o de prueba
-- `db/DescribeTabla.sql`: apoyo para inspeccion de tablas
+- `db/DDL_POSTGRESQL`: creacion del esquema PostgreSQL
+- `db/DML_POSTGRESQL.txt`: datos iniciales para PostgreSQL
 - `db/Selects.sql`: consultas de referencia
 
-Las cadenas de conexion locales apuntan por defecto a una base de datos llamada `PayTollApp`.
+La configuracion activa usa una cadena de conexion PostgreSQL tipo session-pooler de Supabase en `appsettings.json` y `appsettings.Development.json`.
 
 ### Ejecucion Local
 
 #### Prerrequisitos
 
 - .NET 8 SDK
-- SQL Server
-- Un cliente SQL como SQL Server Management Studio o Azure Data Studio
+- Acceso a PostgreSQL mediante Supabase
+- Un cliente SQL como Supabase SQL Editor, DBeaver o Azure Data Studio
 
-#### 1. Crear la base de datos
+#### 1. Aprovisionar la base de datos
 
 Ejecuta los scripts en este orden:
 
-1. `db/DDL.sql`
-2. `db/DML.sql`
+1. `db/DDL_POSTGRESQL`
+2. `db/DML_POSTGRESQL.txt`
 
 #### 2. Configurar cadenas de conexion
 
-Ajusta `appsettings.json` segun tu entorno:
+El repositorio ya incluye una cadena de conexion funcional de Supabase session-pooler para despliegues de demo o portfolio. Si necesitas cambiarla, ajusta `appsettings.json` y `appsettings.Development.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Database=PayTollApp;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;",
-  "UsuariosDB": "Server=localhost;Database=PayTollApp;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+  "DefaultConnection": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;",
+  "UsuariosDB": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;"
 }
 ```
 
@@ -333,7 +331,7 @@ La aplicacion tambien sirve un sitio estatico desde `wwwroot/`, con paginas como
 - El repositorio incluye un `Procfile` con `web: dotnet PayTollCardApi.dll`
 - La aplicacion procesa encabezados reenviados para funcionar detras de proxies
 - La redireccion a HTTPS se omite cuando existe la variable de entorno `PORT`, lo que ayuda en ciertos despliegues cloud
-- Existe una politica CORS configurada para el origen del frontend desplegado en Heroku definido en `Program.cs`
+- La aplicacion ya quedo alineada para trabajar con PostgreSQL en Supabase sin cambios de codigo posteriores al despliegue
 
 ### Notas Actuales de Implementacion
 
