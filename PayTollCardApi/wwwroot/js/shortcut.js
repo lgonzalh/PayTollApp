@@ -12,7 +12,7 @@ document.getElementById("execute-btn").addEventListener("click", async () => {
     }
   
     try {
-      const response = await fetch("https://paytollcard-2b6b0c89816c.herokuapp.com/api/Sql/execute", {
+      const response = await fetch("/api/Sql/execute", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: queryInput }),

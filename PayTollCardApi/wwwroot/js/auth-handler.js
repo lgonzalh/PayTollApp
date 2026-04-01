@@ -1,8 +1,8 @@
 // auth-handler.js
 class AuthHandler {
     constructor() {
-        // Usar el mismo dominio del frontend
-        this.API_BASE_URL = 'https://paytollcard-2b6b0c89816c.herokuapp.com';
+        // Usar el mismo dominio del frontend (local o desplegado)
+        this.API_BASE_URL = window.location.origin;
         this.setupEventListeners();
     }
 

@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             console.log('Datos enviados al backend:', data);
 
-            fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Usuarios/register', {
+            fetch('/api/Usuarios/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

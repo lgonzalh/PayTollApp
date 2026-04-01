@@ -38,7 +38,7 @@ export default function solicitudModule() {
             const descripcionSolicitud = document.getElementById('descripcionSolicitud').value;
 
             try {
-                const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Solicitudes', {
+                const response = await fetch('/api/Solicitudes', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

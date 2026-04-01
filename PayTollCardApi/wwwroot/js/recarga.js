@@ -28,7 +28,7 @@ export default function recargaModule() {
             const montoRecarga = document.getElementById('montoRecarga').value;
 
             try {
-                const response = await fetch('https://paytollcard-2b6b0c89816c.herokuapp.com/api/Recargas', {
+                const response = await fetch('/api/Recargas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
