@@ -1,18 +1,20 @@
-using Microsoft.AspNetCore.Builder;
+锘縰sing Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using PayTollCardApi.Data;
-using PayTollCardApi.DataAccess;
-using PayTollCardApi.Services;
-using PayTollCardApi.SharedServices;
 using Microsoft.AspNetCore.HttpOverrides;
+using PayTollCardApi.Infrastructure.Persistence;
+using PayTollCardApi.Core.Interfaces;
+using PayTollCardApi.Core.Services;
+using PayTollCardApi.Core.Entities;
+using PayTollCardApi.Web.Models;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuraci髇 de DbContext con EnableRetryOnFailure
+// Configuraci贸n de DbContext
 builder.Services.AddDbContext<TarjetasDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -34,17 +36,14 @@ builder.Services.AddDbContext<VehiculosDbContext>(options =>
     )
 );
 
-// Registro de Servicios
+// Inyecci贸n de Dependencias: Capa de Servicios
 builder.Services.AddScoped<TarjetaService>();
 builder.Services.AddScoped<IAdministradorService, AdministradorService>();
-
-// **Agregar esta l韓ea para registrar SqlService**
 builder.Services.AddSingleton<SqlService>(new SqlService(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// A馻dir Controllers
 builder.Services.AddControllers();
 
-// Configuraci髇 de CORS
+// Configuraci贸n de CORS para Portfolio y Entornos Cloud
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowHerokuApp", policy =>
@@ -55,22 +54,23 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configuraci髇 de Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PayTollCard API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { 
+        Title = "PayTollCard API - Sistema de Telepeaje", 
+        Version = "v1",
+        Description = "API RESTful orientada a Servicios para gesti贸n de tarjetas de telepeaje."
+    });
 });
 
 var app = builder.Build();
 
-// Configurar Forwarded Headers para Heroku
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-// Configuraci髇 de Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -87,25 +87,16 @@ else
     app.UseHsts();
 }
 
-// Desactivar Redirecci髇 HTTPS en Heroku
 var isHeroku = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PORT"));
 if (!isHeroku)
 {
     app.UseHttpsRedirection();
 }
 
-// Servir archivos est醫icos y archivos por defecto
 app.UseDefaultFiles();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-// Aplicar CORS
 app.UseCors("AllowHerokuApp");
-
-// Opcional: Autenticaci髇 y Autorizaci髇
-// app.UseAuthentication();
-// app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
