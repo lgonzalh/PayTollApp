@@ -7,7 +7,7 @@ RUN dotnet restore
 
 # Copiar todo lo demás y compilar
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish PayTollCardApi.csproj -c Release -o out
 
 # Construir imagen en tiempo de ejecución
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
