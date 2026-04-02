@@ -1,0 +1,24 @@
+# Directorios de compilación
+bin/
+obj/
+
+# Archivos de usuario
+*.user
+*.suo
+
+# Archivos de logs y temporales
+*.log
+*.tmp
+tmp.txt
+build_errors.txt
+
+# Entorno de Visual Studio
+.vs/
+.vscode/
+
+# Variables de entorno
+.env
+
+# Directorios publicos de node / frameworks si aplica
+node_modules/
+wwwroot/node_modules/
