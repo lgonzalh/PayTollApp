@@ -50,7 +50,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowHerokuApp", policy =>
     {
-        policy.WithOrigins("https://paytollcard-2b6b0c89816c.herokuapp.com")
+        policy.WithOrigins("https://paytollcard-2b6b0c89816c.herokuapp.com", "https://paytollapp-be391.web.app", "http://localhost:5000", "https://localhost:5001")
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
