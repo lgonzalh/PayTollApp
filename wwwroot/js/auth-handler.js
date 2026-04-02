@@ -66,7 +66,7 @@ class AuthHandler {
 
         } catch (error) {
             console.error('Error detallado:', error);
-            alert('Error en el inicio de sesiÃ³n: ' + error.message);
+            alert('Error en el inicio de sesión: ' + error.message);
         }
     }
 

@@ -18,7 +18,12 @@ export default function extractoModule() {
 
         try {
             const response = await fetch(`/api/Extracto/${cedula}`, { method: 'GET' });
-            if (!response.ok) throw new Error('Error al obtener el extracto.');
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error('Cédula no disponible o no hay extractos registrados.');
+                }
+                throw new Error('Error al obtener el extracto.');
+            }
 
             const result = await response.json();
             alert('Extracto obtenido correctamente.');
@@ -26,7 +31,7 @@ export default function extractoModule() {
             renderSaldoGrid(result);
         } catch (error) {
             console.error('Error:', error);
-            alert('Hubo un problema al obtener el extracto.');
+            alert(error.message);
         }
     });
 

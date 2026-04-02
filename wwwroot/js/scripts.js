@@ -49,29 +49,32 @@ $(document).ready(function () {
       }
     });
 
-    // Mostrar/Ocultar contraseña
-    const togglePassword1 = document.getElementById('togglePassword1');
-    const togglePassword2 = document.getElementById('togglePassword2');
+    // Actualizar navbar según estado de autenticación
+    updateAuthUI();
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
     const passwordInput1 = document.getElementById('contrasena');
     const passwordInput2 = document.getElementById('confirmar_contrasena');
-    const passwordError = document.getElementById('password_error');
+    const passwordError = document.getElementById('passwordError');
 
-    togglePassword1.addEventListener('click', function() {
-      const type = passwordInput1.type === 'password' ? 'text' : 'password';
-      passwordInput1.type = type;
+    togglePassword?.addEventListener('click', function() {
+      const type = passwordInput1.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput1.setAttribute('type', type);
       this.querySelector('i').classList.toggle('fa-eye');
       this.querySelector('i').classList.toggle('fa-eye-slash');
     });
 
-    togglePassword2.addEventListener('click', function() {
-      const type = passwordInput2.type === 'password' ? 'text' : 'password';
-      passwordInput2.type = type;
+    toggleConfirmPassword?.addEventListener('click', function() {
+      const type = passwordInput2.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput2.setAttribute('type', type);
       this.querySelector('i').classList.toggle('fa-eye');
       this.querySelector('i').classList.toggle('fa-eye-slash');
     });
 
     // Validación de contraseñas
-    passwordInput2.addEventListener('input', function() {
+    passwordInput2?.addEventListener('input', function() {
       if (passwordInput1.value !== passwordInput2.value) {
         passwordError.textContent = 'No son iguales las contraseñas, revísalas!';
       } else {
@@ -79,6 +82,28 @@ $(document).ready(function () {
       }
     });
   });
+
+  // Función para manejar la UI de autenticación en la navbar
+  function updateAuthUI() {
+    const loggedInUserStr = localStorage.getItem('loggedInUser');
+    const authButtonContainer = document.querySelector('.navbar-nav .nav-item.ms-3');
+    
+    if (authButtonContainer) {
+        if (loggedInUserStr) {
+            // Usuario logueado
+            authButtonContainer.innerHTML = '<button class="btn btn-outline-danger rounded-pill px-4" id="btnLogout">Cerrar Sesión</button>';
+            
+            document.getElementById('btnLogout').addEventListener('click', function() {
+                localStorage.removeItem('loggedInUser');
+                localStorage.removeItem('authToken');
+                window.location.href = 'index.html';
+            });
+        } else {
+            // Usuario no logueado
+            authButtonContainer.innerHTML = '<button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Acceder</button>';
+        }
+    }
+  }
 
   //Registar Vehiculo
 

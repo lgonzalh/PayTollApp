@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     // ValidaciÃ³n de Fecha de Nacimiento
     const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
     const edadError = document.getElementById('edadError');
@@ -34,14 +34,14 @@
         });
     }
 
-    // ValidaciÃ³n de coincidencia de contraseÃ±as
+    // Validación de coincidencia de contraseñas
     const passwordInput1 = document.getElementById('contrasena');
     const passwordInput2 = document.getElementById('confirmar_contrasena');
     const passwordError = document.getElementById('passwordError');
 
     const validatePasswords = () => {
         if (passwordInput1.value !== passwordInput2.value) {
-            passwordError.textContent = 'Las contraseÃ±as no coinciden.';
+            passwordError.textContent = 'Las contraseñas no coinciden.';
             passwordError.style.display = 'block';
         } else {
             passwordError.textContent = '';
@@ -54,7 +54,7 @@
         passwordInput2.addEventListener('input', validatePasswords);
     }
 
-    // Manejo del envÃ­o del formulario de registro
+    // Manejo del envío del formulario de registro
     const registerForm = document.getElementById('registerForm');
     const registerMessage = document.getElementById('registerMessage');
     const numeroIdentificacion = document.getElementById('numero_identificacion');

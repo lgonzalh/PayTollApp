@@ -1,4 +1,4 @@
-﻿// index.js
+// index.js
 
 var myCarousel = document.querySelector('#imageCarousel');
 var carousel = new bootstrap.Carousel(myCarousel, {interval: 3000, ride: 'carousel'});
@@ -44,17 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(result => {
-                console.log('Inicio de sesiÃ³n exitoso:', result);
+                console.log('Inicio de sesión exitoso:', result);
                 const loggedInUser = result.usuario || result.Usuario;
                 if (loggedInUser) {
                     localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
                 }
-                alert('Inicio de sesiÃ³n exitoso.');
+                alert('Inicio de sesión exitoso.');
                 window.location.href = 'services.html';
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Correo o contraseÃ±a incorrectos.');
+                alert('Correo o contraseña incorrectos.');
             });
         });
     } else {

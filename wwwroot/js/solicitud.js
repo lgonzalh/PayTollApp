@@ -1,15 +1,15 @@
-﻿export default function solicitudModule() {
+export default function solicitudModule() {
     const solicitudFormContainer = document.getElementById('solicitudFormContainer');
 
     if (!solicitudFormContainer) {
-        console.error('No se encontrÃ³ el contenedor del formulario de solicitud.');
+        console.error('No se encontró el contenedor del formulario de solicitud.');
         return;
     }
 
     solicitudFormContainer.innerHTML = `
         <form id="solicitudForm">
             <div class="mb-3">
-                <label for="cedula" class="form-label">NÃºmero de CÃ©dula</label>
+                <label for="cedula" class="form-label">Número de Cédula</label>
                 <input type="text" class="form-control" id="cedula" required>
             </div>
             <div class="mb-3">
@@ -17,12 +17,12 @@
                 <select class="form-select" id="tipoSolicitud" required>
                     <option value="">Seleccione</option>
                     <option value="Reclamo">Reclamo</option>
-                    <option value="PeticiÃ³n">PeticiÃ³n</option>
+                    <option value="Petición">Petición</option>
                     <option value="Queja">Queja</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="descripcionSolicitud" class="form-label">DescripciÃ³n</label>
+                <label for="descripcionSolicitud" class="form-label">Descripción</label>
                 <textarea class="form-control" id="descripcionSolicitud" rows="3" required></textarea>
             </div>
         </form>
@@ -62,7 +62,7 @@
             }
         });
     } else {
-        console.error('No se encontrÃ³ el botÃ³n submitSolicitud o el formulario solicitudForm.');
+        console.error('No se encontró el botón submitSolicitud o el formulario solicitudForm.');
     }
 }
 
