@@ -1,4 +1,4 @@
-﻿// auth-handler.js
+// auth-handler.js
 class AuthHandler {
     constructor() {
         const storedApiBaseUrl = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim();
@@ -62,6 +62,12 @@ class AuthHandler {
                 localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
             }
 
+            // Actualizar UI
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+
+            alert('Inicio de sesión exitoso.');
             window.location.href = 'services.html';
 
         } catch (error) {

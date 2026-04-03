@@ -87,6 +87,7 @@ $(document).ready(function () {
   function updateAuthUI() {
     const loggedInUserStr = localStorage.getItem('loggedInUser');
     const authButtonContainer = document.querySelector('.navbar-nav .nav-item.ms-3');
+    const loginModalElement = document.getElementById('loginModal');
     
     if (authButtonContainer) {
         if (loggedInUserStr) {
@@ -98,6 +99,14 @@ $(document).ready(function () {
                 localStorage.removeItem('authToken');
                 window.location.href = 'index.html';
             });
+            
+            // Cerrar el modal si está abierto
+            if (loginModalElement) {
+                const loginModal = bootstrap.Modal.getInstance(loginModalElement);
+                if (loginModal) {
+                    loginModal.hide();
+                }
+            }
         } else {
             // Usuario no logueado
             authButtonContainer.innerHTML = '<button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Acceder</button>';
