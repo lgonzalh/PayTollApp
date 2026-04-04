@@ -4,67 +4,27 @@
 
 ## English
 
-### Overview
+### Executive Summary
 
-PayTollApp is an ASP.NET Core 8 web application for managing electronic toll-card operations. The solution combines a REST API, PostgreSQL persistence on Supabase, static web pages, and Swagger-based API exploration for development environments.
-
-The platform currently supports:
-
-- User registration and sign-in
-- Vehicle registration linked to a user
-- Toll-card creation and lookup
-- Balance top-ups and toll payments
-- Account statement generation
-- Customer contact and support requests
-- Administrative user and card management
-
-### Architecture
-
-The codebase follows a layered structure:
-
-- `Core/`: domain entities, business services, and service contracts
-- `Infrastructure/`: Entity Framework Core database contexts
-- `Web/`: API controllers and request/response models
-- `wwwroot/`: static frontend assets and HTML pages
-- `db/`: SQL scripts for schema creation, seed data, and ad-hoc queries
-
-This layout keeps business logic separated from HTTP concerns and persistence details, making the project easier to maintain and extend.
+PayTollApp is a comprehensive cloud-based platform designed for automated toll payment management and electronic top-ups. The solution integrates a robust backend REST API with a clean, decoupled static frontend, providing a seamless experience for vehicle registration, toll card management, and transaction history. Designed with a modular architecture, it separates business logic from HTTP concerns and persistence details, ensuring high maintainability and scalability.
 
 ### Technology Stack
 
+**Backend**
 - .NET 8 / ASP.NET Core Web API
-- Entity Framework Core with PostgreSQL via Npgsql
-- Swagger / OpenAPI for local API documentation
-- Static HTML, CSS, JavaScript frontend served via Firebase Hosting
-- Supabase PostgreSQL database
-- Serverless backend deployment on Google Cloud Run via Docker
-- CORS configuration supporting cross-origin requests from multiple environments
+- Entity Framework Core (ORM)
+- PostgreSQL (Supabase)
+- Swagger / OpenAPI (API Documentation)
 
-### Repository Structure
+**Frontend**
+- HTML5 & CSS3 (Bootstrap 5)
+- Vanilla JavaScript
+- Dynamic UI State Management & LocalStorage
 
-```text
-PayTollApp/
-|-- Core/
-|   |-- Entities/
-|   |-- Interfaces/
-|   `-- Services/
-|-- Infrastructure/
-|   `-- Persistence/
-|-- Web/
-|   |-- Controllers/
-|   `-- Models/
-|-- db/
-|   |-- DDL_POSTGRESQL
-|   |-- DML_POSTGRESQL.txt
-|   `-- Selects.sql
-|-- wwwroot/
-|   |-- css/
-|   |-- js/
-|   `-- *.html
-|-- Program.cs
-|-- PayTollCardApi.csproj
-`-- README.md
-```
+**Cloud & DevOps**
+- Docker (Containerization)
+- Google Cloud Run (Serverless API deployment)
+- Cross-Origin Resource Sharing (CORS) configured for decoupled architectures
 
 ### Main API Surface
 
@@ -88,152 +48,45 @@ PayTollApp/
 | Contacts | `POST /api/Contactos/enviar` | Submit a contact message |
 | Contacts | `GET /api/Contactos/historial/{cedula}` | Retrieve contact history |
 | Diagnostics | `POST /api/Sql/execute` | Execute read-only diagnostic queries |
-| Administration | `GET/POST/PUT/DELETE /api/Administracion/...` | Administrative operations for users, cards, payments, top-ups, and requests |
-
-### Database
-
-The application is currently configured to run against Supabase PostgreSQL. The repository also includes database scripts under `db/`:
-
-- `db/DDL_POSTGRESQL`: PostgreSQL schema creation
-- `db/DML_POSTGRESQL.txt`: PostgreSQL seed data
-- `db/Selects.sql`: query samples
-
-The live application configuration uses a Supabase session-pooler PostgreSQL connection string in `appsettings.json` and `appsettings.Development.json`.
-
-### Local Setup
-
-#### Prerequisites
-
-- .NET 8 SDK
-- PostgreSQL access through Supabase
-- A SQL client such as Supabase SQL Editor, DBeaver, or Azure Data Studio
-
-#### 1. Provision the database
-
-Run the scripts in this order:
-
-1. `db/DDL_POSTGRESQL`
-2. `db/DML_POSTGRESQL.txt`
-
-#### 2. Configure connection strings
-
-The repository already includes a working Supabase session-pooler connection string for demo and portfolio deployment. If you need to change it, update `appsettings.json` and `appsettings.Development.json`:
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;",
-  "UsuariosDB": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;"
-}
-```
-
-#### 3. Restore and build
-
-```bash
-dotnet restore
-dotnet build
-```
-
-#### 4. Run the application
-
-```bash
-dotnet run
-```
-
-Behavior by environment:
-
-- Development: Swagger UI is exposed at the application root
-- Non-development: static files and HTML pages are served, and Swagger is disabled
-
-### Frontend
-
-The project also serves a static site from `wwwroot/`, including pages such as:
-
-- `index.html`
-- `register.html`
-- `services.html`
-- `about.html`
-- `contact.html`
-- `admin.html`
-- `shortcut.html`
 
 ---
 
-## Espanol Latinoamericano
+## Español Latinoamericano
 
-### Resumen
+### Resumen Ejecutivo
 
-PayTollApp es una aplicacion web construida con ASP.NET Core 8 para gestionar operaciones de telepeaje mediante tarjetas. La solucion integra una API REST, persistencia sobre PostgreSQL en Supabase, paginas web estaticas y documentacion Swagger disponible en entornos de desarrollo.
+PayTollApp es una plataforma integral en la nube diseñada para la gestión automatizada de pagos de peaje y recargas electrónicas. La solución integra un robusto backend API REST con un frontend estático desacoplado, brindando una experiencia fluida para el registro de vehículos, gestión de tarjetas de peaje e historial de transacciones. Construida sobre una arquitectura modular, separa la lógica de negocio de las operaciones HTTP y de persistencia, garantizando un alto grado de escalabilidad y mantenibilidad.
 
-Actualmente la plataforma soporta:
+### Stack Tecnológico
 
-- Registro e inicio de sesion de usuarios
-- Registro de vehiculos asociados a un usuario
-- Creacion y consulta de tarjetas de telepeaje
-- Recargas de saldo y pagos en peajes
-- Generacion de extractos
-- Gestion de contactos y solicitudes de soporte
-- Operaciones administrativas sobre usuarios y tarjetas
-
-### Arquitectura
-
-La base del proyecto sigue una estructura por capas:
-
-- `Core/`: entidades de dominio, servicios y contratos
-- `Infrastructure/`: contextos de base de datos con Entity Framework Core
-- `Web/`: controladores HTTP y modelos de entrada/salida
-- `wwwroot/`: frontend estatico y recursos publicos
-- `db/`: scripts SQL para crear, poblar e inspeccionar la base de datos
-
-Esta organizacion facilita el mantenimiento y separa la logica del negocio de la capa web y de persistencia.
-
-### Stack Tecnologico
-
+**Backend**
 - .NET 8 / ASP.NET Core Web API
-- Entity Framework Core con PostgreSQL mediante Npgsql
-- Swagger / OpenAPI para exploracion local de la API
-- Frontend estatico (HTML, CSS y JavaScript) servido mediante Firebase Hosting
-- Base de datos PostgreSQL en Supabase
-- Despliegue de backend en arquitectura serverless mediante Docker en Google Cloud Run
-- Politicas de CORS habilitadas para comunicaciones seguras desde dominios cruzados
+- Entity Framework Core (ORM)
+- PostgreSQL (Supabase)
+- Swagger / OpenAPI (Documentación de API)
 
-### Estructura del Repositorio
+**Frontend**
+- HTML5 y CSS3 (Bootstrap 5)
+- Vanilla JavaScript
+- Gestión dinámica del estado de la UI y LocalStorage
 
-```text
-PayTollApp/
-|-- Core/
-|   |-- Entities/
-|   |-- Interfaces/
-|   `-- Services/
-|-- Infrastructure/
-|   `-- Persistence/
-|-- Web/
-|   |-- Controllers/
-|   `-- Models/
-|-- db/
-|   |-- DDL_POSTGRESQL
-|   |-- DML_POSTGRESQL.txt
-|   `-- Selects.sql
-|-- wwwroot/
-|   |-- css/
-|   |-- js/
-|   `-- *.html
-|-- Program.cs
-|-- PayTollCardApi.csproj
-`-- README.md
-```
+**Nube y DevOps**
+- Docker (Contenerización)
+- Google Cloud Run (Despliegue serverless de la API)
+- Políticas CORS configuradas para arquitecturas web desacopladas
 
 ### Superficie Principal de la API
 
-| Area | Endpoint | Proposito |
+| Área | Endpoint | Propósito |
 | --- | --- | --- |
 | Usuarios | `POST /api/Usuarios/register` | Registrar un nuevo usuario |
-| Usuarios | `POST /api/Usuarios/login` | Validar credenciales basicas |
-| Usuarios | `GET /api/Usuarios/perfil/{cedula}` | Consultar perfil por cedula |
-| Usuarios | `GET /api/Usuarios/categoria/{cedula}` | Obtener la categoria del vehiculo asociada a la tarjeta |
-| Vehiculos | `POST /api/Vehiculos/register` | Registrar un vehiculo para un usuario existente |
-| Vehiculos | `GET /api/Vehiculos/getByCedula/{cedula}` | Listar vehiculos del usuario |
+| Usuarios | `POST /api/Usuarios/login` | Validar credenciales básicas |
+| Usuarios | `GET /api/Usuarios/perfil/{cedula}` | Consultar perfil por cédula |
+| Usuarios | `GET /api/Usuarios/categoria/{cedula}` | Obtener la categoría del vehículo asociada a la tarjeta |
+| Vehículos | `POST /api/Vehiculos/register` | Registrar un vehículo para un usuario existente |
+| Vehículos | `GET /api/Vehiculos/getByCedula/{cedula}` | Listar vehículos del usuario |
 | Tarjetas | `POST /api/Tarjetas/create` | Crear una tarjeta de telepeaje |
-| Tarjetas | `GET /api/Tarjetas/getByCedula/{cedula}` | Consultar tarjetas por cedula |
+| Tarjetas | `GET /api/Tarjetas/getByCedula/{cedula}` | Consultar tarjetas por cédula |
 | Recargas | `POST /api/Recargas/recargar` | Agregar saldo a la tarjeta |
 | Recargas | `GET /api/Recargas/historial/{cedula}` | Consultar historial de recargas |
 | Pagos | `POST /api/Pagos/pagar` | Ejecutar un pago de peaje |
@@ -243,71 +96,4 @@ PayTollApp/
 | Solicitudes | `GET /api/Solicitudes/historial/{cedula}` | Consultar historial de solicitudes |
 | Contactos | `POST /api/Contactos/enviar` | Enviar mensaje de contacto |
 | Contactos | `GET /api/Contactos/historial/{cedula}` | Consultar historial de contactos |
-| Diagnostico | `POST /api/Sql/execute` | Ejecutar consultas diagnosticas de solo lectura |
-| Administracion | `GET/POST/PUT/DELETE /api/Administracion/...` | Operaciones administrativas sobre usuarios, tarjetas, pagos, recargas y solicitudes |
-
-### Base de Datos
-
-La aplicacion esta configurada actualmente para ejecutarse sobre PostgreSQL en Supabase. El repositorio tambien incluye scripts en `db/`:
-
-- `db/DDL_POSTGRESQL`: creacion del esquema PostgreSQL
-- `db/DML_POSTGRESQL.txt`: datos iniciales para PostgreSQL
-- `db/Selects.sql`: consultas de referencia
-
-La configuracion activa usa una cadena de conexion PostgreSQL tipo session-pooler de Supabase en `appsettings.json` y `appsettings.Development.json`.
-
-### Ejecucion Local
-
-#### Prerrequisitos
-
-- .NET 8 SDK
-- Acceso a PostgreSQL mediante Supabase
-- Un cliente SQL como Supabase SQL Editor, DBeaver o Azure Data Studio
-
-#### 1. Aprovisionar la base de datos
-
-Ejecuta los scripts en este orden:
-
-1. `db/DDL_POSTGRESQL`
-2. `db/DML_POSTGRESQL.txt`
-
-#### 2. Configurar cadenas de conexion
-
-El repositorio ya incluye una cadena de conexion funcional de Supabase session-pooler para despliegues de demo o portfolio. Si necesitas cambiarla, ajusta `appsettings.json` y `appsettings.Development.json`:
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;",
-  "UsuariosDB": "Host=aws-1-us-east-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vjtaejjmklslqqohcukw;Password=YOUR_PASSWORD;SSL Mode=Require;Trust Server Certificate=true;Timeout=300;Command Timeout=300;"
-}
-```
-
-#### 3. Restaurar y compilar
-
-```bash
-dotnet restore
-dotnet build
-```
-
-#### 4. Ejecutar la aplicacion
-
-```bash
-dotnet run
-```
-
-Comportamiento por entorno:
-
-- Desarrollo: Swagger UI se expone en la raiz de la aplicacion
-- No desarrollo: se sirven archivos estaticos y paginas HTML, y Swagger se deshabilita
-
-### Frontend
-
-La aplicacion tambien sirve un sitio estatico desde `wwwroot/`, con paginas como:
-
-- `index.html`
-- `register.html`
-- `services.html`
-- `about.html`
-- `contact.html`
-- `admin.html`
-- `shortcut.html`
+| Diagnóstico | `POST /api/Sql/execute` | Ejecutar consultas diagnósticas de solo lectura |
