@@ -31,6 +31,7 @@ export default function recargaModule() {
             const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
             const cedula = document.getElementById('cedulaRecarga').value;
             const monto = document.getElementById('montoRecarga').value;
+            const metodoPago = document.getElementById('metodoPagoRecarga').value;
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/Recargas/recargar`, {
@@ -39,8 +40,9 @@ export default function recargaModule() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        cedula,
-                        monto
+                        cedula: cedula,
+                        monto: parseFloat(monto),
+                        metodoPago: metodoPago
                     })
                 });
 
