@@ -156,22 +156,6 @@ The project also serves a static site from `wwwroot/`, including pages such as:
 - `admin.html`
 - `shortcut.html`
 
-### Deployment Notes
-
-- The application uses Docker for deployment to serverless platforms like Google Cloud Run.
-- The static frontend (`wwwroot`) is designed to be decoupled and is hosted on Firebase Hosting, communicating with the API via dynamic `localStorage` configuration.
-- CORS policies are specifically configured to allow requests from the Firebase production domain and localhost.
-- The application handles forwarded headers for reverse proxies and automatically binds to dynamic ports (`PORT` env variable) provided by cloud environments.
-- The application is configured to work against a Supabase PostgreSQL database without additional post-deployment code changes.
-
-### Current Implementation Notes
-
-- Authentication validates credentials against stored user data and dynamically updates the UI state (e.g., hiding login/showing logout buttons).
-- Custom HTTP error handling avoids unhandled exceptions on empty queries or missing records.
-- Swagger is enabled only in development mode.
-- The repository currently does not include automated tests.
-- Password handling appears database-driven and should be reviewed before production use.
-
 ---
 
 ## Espanol Latinoamericano
@@ -327,19 +311,3 @@ La aplicacion tambien sirve un sitio estatico desde `wwwroot/`, con paginas como
 - `contact.html`
 - `admin.html`
 - `shortcut.html`
-
-### Notas de Despliegue
-
-- La aplicacion se conteneriza con Docker para ser desplegada en plataformas serverless como Google Cloud Run.
-- El frontend estatico (`wwwroot`) esta desacoplado y alojado en Firebase Hosting, conectandose dinamicamente a la API a traves de la configuracion en `localStorage`.
-- Las politicas de CORS se configuraron especificamente para permitir el trafico seguro desde el dominio en produccion de Firebase.
-- Soporta procesamiento de encabezados reenviados y adaptacion automatica de puertos para entornos de despliegue en la nube.
-- La aplicacion trabaja con PostgreSQL en Supabase de forma automatica, leyendo la cadena de conexion desde las variables de entorno.
-
-### Notas Actuales de Implementacion
-
-- La interfaz de usuario refleja el estado de autenticacion de manera dinamica (ocultando botones de inicio de sesion y habilitando el cierre de sesion).
-- Mejoras en el manejo de errores HTTP, como mensajes controlados (404) al consultar extractos vacios o realizar peticiones no encontradas.
-- Swagger solo se habilita en modo desarrollo.
-- Los archivos JavaScript aseguran una codificacion correcta en UTF-8.
-- El manejo de contrasenas debe revisarse exhaustivamente para estandares productivos.
