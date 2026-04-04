@@ -14,10 +14,11 @@ export default function extractoModule() {
     `;
 
     document.getElementById('extractoModalSubmit').addEventListener('click', async () => {
+        const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
         const cedula = document.getElementById('cedulaExtracto').value;
 
         try {
-            const response = await fetch(`/api/Extracto/${cedula}`, { method: 'GET' });
+            const response = await fetch(`${API_BASE_URL}/api/Extracto/${cedula}`, { method: 'GET' });
             if (!response.ok) {
                 if (response.status === 404) {
                     throw new Error('Cédula no disponible o no hay extractos registrados.');

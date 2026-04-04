@@ -51,6 +51,8 @@ export default function vehiculoModule() {
 
     // Registro de vehículo
     document.getElementById('registerVehicle').addEventListener('click', async () => {
+        const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
+
         const data = {
             cedula: document.getElementById('cedula').value,
             placa: document.getElementById('placa').value,
@@ -58,7 +60,7 @@ export default function vehiculoModule() {
         };
 
         try {
-            const response = await fetch('/api/Vehiculos/register', {
+            const response = await fetch(`${API_BASE_URL}/api/Vehiculos/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -75,9 +77,10 @@ export default function vehiculoModule() {
 
     // Consulta de vehículo
     document.getElementById('consultVehicle').addEventListener('click', async () => {
+        const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
         const cedula = document.getElementById('consultCedula').value;
         try {
-            const response = await fetch(`/api/Vehiculos/getByCedula/${cedula}`);
+            const response = await fetch(`${API_BASE_URL}/api/Vehiculos/getByCedula/${cedula}`);
             if (!response.ok) throw new Error('No se encontraron vehículos para esta cédula.');
             
             const vehicles = await response.json();

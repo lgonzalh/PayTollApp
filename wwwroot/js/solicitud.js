@@ -33,12 +33,13 @@ export default function solicitudModule() {
 
     if (submitSolicitud && solicitudForm) {
         submitSolicitud.addEventListener('click', async () => {
+            const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
             const cedula = document.getElementById('cedula').value;
             const tipoSolicitud = document.getElementById('tipoSolicitud').value;
             const descripcionSolicitud = document.getElementById('descripcionSolicitud').value;
 
             try {
-                const response = await fetch('/api/Solicitudes/crear', {
+                const response = await fetch(`${API_BASE_URL}/api/Solicitudes/crear`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

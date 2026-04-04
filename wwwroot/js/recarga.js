@@ -28,11 +28,12 @@ export default function recargaModule() {
 
     if (submitRecarga && recargaForm) {
         submitRecarga.addEventListener('click', async () => {
+            const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
             const cedula = document.getElementById('cedulaRecarga').value;
             const monto = document.getElementById('montoRecarga').value;
 
             try {
-                const response = await fetch('/api/Recargas/recargar', {
+                const response = await fetch(`${API_BASE_URL}/api/Recargas/recargar`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -108,7 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             console.log('Datos enviados al backend:', data);
 
-            fetch('/api/Usuarios/register', {
+            const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
+
+            fetch(`${API_BASE_URL}/api/Usuarios/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
