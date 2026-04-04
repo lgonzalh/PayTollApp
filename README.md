@@ -35,10 +35,10 @@ This layout keeps business logic separated from HTTP concerns and persistence de
 - .NET 8 / ASP.NET Core Web API
 - Entity Framework Core with PostgreSQL via Npgsql
 - Swagger / OpenAPI for local API documentation
-- Static HTML, CSS, JavaScript frontend served by ASP.NET Core
+- Static HTML, CSS, JavaScript frontend served via Firebase Hosting
 - Supabase PostgreSQL database
-- PostgreSQL DDL/DML scripts for database provisioning
-- Heroku-oriented runtime support through `Procfile` and forwarded headers handling
+- Serverless backend deployment on Google Cloud Run via Docker
+- CORS configuration supporting cross-origin requests from multiple environments
 
 ### Repository Structure
 
@@ -158,17 +158,19 @@ The project also serves a static site from `wwwroot/`, including pages such as:
 
 ### Deployment Notes
 
-- The repository includes a `Procfile` with `web: dotnet PayTollCardApi.dll`
-- The application handles forwarded headers for reverse proxies
-- HTTPS redirection is skipped when a `PORT` environment variable is present, which supports certain cloud-hosted environments
-- The application is configured to work against a Supabase PostgreSQL database without additional post-deployment code changes
+- The application uses Docker for deployment to serverless platforms like Google Cloud Run.
+- The static frontend (`wwwroot`) is designed to be decoupled and is hosted on Firebase Hosting, communicating with the API via dynamic `localStorage` configuration.
+- CORS policies are specifically configured to allow requests from the Firebase production domain and localhost.
+- The application handles forwarded headers for reverse proxies and automatically binds to dynamic ports (`PORT` env variable) provided by cloud environments.
+- The application is configured to work against a Supabase PostgreSQL database without additional post-deployment code changes.
 
 ### Current Implementation Notes
 
-- Authentication is currently implemented as direct credential validation against stored user data
-- Swagger is enabled only in development mode
-- The repository currently does not include automated tests
-- Password handling appears database-driven and should be reviewed before production use
+- Authentication validates credentials against stored user data and dynamically updates the UI state (e.g., hiding login/showing logout buttons).
+- Custom HTTP error handling avoids unhandled exceptions on empty queries or missing records.
+- Swagger is enabled only in development mode.
+- The repository currently does not include automated tests.
+- Password handling appears database-driven and should be reviewed before production use.
 
 ---
 
@@ -205,10 +207,10 @@ Esta organizacion facilita el mantenimiento y separa la logica del negocio de la
 - .NET 8 / ASP.NET Core Web API
 - Entity Framework Core con PostgreSQL mediante Npgsql
 - Swagger / OpenAPI para exploracion local de la API
-- Frontend estatico en HTML, CSS y JavaScript
+- Frontend estatico (HTML, CSS y JavaScript) servido mediante Firebase Hosting
 - Base de datos PostgreSQL en Supabase
-- Scripts DDL/DML para aprovisionamiento de la base de datos PostgreSQL
-- Compatibilidad de despliegue tipo Heroku mediante `Procfile` y encabezados reenviados
+- Despliegue de backend en arquitectura serverless mediante Docker en Google Cloud Run
+- Politicas de CORS habilitadas para comunicaciones seguras desde dominios cruzados
 
 ### Estructura del Repositorio
 
@@ -328,14 +330,16 @@ La aplicacion tambien sirve un sitio estatico desde `wwwroot/`, con paginas como
 
 ### Notas de Despliegue
 
-- El repositorio incluye un `Procfile` con `web: dotnet PayTollCardApi.dll`
-- La aplicacion procesa encabezados reenviados para funcionar detras de proxies
-- La redireccion a HTTPS se omite cuando existe la variable de entorno `PORT`, lo que ayuda en ciertos despliegues cloud
-- La aplicacion ya quedo alineada para trabajar con PostgreSQL en Supabase sin cambios de codigo posteriores al despliegue
+- La aplicacion se conteneriza con Docker para ser desplegada en plataformas serverless como Google Cloud Run.
+- El frontend estatico (`wwwroot`) esta desacoplado y alojado en Firebase Hosting, conectandose dinamicamente a la API a traves de la configuracion en `localStorage`.
+- Las politicas de CORS se configuraron especificamente para permitir el trafico seguro desde el dominio en produccion de Firebase.
+- Soporta procesamiento de encabezados reenviados y adaptacion automatica de puertos para entornos de despliegue en la nube.
+- La aplicacion trabaja con PostgreSQL en Supabase de forma automatica, leyendo la cadena de conexion desde las variables de entorno.
 
 ### Notas Actuales de Implementacion
 
-- La autenticacion actual valida credenciales directamente contra los datos almacenados
-- Swagger solo se habilita en modo desarrollo
-- El repositorio no incluye pruebas automatizadas en este momento
-- El manejo de contrasenas debe revisarse antes de un uso productivo
+- La interfaz de usuario refleja el estado de autenticacion de manera dinamica (ocultando botones de inicio de sesion y habilitando el cierre de sesion).
+- Mejoras en el manejo de errores HTTP, como mensajes controlados (404) al consultar extractos vacios o realizar peticiones no encontradas.
+- Swagger solo se habilita en modo desarrollo.
+- Los archivos JavaScript aseguran una codificacion correcta en UTF-8.
+- El manejo de contrasenas debe revisarse exhaustivamente para estandares productivos.
