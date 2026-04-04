@@ -18,13 +18,7 @@ export default function recargaModule() {
             </div>
             <div class="mb-3">
                 <label for="metodoPagoRecarga" class="form-label">Método de Pago</label>
-                <select class="form-select" id="metodoPagoRecarga" required>
-                    <option value="PSE">PSE</option>
-                    <option value="NEQUI">NEQUI</option>
-                    <option value="EFECTIVO">Efectivo</option>
-                    <option value="TARJETA_CREDITO">Tarjeta de Crédito</option>
-                    <option value="TARJETA_DEBITO">Tarjeta de Débito</option>
-                </select>
+                <input type="text" class="form-control" id="metodoPagoRecarga" required placeholder="Ej: NEQUI, DAVIPLATA, EFECTIVO">
             </div>
         </form>
     `;
@@ -37,7 +31,8 @@ export default function recargaModule() {
             const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
             const cedula = document.getElementById('cedulaRecarga').value;
             const monto = document.getElementById('montoRecarga').value;
-            const metodoPago = document.getElementById('metodoPagoRecarga').value;
+            const metodoPagoInput = document.getElementById('metodoPagoRecarga').value;
+            const metodoPago = metodoPagoInput ? metodoPagoInput.toUpperCase() : '';
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/Recargas/recargar`, {
@@ -56,7 +51,8 @@ export default function recargaModule() {
                     alert('Recarga exitosa.');
                     // Cerrar el modal si es necesario
                 } else {
-                    alert('Error en la recarga.');
+                    const errorMsg = await response.text();
+                    alert(`Error en la recarga: ${errorMsg}`);
                 }
             } catch (error) {
                 console.error('Error:', error);
