@@ -18,7 +18,13 @@ export default function recargaModule() {
             </div>
             <div class="mb-3">
                 <label for="metodoPagoRecarga" class="form-label">Método de Pago</label>
-                <input type="text" class="form-control" id="metodoPagoRecarga" value="PSE" readonly>
+                <select class="form-select" id="metodoPagoRecarga" required>
+                    <option value="PSE">PSE</option>
+                    <option value="NEQUI">NEQUI</option>
+                    <option value="EFECTIVO">Efectivo</option>
+                    <option value="TARJETA_CREDITO">Tarjeta de Crédito</option>
+                    <option value="TARJETA_DEBITO">Tarjeta de Débito</option>
+                </select>
             </div>
         </form>
     `;
