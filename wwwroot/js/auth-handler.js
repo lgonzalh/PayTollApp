@@ -8,11 +8,42 @@ class AuthHandler {
 
     setupEventListeners() {
         document.addEventListener('DOMContentLoaded', () => {
+            this.updateAuthUI();
             const loginForm = document.getElementById('loginForm');
             if (loginForm) {
                 loginForm.addEventListener('submit', (e) => this.handleLogin(e));
             }
         });
+    }
+
+    updateAuthUI() {
+        const loggedInUserStr = localStorage.getItem('loggedInUser');
+        const authButtonContainer = document.querySelector('.navbar-nav .nav-item.ms-3');
+        const loginModalElement = document.getElementById('loginModal');
+        
+        if (authButtonContainer) {
+            if (loggedInUserStr) {
+                // Usuario logueado
+                authButtonContainer.innerHTML = '<button class="btn btn-outline-danger rounded-pill px-4" id="btnLogout">Cerrar Sesión</button>';
+                
+                document.getElementById('btnLogout').addEventListener('click', function() {
+                    localStorage.removeItem('loggedInUser');
+                    localStorage.removeItem('authToken');
+                    window.location.href = 'index.html';
+                });
+                
+                // Cerrar el modal si está abierto
+                if (loginModalElement) {
+                    const loginModal = bootstrap.Modal.getInstance(loginModalElement);
+                    if (loginModal) {
+                        loginModal.hide();
+                    }
+                }
+            } else {
+                // Usuario no logueado
+                authButtonContainer.innerHTML = '<button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Acceder</button>';
+            }
+        }
     }
 
     async handleLogin(event) {
@@ -63,9 +94,7 @@ class AuthHandler {
             }
 
             // Actualizar UI
-            if (typeof updateAuthUI === 'function') {
-                updateAuthUI();
-            }
+            this.updateAuthUI();
 
             alert('Inicio de sesión exitoso.');
             window.location.href = 'services.html';

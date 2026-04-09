@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using PayTollCardApi.Core.Entities;
@@ -12,10 +12,12 @@ namespace PayTollCardApi.Web.Controllers
     public class RecargasController : ControllerBase
     {
         private readonly TarjetasDbContext _context;
+        private readonly PayTollCardApi.Core.Services.TarjetaService _tarjetaService;
 
-        public RecargasController(TarjetasDbContext context)
+        public RecargasController(TarjetasDbContext context, PayTollCardApi.Core.Services.TarjetaService tarjetaService)
         {
             _context = context;
+            _tarjetaService = tarjetaService;
         }
 
         // Endpoint para realizar una recarga usando la cédula
@@ -35,7 +37,18 @@ namespace PayTollCardApi.Web.Controllers
                 var tarjetas = await _context.Tarjetas.Where(t => t.IdUsuario == usuario.Id).ToListAsync();
                 if (!tarjetas.Any())
                 {
-                    return NotFound("El usuario no tiene tarjetas asociadas.");
+                    // Si el usuario no tiene tarjeta, verificar si tiene un vehículo registrado
+                    var vehiculoUsuario = await _context.Vehiculos.FirstOrDefaultAsync(v => v.IdUsuario == usuario.Id);
+                    if (vehiculoUsuario != null)
+                    {
+                        // Crear tarjeta automáticamente para el primer vehículo encontrado
+                        await _tarjetaService.CrearTarjetaParaVehiculoAsync(usuario.Id, vehiculoUsuario.Id);
+                        tarjetas = await _context.Tarjetas.Where(t => t.IdUsuario == usuario.Id).ToListAsync();
+                    }
+                    else
+                    {
+                        return NotFound("El usuario no tiene vehículos registrados. Registre un vehículo para crear su tarjeta automáticamente.");
+                    }
                 }
 
                 // Por simplicidad, asumamos que el usuario tiene una sola tarjeta

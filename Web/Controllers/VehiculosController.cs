@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayTollCardApi.Core.Entities;
 using PayTollCardApi.Web.Models;
@@ -11,10 +11,12 @@ namespace PayTollCardApi.Web.Controllers
     public class VehiculosController : ControllerBase
     {
         private readonly VehiculosDbContext _context;
+        private readonly PayTollCardApi.Core.Services.TarjetaService _tarjetaService;
 
-        public VehiculosController(VehiculosDbContext context)
+        public VehiculosController(VehiculosDbContext context, PayTollCardApi.Core.Services.TarjetaService tarjetaService)
         {
             _context = context;
+            _tarjetaService = tarjetaService;
         }
 
         [HttpPost("register")]
@@ -43,7 +45,11 @@ namespace PayTollCardApi.Web.Controllers
             {
                 _context.Vehiculos.Add(vehiculo);
                 await _context.SaveChangesAsync();
-                return Ok("Vehículo registrado exitosamente.");
+
+                // Crear automáticamente una tarjeta para el vehículo registrado
+                await _tarjetaService.CrearTarjetaParaVehiculoAsync(usuario.Id, vehiculo.Id);
+
+                return Ok("Vehículo registrado y tarjeta creada exitosamente.");
             }
             catch (Exception ex)
             {

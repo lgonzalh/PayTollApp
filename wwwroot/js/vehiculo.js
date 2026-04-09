@@ -68,7 +68,7 @@ export default function vehiculoModule() {
 
             if (!response.ok) throw new Error('Error al registrar el vehículo.');
             alert('El vehículo se ha registrado correctamente.');
-            window.location.href = 'index.html';
+            window.location.href = 'services.html';
         } catch (error) {
             console.error('Error:', error);
             alert(error.message);
