@@ -49,9 +49,6 @@ $(document).ready(function () {
       }
     });
 
-    // Actualizar navbar según estado de autenticación
-    updateAuthUI();
-
     // Toggle password visibility
     const togglePassword = document.getElementById('togglePassword');
     const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
@@ -82,37 +79,6 @@ $(document).ready(function () {
       }
     });
   });
-
-  // Función para manejar la UI de autenticación en la navbar
-  function updateAuthUI() {
-    const loggedInUserStr = localStorage.getItem('loggedInUser');
-    const authButtonContainer = document.querySelector('.navbar-nav .nav-item.ms-3');
-    const loginModalElement = document.getElementById('loginModal');
-    
-    if (authButtonContainer) {
-        if (loggedInUserStr) {
-            // Usuario logueado
-            authButtonContainer.innerHTML = '<button class="btn btn-outline-danger rounded-pill px-4" id="btnLogout">Cerrar Sesión</button>';
-            
-            document.getElementById('btnLogout').addEventListener('click', function() {
-                localStorage.removeItem('loggedInUser');
-                localStorage.removeItem('authToken');
-                window.location.href = 'index.html';
-            });
-            
-            // Cerrar el modal si está abierto
-            if (loginModalElement) {
-                const loginModal = bootstrap.Modal.getInstance(loginModalElement);
-                if (loginModal) {
-                    loginModal.hide();
-                }
-            }
-        } else {
-            // Usuario no logueado
-            authButtonContainer.innerHTML = '<button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Acceder</button>';
-        }
-    }
-  }
 
   //Registar Vehiculo
 
