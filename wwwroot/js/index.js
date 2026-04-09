@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const contrasena = passwordInput.value;
 
             // Ruta correcta del endpoint
-            const endpoint = '/api/Usuarios/login';
+            const API_BASE_URL = (localStorage.getItem('PAYTOLL_API_BASE_URL') || '').trim() || window.location.origin;
+            const endpoint = `${API_BASE_URL}/api/Usuarios/login`;
 
             const data = {
                 CorreoElectronico: correoElectronico,
